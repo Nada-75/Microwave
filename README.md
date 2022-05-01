@@ -1,2 +1,2 @@
 # Microwave
-This is a Microwave Oven Controller Project using Arm Cortex-m4 for my college. 
+This is a Microwave Oven Controller Project using Arm Cortex-m4 for our college. 
