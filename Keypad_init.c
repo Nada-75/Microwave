@@ -12,7 +12,7 @@ void Keypad_initial()
 	GPIO_PORTE_AMSEL_R&=~0x0F; // disable analog function
 	GPIO_PORTC_PCTL_R&=~0xF0; // GPIO clear bit PCTL
 	GPIO_PORTE_PCTL_R&=~0x0F;// GPIO clear bit PCTL
-  GPIO_PORTC_AFSEL_R&=~0xF0; // no alternate function
+  	GPIO_PORTC_AFSEL_R&=~0xF0; // no alternate function
 	GPIO_PORTE_AFSEL_R&=~0x0F; //no alternate function
 	GPIO_PORTC_DIR_R&=~0xF0; //PC7-4 input
 	GPIO_PORTE_DIR_R|=0x0F; // PE3-0 output
