@@ -72,7 +72,13 @@ void RGB_Output (unsigned char data){
 	GPIO_PORTF_DATA_R |= data;
 }
 
-
+// this fuction makes the red bilnks for almost 1 second
+void ledBlink(void){
+	GPIO_PORTF_DATA_R = 0x02;    //Turn on RED LED 
+	Delay();	             //Delay almost 1 sec
+	GPIO_PORTF_DATA_R = 0x00;    //Turn  off LED
+	Delay();                     //Delay almost 1 sec
+}
 /*int is_CLOSE(void)
 {
 	 if(GPIO_PORTA_DATA_R==!0X01 )//   SW3 IS PRESS (DOOR OPWN) =0X10
@@ -102,10 +108,7 @@ int main()
 			GPIO_PORTF_DATA_R = 0x02;			
 			if(button1==!0X01)//if SW1 is pressed or the door opened
 			{
-				GPIO_PORTF_DATA_R = 0x02;    //Turn on RED LED 	 
-				Delay();	                   //Delay almost 1 sec
-				GPIO_PORTF_DATA_R = 0x00;    //Turn  off LED
-				Delay();                     //Delay almost 1 sec
+				ledBlink();
 			}
 			else if((button3==!0X01)&(button2==!0X01)&(button1==0X01))
 			{
@@ -113,10 +116,7 @@ int main()
 			}
 			else if((button3==0X01)&(GPIO_PORTF_DATA_R = 0x02))
 			{
-				GPIO_PORTF_DATA_R = 0x02;    //Turn on RED LED 	 
-				Delay();	                   //Delay almost 1 sec
-				GPIO_PORTF_DATA_R = 0x00;    //Turn  off LED
-				Delay();                     //Delay almost 1 sec				
+				ledBlink();				
 			}
 		}
 		/*if()
