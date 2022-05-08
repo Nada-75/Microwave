@@ -2,7 +2,7 @@
 #include "stdint.h"
 unsigned int Keypad_col_1= 0x10;
 unsigned int Keypad_row_1 =0x01;
-unsigned char array[4][4]={{0x00, 0x03, 0x02, 0x01},{0x04, 0x07, 0x06, 0x05},{0x08, 0x0B, 0x0A, 0x09},{0x0C, 0x0F, 0x0E, 0x0D}}; 
+unsigned char array[4][4]={{'1', '2', '3', 'A'},{'4', '5', '6', 'B'},{'7', '8', '9', 'c'},{'*', '0','#', 'D'}}; 
 
 unsigned char Keypad_scan()
 	
