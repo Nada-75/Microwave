@@ -104,3 +104,122 @@ void Port_Init(unsigned char portname){
 		}
 	}
 }
+
+
+//Pull up pin function 
+void enable_PullUP (unsigned char port_name, unsigned char pin_num){ //set the  pullup pin in the wanted port to 1 
+	switch (port_name){
+		//A
+		case 'A':
+		case 'a': 
+		{SET_BIT(GPIO_PORTA_PUR_R, pin_num);
+		 break;
+		}
+	  //B
+		case 'B':
+		case 'b': 
+		{SET_BIT(GPIO_PORTB_PUR_R, pin_num);
+		 break;
+		}
+	  //C
+		case 'C':
+		case 'c': 
+		{SET_BIT(GPIO_PORTC_PUR_R, pin_num);
+		 break;
+		}
+	 //D
+		case 'D':
+		case 'd': 
+		{SET_BIT(GPIO_PORTD_PUR_R, pin_num);
+		 break;
+		}
+	//E
+		case 'E':
+		case 'e': 
+		{SET_BIT(GPIO_PORTE_PUR_R, pin_num);
+		 break;
+		}
+   //F
+		case 'F':
+		case 'f': 
+		{SET_BIT(GPIO_PORTF_PUR_R, pin_num);
+		 break;
+		}
+	}
+
+}
+
+
+// set the pin direction 
+void Set_pinDirection (unsigned char port_name, unsigned char pin_num, unsigned char direction){ //set the bin in the wanted port to 1 or 0
+	switch (port_name){
+		//A
+		case 'A':
+		case 'a': 
+		{if(direction ==1)
+		{SET_BIT(GPIO_PORTA_DIR_R, pin_num);
+		 break;
+		}
+		else
+			{CLR_BIT(GPIO_PORTA_DIR_R, pin_num);
+		 break;
+		} }
+		//B
+		case 'B':
+		case 'b': 
+		{if(direction ==1)
+		{SET_BIT(GPIO_PORTB_DIR_R, pin_num);
+		 break;
+		}
+		else
+			{CLR_BIT(GPIO_PORTB_DIR_R, pin_num);
+		 break;
+		} }
+		//C
+		case 'C':
+		case 'c': 
+		{if(direction ==1)
+		{SET_BIT(GPIO_PORTC_DIR_R, pin_num);
+		 break;
+		}
+		else
+			{CLR_BIT(GPIO_PORTC_DIR_R, pin_num);
+		 break;
+		} }	
+		//D
+		case 'D':
+		case 'd': 
+		{if(direction ==1)
+		{SET_BIT(GPIO_PORTD_DIR_R, pin_num);
+		 break;
+		}
+		else
+			{CLR_BIT(GPIO_PORTD_DIR_R, pin_num);
+		 break;
+		} }	
+			//E
+		case 'E':
+		case 'e': 
+		{if(direction ==1)
+		{SET_BIT(GPIO_PORTE_DIR_R, pin_num);
+		 break;
+		}
+		else
+			{CLR_BIT(GPIO_PORTE_DIR_R, pin_num);
+		 break;
+		} }	
+		//F
+		case 'F':
+		case 'f': 
+		{if(direction ==1)
+		{SET_BIT(GPIO_PORTF_DIR_R, pin_num);
+		 break;
+		}
+		else
+			{CLR_BIT(GPIO_PORTF_DIR_R, pin_num);
+		 break;
+		} 
+		}	
+
+	} 
+  }
