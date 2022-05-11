@@ -62,4 +62,45 @@ void Port_Init(unsigned char portname){
 			GPIO_PORTF_DEN_R=0xFF;
 		}
 	}
+
+	unsigned char ReadPort(unsigned char portname){
+		switch(portname){
+			case'A':
+			case'a':
+			{
+				return GPIO_PORTA_DATA_R;
+			}
+			break;
+			case'B':
+			case'b':
+			{
+				return GPIO_PORTB_DATA_R;
+			}
+			break;
+			case'C':
+			case'c':
+			{
+				return GPIO_PORTC_DATA_R;
+			}
+			break;
+			case'D':
+			case'd':
+			{
+				return GPIO_PORTD_DATA_R;
+			}
+			break;
+			case'E':
+			case'e':
+			{
+				return GPIO_PORTE_DATA_R;
+			}
+			break;
+			case'F':
+			case'f':
+			{
+				return GPIO_PORTF_DATA_R;	
+			}
+			break;
+		}
+	}
 }
