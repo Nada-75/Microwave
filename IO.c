@@ -284,3 +284,109 @@ void Set_pinDirection (unsigned char port_name, unsigned char pin_num, unsigned 
 
 
 
+// write functions 
+void write_port(unsigned char port_name,unsigned char data){
+  
+	switch(port_name){
+		case'A':
+		case'a':
+		{	GPIO_PORTA_DATA_R  =data ;	
+		}
+	case'B':
+		case'b':
+		{	GPIO_PORTB_DATA_R  =data ;	
+		}break;
+		case'C':
+		case'c':
+		{	GPIO_PORTC_DATA_R  =data ;	
+		}break;
+		case'D':
+		case'd':
+		{	GPIO_PORTD_DATA_R  =data ;	
+		}break;
+		case'E':
+		case'e':
+		{	GPIO_PORTE_DATA_R  =data ;	
+		}break;
+		case'F':
+		case'f':
+		{	GPIO_PORTF_DATA_R  =data ;	
+		}break;
+	}
+}
+
+
+
+void write_highnibble(unsigned char port_name,unsigned char data){
+  data= data<<4;
+	switch(port_name){
+		case'A':
+		case'a':
+		{ GPIO_PORTA_DATA_R  &=0x0F;
+			GPIO_PORTA_DATA_R  |=data ;	
+		}break;
+	  case'B':
+		case'b':
+		{	GPIO_PORTB_DATA_R  &=0x0F;
+			GPIO_PORTB_DATA_R  |=data ;	
+		}break;
+		case'C':
+		case'c':
+		{	GPIO_PORTC_DATA_R  &=0x0F;
+			GPIO_PORTC_DATA_R  |=data ;	
+		}break;
+		case'D':
+		case'd':
+		{	GPIO_PORTD_DATA_R  &=0x0F;
+			GPIO_PORTD_DATA_R  |=data ;	
+		}break;
+		case'E':
+		case'e':
+		{	GPIO_PORTE_DATA_R  &=0x0F;
+			GPIO_PORTE_DATA_R  |=data ;	
+		}break;
+		case'F':
+		case'f':
+		{	GPIO_PORTF_DATA_R  &=0x0F;
+			GPIO_PORTF_DATA_R  |=data ;	
+		}break;
+	}
+}
+	
+
+
+void write_lownibble(unsigned char port_name,unsigned char data){
+  
+	switch(port_name){
+		case'A':
+		case'a':
+		{ GPIO_PORTA_DATA_R  &=0xF0;
+			GPIO_PORTA_DATA_R  |=data ;	
+		}break;
+	        case'B':
+		case'b':
+		{	GPIO_PORTB_DATA_R  &=0xF0;
+			GPIO_PORTB_DATA_R  |=data ;	
+		}break;
+		case'C':
+		case'c':
+		{	GPIO_PORTC_DATA_R  &=0xF0;
+			GPIO_PORTC_DATA_R  |=data ;	
+		}break;
+		case'D':
+		case'd':
+		{	GPIO_PORTD_DATA_R  &=0xF0;
+			GPIO_PORTD_DATA_R  |=data ;	
+		}break;
+		case'E':
+		case'e':
+		{	GPIO_PORTE_DATA_R  &=0xF0;
+			GPIO_PORTE_DATA_R  |=data ;	
+		}break;
+		case'F':
+		case'f':
+		{	GPIO_PORTF_DATA_R  &=0xF0;
+			GPIO_PORTF_DATA_R  |=data ;	
+		}break;
+	}
+}
