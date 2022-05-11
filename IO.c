@@ -1,9 +1,16 @@
+/*This is the driver for  our Input output usage
+   It contains functions to help managing ports' inialization 
+	 and deal with registers*/
+//Included files 
 #include "tm4c123gh6pm.h"
 
+//macros 
 #define SET_BIT(REG,BIT) REG|=1<<BIT
 #define CLR_BIT(REG, BIT) REG&=~(1<<BIT)
 #define TOG_BIT(REG,BIT)  REG^= 1<<BIT
 #define READ_BIT(REG,BIT) REG&(1<<BIT)>>BIT
+
+//Functions
 void Port_Init(unsigned char portname){
 	switch(portname)
 	{
