@@ -1,6 +1,7 @@
-/*This is the driver for  our Input output usage
+/* This is the driver for  our Input output usage
    It contains functions to help managing ports' inialization 
-	 and deal with registers*/
+	 and deal with registers
+*/
 //Included files 
 #include "tm4c123gh6pm.h"
 
