@@ -150,7 +150,7 @@ void enable_PullUP (unsigned char port_name, unsigned char pin_num){ //set the  
 }
 
 
-// set the pin direction 
+// set the direction of pin
 void Set_pinDirection (unsigned char port_name, unsigned char pin_num, unsigned char direction){ //set the bin in the wanted port to 1 or 0
 	switch (port_name){
 		//A
