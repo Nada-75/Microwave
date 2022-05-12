@@ -19,7 +19,7 @@ void SysTick_wait(unsigned long delay){
 	//we will put further instructions to do after each one second here
 }
 
-//A function to determine the delay for chicken and been
+//A function to determine the delay for chicken and beef
 //this function will be called inside the genericDelay function to determine the time in seconds.
 unsigned long BC_delay(unsigned char state, unsigned char weight,unsigned long time ){
 	switch(state) {
