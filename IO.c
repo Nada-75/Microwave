@@ -76,6 +76,7 @@ void Port_Init(unsigned char portname){
 			break;
 		}
 	}
+}
 // a function read the values of any port 
 unsigned char ReadPort(unsigned char portname){
 	switch(portname){
@@ -122,7 +123,6 @@ unsigned char ReadPort(unsigned char portname){
 		}
 		break;
 		}
-	}
 }
 
 unsigned char ReadPin (unsigned char portName,unsigned pinNum)
