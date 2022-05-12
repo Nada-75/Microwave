@@ -23,6 +23,7 @@ void Port_Init(unsigned char portname){
 			GPIO_PORTA_LOCK_R=0X4C4F434B;
 			GPIO_PORTA_CR_R=0xFF;
 			GPIO_PORTA_DEN_R=0xFF;
+			break;
 		}
 		case 'B':
 		case 'b':
@@ -32,6 +33,7 @@ void Port_Init(unsigned char portname){
 			GPIO_PORTB_LOCK_R=0X4C4F434B;
 			GPIO_PORTB_CR_R=0xFF;
 			GPIO_PORTB_DEN_R=0xFF;
+			break;
 		}
 		case 'C':
 		case 'c':
@@ -41,6 +43,7 @@ void Port_Init(unsigned char portname){
 			GPIO_PORTC_LOCK_R=0X4C4F434B;
 			GPIO_PORTC_CR_R=0xFF;
 			GPIO_PORTC_DEN_R=0xFF;
+			break;
 		}
 		case 'D':
 		case 'd':
@@ -50,6 +53,7 @@ void Port_Init(unsigned char portname){
 			GPIO_PORTD_LOCK_R=0X4C4F434B;
 			GPIO_PORTD_CR_R=0xFF;
 			GPIO_PORTD_DEN_R=0xFF;
+			break;
 		}
 		case 'E':
 		case 'e':
@@ -59,6 +63,7 @@ void Port_Init(unsigned char portname){
 			GPIO_PORTE_LOCK_R=0X4C4F434B;
 			GPIO_PORTE_CR_R=0xFF;
 			GPIO_PORTE_DEN_R=0xFF;
+			break;
 		}
 		case 'F':
 		case 'f':
@@ -68,49 +73,56 @@ void Port_Init(unsigned char portname){
 			GPIO_PORTF_LOCK_R=0X4C4F434B;
 			GPIO_PORTF_CR_R=0xFF;
 			GPIO_PORTF_DEN_R=0xFF;
-		}
-	}
-
-	unsigned char ReadPort(unsigned char portname){
-		switch(portname){
-			case'A':
-			case'a':
-			{
-				return GPIO_PORTA_DATA_R;
-			}
-			break;
-			case'B':
-			case'b':
-			{
-				return GPIO_PORTB_DATA_R;
-			}
-			break;
-			case'C':
-			case'c':
-			{
-				return GPIO_PORTC_DATA_R;
-			}
-			break;
-			case'D':
-			case'd':
-			{
-				return GPIO_PORTD_DATA_R;
-			}
-			break;
-			case'E':
-			case'e':
-			{
-				return GPIO_PORTE_DATA_R;
-			}
-			break;
-			case'F':
-			case'f':
-			{
-				return GPIO_PORTF_DATA_R;	
-			}
 			break;
 		}
 	}
+}
+// a function read the values of any port 
+unsigned char ReadPort(unsigned char portname){
+	switch(portname){
+		// port A
+		case'A':
+		case'a':
+		{
+			return GPIO_PORTA_DATA_R;
+		}
+		break;
+		// port B		
+		case'B':
+		case'b':
+		{
+			return GPIO_PORTB_DATA_R;
+		}
+		break;
+		// port C		
+		case'C':
+		case'c':
+		{
+			return GPIO_PORTC_DATA_R;
+		}
+		break;
+		// port D		
+		case'D':
+		case'd':
+		{
+			return GPIO_PORTD_DATA_R;
+		}
+		break;
+		// port E		
+		case'E':
+		case'e':
+		{
+			return GPIO_PORTE_DATA_R;
+		}
+		break;
+		// port F		
+		case'F':
+		case'f':
+		{
+			return GPIO_PORTF_DATA_R;	
+		}
+		break;
+		}
 }
 
 unsigned char ReadPin (unsigned char portName,unsigned pinNum)
@@ -284,3 +296,109 @@ void Set_pinDirection (unsigned char port_name, unsigned char pin_num, unsigned 
 
 
 
+// write functions 
+void write_port(unsigned char port_name,unsigned char data){
+  
+	switch(port_name){
+		case'A':
+		case'a':
+		{	GPIO_PORTA_DATA_R  =data ;	
+		}
+	case'B':
+		case'b':
+		{	GPIO_PORTB_DATA_R  =data ;	
+		}break;
+		case'C':
+		case'c':
+		{	GPIO_PORTC_DATA_R  =data ;	
+		}break;
+		case'D':
+		case'd':
+		{	GPIO_PORTD_DATA_R  =data ;	
+		}break;
+		case'E':
+		case'e':
+		{	GPIO_PORTE_DATA_R  =data ;	
+		}break;
+		case'F':
+		case'f':
+		{	GPIO_PORTF_DATA_R  =data ;	
+		}break;
+	}
+}
+
+
+
+void write_highnibble(unsigned char port_name,unsigned char data){
+  data= data<<4;
+	switch(port_name){
+		case'A':
+		case'a':
+		{ GPIO_PORTA_DATA_R  &=0x0F;
+			GPIO_PORTA_DATA_R  |=data ;	
+		}break;
+	  case'B':
+		case'b':
+		{	GPIO_PORTB_DATA_R  &=0x0F;
+			GPIO_PORTB_DATA_R  |=data ;	
+		}break;
+		case'C':
+		case'c':
+		{	GPIO_PORTC_DATA_R  &=0x0F;
+			GPIO_PORTC_DATA_R  |=data ;	
+		}break;
+		case'D':
+		case'd':
+		{	GPIO_PORTD_DATA_R  &=0x0F;
+			GPIO_PORTD_DATA_R  |=data ;	
+		}break;
+		case'E':
+		case'e':
+		{	GPIO_PORTE_DATA_R  &=0x0F;
+			GPIO_PORTE_DATA_R  |=data ;	
+		}break;
+		case'F':
+		case'f':
+		{	GPIO_PORTF_DATA_R  &=0x0F;
+			GPIO_PORTF_DATA_R  |=data ;	
+		}break;
+	}
+}
+	
+
+
+void write_lownibble(unsigned char port_name,unsigned char data){
+  
+	switch(port_name){
+		case'A':
+		case'a':
+		{ GPIO_PORTA_DATA_R  &=0xF0;
+			GPIO_PORTA_DATA_R  |=data ;	
+		}break;
+	        case'B':
+		case'b':
+		{	GPIO_PORTB_DATA_R  &=0xF0;
+			GPIO_PORTB_DATA_R  |=data ;	
+		}break;
+		case'C':
+		case'c':
+		{	GPIO_PORTC_DATA_R  &=0xF0;
+			GPIO_PORTC_DATA_R  |=data ;	
+		}break;
+		case'D':
+		case'd':
+		{	GPIO_PORTD_DATA_R  &=0xF0;
+			GPIO_PORTD_DATA_R  |=data ;	
+		}break;
+		case'E':
+		case'e':
+		{	GPIO_PORTE_DATA_R  &=0xF0;
+			GPIO_PORTE_DATA_R  |=data ;	
+		}break;
+		case'F':
+		case'f':
+		{	GPIO_PORTF_DATA_R  &=0xF0;
+			GPIO_PORTF_DATA_R  |=data ;	
+		}break;
+	}
+}
