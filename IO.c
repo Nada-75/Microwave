@@ -450,8 +450,6 @@ void Set_portDir(unsigned char port_name,unsigned char direction)
 
 
 // toggel the bin direction 
-//bit macros
-#define TOG_BIT(reg,bit)     reg ^= (1>>bit) //define the toggle function 
 
 void TOG_BinData (unsigned char port_name, unsigned char bin_num)
 {
