@@ -443,3 +443,95 @@ void Set_portDir(unsigned char port_name,unsigned char dir){
 		}
 	}
 }
+// Set port function
+
+void Set_portDir(unsigned char port_name,unsigned char direction)
+{
+	switch(port_name){
+		case'A':
+		case'a':
+		{
+			GPIO_PORTA_DIR_R=direction;
+		}
+		break;
+   	case'B':
+		case'b':
+		{
+			GPIO_PORTA_DIR_R=direction;
+		}
+		break;
+		case'C':
+		case'c':
+		{
+			GPIO_PORTA_DIR_R=direction;
+		}
+		break;
+		case'D':
+		case'd':
+		{
+			GPIO_PORTA_DIR_R=direction;
+		}
+		break;
+		case'E':
+		case'e':
+		{
+			GPIO_PORTA_DIR_R=direction;
+		}
+		break;
+		case'F':
+		case'f':
+		{
+			GPIO_PORTA_DIR_R=direction;
+		}
+		break;
+	}
+
+}
+
+
+// toggel the bin direction 
+//bit macros
+#define TOG_BIT(reg,bit)     reg ^= (1>>bit) //define the toggle function 
+
+void TOG_BinData (unsigned char port_name, unsigned char bin_num)
+{
+	switch(port_name){
+		case'A':
+		case'a':
+		{
+			TOG_BIT(GPIO_PORTA_DATA_R , bin_num);
+		}
+		break;
+   	case'B':
+		case'b':
+		{
+			void TOG_BinData (unsigned char port_name, unsigned char bin_num);
+		}
+		break;
+		case'C':
+		case'c':
+		{
+			void TOG_BinData (unsigned char port_name, unsigned char bin_num);
+		}
+		break;
+		case'D':
+		case'd':
+		{
+			void TOG_BinData (unsigned char port_name, unsigned char bin_num);
+		}
+		break;
+		case'E':
+		case'e':
+		{
+			void TOG_BinData (unsigned char port_name, unsigned char bin_num);
+		}
+		break;
+		case'F':
+		case'f':
+		{
+			void TOG_BinData (unsigned char port_name, unsigned char bin_num);
+		}
+		break;
+	}
+
+}
