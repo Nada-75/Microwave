@@ -7,3 +7,4 @@ void Set_pinDirection (unsigned char port_name, unsigned char pin_num, unsigned 
 void write_port(unsigned char port_name,unsigned char data);
 void write_highnibble(unsigned char port_name,unsigned char data);
 void write_lownibble(unsigned char port_name,unsigned char data);
+void Set_portDir(unsigned char port_name,unsigned char dir);
