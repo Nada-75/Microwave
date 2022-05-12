@@ -16,7 +16,9 @@ void SysTick_wait(unsigned long delay){
 	int i;
  for(i=0;i<time ;i++) 
  SysTick_wait(16000); //one second delay 
+	//we will put further instructions to do after each one second here
 }
+
 //A function to determine the delay for chicken and been
 //this function will be called inside the genericDelay function to determine the time in seconds.
 unsigned long BC_delay(unsigned char state, unsigned char weight,unsigned long time ){
