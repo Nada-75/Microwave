@@ -31,7 +31,8 @@ void lcd_send_cmd(unsigned char cmd){
 	 genericDelay(1);
 }
 void lcd_Init(void){
-		//LATER YOU MUST---CLOCK,DEN
+		Port_Init(DataPins);
+		Port_Init(CTRLPins);
 		Set_portDirection(DataPins,0xFF);//set direction of pins as outputs
 		Set_pinDirection(CTRLPins,E,1);//set enable to 1
 	        Set_portDir(CTRLPins,RS,1);//set direction of RS as output
