@@ -402,47 +402,7 @@ void write_lownibble(unsigned char port_name,unsigned char data){
 		}break;
 	}
 }
-void Set_portDir(unsigned char port_name,unsigned char dir){
-	switch(port_name)
-	{
-		case 'A':
-		case 'a':
-		{
-			GPIO_PORTA_DIR_R=dir;
-			break;
-		}
-		case 'B':
-		case 'b':
-		{
-			GPIO_PORTB_DIR_R=dir;
-			break;
-		}
-		case 'C':
-		case 'c':
-		{
-			GPIO_PORTC_DIR_R=dir;
-			break;
-		}
-		case 'D':
-		case 'd':
-		{
-			GPIO_PORTD_DIR_R=dir;
-			break;
-		}
-		case 'E':
-		case 'e':
-		{
-			GPIO_PORTE_DIR_R=dir;
-			break;
-		}
-		case 'F':
-		case 'f':
-		{
-			GPIO_PORTF_DIR_R=dir;
-			break;
-		}
-	}
-}
+
 // Set port function
 
 void Set_portDir(unsigned char port_name,unsigned char direction)
