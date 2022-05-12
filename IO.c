@@ -23,6 +23,7 @@ void Port_Init(unsigned char portname){
 			GPIO_PORTA_LOCK_R=0X4C4F434B;
 			GPIO_PORTA_CR_R=0xFF;
 			GPIO_PORTA_DEN_R=0xFF;
+			break;
 		}
 		case 'B':
 		case 'b':
@@ -32,6 +33,7 @@ void Port_Init(unsigned char portname){
 			GPIO_PORTB_LOCK_R=0X4C4F434B;
 			GPIO_PORTB_CR_R=0xFF;
 			GPIO_PORTB_DEN_R=0xFF;
+			break;
 		}
 		case 'C':
 		case 'c':
@@ -41,6 +43,7 @@ void Port_Init(unsigned char portname){
 			GPIO_PORTC_LOCK_R=0X4C4F434B;
 			GPIO_PORTC_CR_R=0xFF;
 			GPIO_PORTC_DEN_R=0xFF;
+			break;
 		}
 		case 'D':
 		case 'd':
@@ -50,6 +53,7 @@ void Port_Init(unsigned char portname){
 			GPIO_PORTD_LOCK_R=0X4C4F434B;
 			GPIO_PORTD_CR_R=0xFF;
 			GPIO_PORTD_DEN_R=0xFF;
+			break;
 		}
 		case 'E':
 		case 'e':
@@ -59,6 +63,7 @@ void Port_Init(unsigned char portname){
 			GPIO_PORTE_LOCK_R=0X4C4F434B;
 			GPIO_PORTE_CR_R=0xFF;
 			GPIO_PORTE_DEN_R=0xFF;
+			break;
 		}
 		case 'F':
 		case 'f':
@@ -68,6 +73,7 @@ void Port_Init(unsigned char portname){
 			GPIO_PORTF_LOCK_R=0X4C4F434B;
 			GPIO_PORTF_CR_R=0xFF;
 			GPIO_PORTF_DEN_R=0xFF;
+			break;
 		}
 	}
 // a function read the values of any port 
