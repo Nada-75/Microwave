@@ -24,7 +24,7 @@ void Keypad_init(unsigned char portName)
 unsigned char KeypadScan()
 {
     unsigned char x,y,i;
-	while(1)
+	while(1) {
 	for (x=0;x<4;x++)
 		{ 	 write_lownibble('A',0x0F);
 					writePin('A',x,0);
@@ -39,4 +39,4 @@ unsigned char KeypadScan()
 						 
 }	
 	 
-		
+}		
