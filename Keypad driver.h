@@ -3,3 +3,4 @@
 //Functions Prototype
 void Keypad_init(unsigned char portName);
 unsigned char KeypadScan();
+int KeypadConversionWeight();
