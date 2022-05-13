@@ -1,5 +1,11 @@
 #include "IO.h"
+#include "button driver.h"
+#include "lcd.h"
+#include "timer.h"
+#include "tm4c123gh6pm.h"
+
 enum state{Idle, cooking, beefWeight, chickenWeight, cookingTime, pause, end};
+
 int main(void){
 	int state = Idle;
 	while(1){
