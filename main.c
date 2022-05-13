@@ -4,6 +4,8 @@
 #include "timer.h"
 #include "tm4c123gh6pm.h"
 #include "stdint.h"
+#include "led driver.h"
+
 
 enum state{Idle, cooking, beefWeight, chickenWeight, cookingTime, pause, end};
 
@@ -20,6 +22,8 @@ int main(void){
 					lcd_send_string( "popcorn");
 					genericDelay( 2000);
 					//DELY FOR 1 MIN
+					statesDelay(A_delay()); //get the dalay for A and display the count down on the lcd
+					
 					if ( Button_read( F,  0)==0)//sw2 pressed
 					{
 						state = cooking;
@@ -60,7 +64,7 @@ int main(void){
 			lcd_send_string( "Beef weight?");
 		  //
 		  
-		  
+		   
 			 if ( Button_read( F,  0)==0)//sw2 pressed
 			 {
 				  state = cooking;

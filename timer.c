@@ -22,11 +22,28 @@ void SysTick_wait(unsigned long delay){
 }
 
 //function to make a delay AND update the lcd 
-void statesDelay(unsigned long time){
+void statesDelay(unsigned long time){ //the function takes time in milliseconds
 	int i;
+	unsigned int seconds = time/1000 ; //get the time in seconds 
+	unsigned int minutes = seconds/60; //get the minutes by dividing the whole seconde /60
+	seconds =seconds%60; //get the remaining seconds by taking the reminder of the previous operation ###
+	// now we have seconds and minutes in their variables
 	for(i=0; i<time;i++){
 		genericDelay(1000); //1 sec delay
 		//Update lcd goes here to be updated each sec with the new seconds and minutes
+		char *s ="%u : %u",minutes, seconds; //put s in the forman of min:sec in order to be printed ###
+		lcd_send_string(s); //display the string 
+		if(seconds>0 && minutes>=0) {seconds--;} //decrease seconds each one second
+		if(seconds ==0 && minutes>0) { //If seconds reached zero, decrease the minutes 
+			// After 1:00 comes 0:59
+			minutes --;
+			seconds =59;
+		}
+		if(seconds==0 && minutes==0){//we finished counting down 
+			//what to do when we finish goes here ###
+			}
+		
+		
 		
 	}
 }
@@ -42,12 +59,12 @@ unsigned long BC_delay(unsigned char state, unsigned char weight,unsigned long t
 	 
 //A function to determine popcorn delay (just for further abstraction)	
 unsigned long A_delay(unsigned long time){
-return time=60*1000; //60 sec dalay
+return time=60*1000;	//60 sec dalay
 } 
 
 //A function to determine D(custom) delay 
 unsigned long D_delay (unsigned long time, unsigned char seconds, unsigned char minutes){ 
 	 time = 60*minutes + seconds; //times in seconds
-	return time *1000; //as function takes milli
+	return time *1000; //as function takes milliseconds
 }
 	
