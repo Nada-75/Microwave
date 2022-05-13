@@ -40,7 +40,7 @@ unsigned char KeypadScan()
 }	
 	 
 }		
-int KeypadConversionWeight()
+unsigned int KeypadConversionWeight()
 { unsigned int a;
 	unsigned char x = KeypadScan();
 	 a= x-'0';
