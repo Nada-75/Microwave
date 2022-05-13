@@ -18,10 +18,10 @@ enum state{Idle, cooking, beefWeight, chickenWeight, cookingTime, pause, end};
 int main(void){
 	
 
-    void Button_init(F,0);//sw2
-    void Button_init(F,4);//sw1
-    void Button_init( sw3PortName, sw3PinNUM);//sw3
-    void LED_INIT()
+     Button_init(F,0);//sw2
+     Button_init(F,4);//sw1
+     Button_init( sw3PortName, sw3PinNUM);//sw3
+     LED_INIT()
    int state = Idle;
 	while(1){
 		switch(state){
