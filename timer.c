@@ -1,5 +1,5 @@
 //files included
-#include "tm4c123gh6pm.h"
+#include "IO.c"
 #include "stdio.h"
 
 //initialize the systic timer 

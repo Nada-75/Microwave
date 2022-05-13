@@ -1,6 +1,7 @@
+//files included
 #include "IO.h" 
 #include "button driver.h"
-#include "tm4c123gh6pm.h"
+
 //initialization 
 void Button_init(unsigned char port_name, unsigned char pin_num){
 	//initialize the port 
