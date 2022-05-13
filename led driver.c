@@ -18,8 +18,8 @@ void ArrayLED_OFF(){
 
 // flash leds for 3 times  
 void ArrayLED_Flash(){
-   int i=0;
-   for(i;i<6;i++)
+   int i;
+   for(i=0;i<6;i++)
 		{
         GPIO_PORTF_DATA_R=GPIO_PORTF_DATA_R ^0x0E;
     	genericDelay(1000); //1sec  
