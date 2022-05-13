@@ -131,30 +131,25 @@ unsigned char ReadPort(unsigned char portname){
 	}
 }
 
-unsigned char ReadPin (unsigned char portName,unsigned char pinNum)
-{
-	switch (portName)
-	{
-		case 'A' :
-		return READ_BIT(GPIO_PORTA_DATA_R,pinNum);
-		break;
-		case 'B' :
-		return READ_BIT(GPIO_PORTB_DATA_R,pinNum);
-		break;
+unsigned char ReadPin (unsigned char portName,unsigned pinNum)
+{ while(1)
+		switch (portName)
+			
+{   case 'A' :
+	 return READ_BIT(GPIO_PORTA_DATA_R,pinNum);
+    case 'B' :
+	  return READ_BIT(GPIO_PORTB_DATA_R,pinNum);
 		case 'C' :
-		return READ_BIT(GPIO_PORTC_DATA_R,pinNum);
-		break;
+	  return READ_BIT(GPIO_PORTC_DATA_R,pinNum);
 		case 'D' :
-		return READ_BIT(GPIO_PORTD_DATA_R,pinNum);
-		break;
+	 return READ_BIT(GPIO_PORTD_DATA_R,pinNum);
 		case 'E' :
-		return READ_BIT(GPIO_PORTE_DATA_R,pinNum);
-		break;
+	  return READ_BIT(GPIO_PORTE_DATA_R,pinNum);
 		case 'F' :
-		return READ_BIT(GPIO_PORTF_DATA_R,pinNum);
-		break;
-	}
-}	
+	  return READ_BIT(GPIO_PORTF_DATA_R,pinNum);
+}
+}
+	
 void writePin(unsigned char portName,unsigned char pinNumber,unsigned char data)
 {
 	switch (portName)
@@ -162,29 +157,30 @@ void writePin(unsigned char portName,unsigned char pinNumber,unsigned char data)
 {   case 'A' :
 	{ if (data ==1) SET_BIT(GPIO_PORTA_DIR_R,pinNumber) ;
 	 else  CLR_BIT(GPIO_PORTA_DIR_R,pinNumber);
-	}break; 
+	break;} 
 		case 'B' :
 	  { if (data ==1) SET_BIT(GPIO_PORTB_DIR_R,pinNumber) ;
 	 else  CLR_BIT(GPIO_PORTB_DIR_R,pinNumber);
-		}break; 
+		break; }
 		case 'C' :
 	 { if (data ==1) SET_BIT(GPIO_PORTC_DIR_R,pinNumber) ;
 	 else  CLR_BIT(GPIO_PORTC_DIR_R,pinNumber);
-	 }break; 
+	 break; }
 		case 'D' :
 	 { if (data ==1) SET_BIT(GPIO_PORTD_DIR_R,pinNumber) ;
 	 else  CLR_BIT(GPIO_PORTD_DIR_R,pinNumber);
-	 }break; 
+	 break;} 
 		case 'E' :
 	  { if (data ==1) SET_BIT(GPIO_PORTE_DIR_R,pinNumber) ;
 	 else  CLR_BIT(GPIO_PORTE_DIR_R,pinNumber);
-		}break; 
+		break; }
 		case 'F':
 { if (data ==1) SET_BIT(GPIO_PORTF_DIR_R,pinNumber) ;
 	 else  CLR_BIT(GPIO_PORTF_DIR_R,pinNumber);
-}break; 
+break;} 
 }
 }
+
 
 
 //Pull up pin function 
