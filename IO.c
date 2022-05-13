@@ -82,48 +82,53 @@ void Port_Init(unsigned char portname){
 unsigned char ReadPort(unsigned char portname){
 	switch(portname){
 		// port A
-		case'A':
-		case'a':
+		case 'A':
+		case 'a':
 		{
 			return GPIO_PORTA_DATA_R;
+			break;	
 		}
-		break;
 		// port B		
-		case'B':
-		case'b':
+		case 'B':
+		case 'b':
 		{
 			return GPIO_PORTB_DATA_R;
+			break;	
 		}
-		break;
 		// port C		
-		case'C':
-		case'c':
+		case 'C':
+		case 'c':
 		{
 			return GPIO_PORTC_DATA_R;
+			break;	
 		}
-		break;
 		// port D		
-		case'D':
-		case'd':
+		case 'D':
+		case 'd':
 		{
 			return GPIO_PORTD_DATA_R;
+			break;	
 		}
-		break;
 		// port E		
-		case'E':
-		case'e':
+		case 'E':
+		case 'e':
 		{
 			return GPIO_PORTE_DATA_R;
+			break;	
 		}
-		break;
 		// port F		
-		case'F':
-		case'f':
+		case 'F':
+		case 'f':
 		{
-			return GPIO_PORTF_DATA_R;	
+			return GPIO_PORTF_DATA_R;
+			break;				
 		}
-		break;
+		default:
+		{
+			return GPIO_PORTF_DATA_R;
+			break;			
 		}
+	}
 }
 
 unsigned char ReadPin (unsigned char portName,unsigned char pinNum)
