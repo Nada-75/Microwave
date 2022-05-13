@@ -20,7 +20,7 @@ int main(void){
 
     void Button_init(F,0);
     void Button_init(F,4);
-
+    void LED_INIT()
    int state = Idle;
 	while(1){
 		switch(state){
