@@ -48,8 +48,8 @@ void statesDelay(unsigned long time){ //the function takes time in milliseconds
 		}
 		if(seconds==0 && minutes==0){//we finished counting down 
 			//what to do when we finish goes here ###
+			break; //get out  from the for loop			
 			}
-		
 		
 		
 	}
