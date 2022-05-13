@@ -4,9 +4,15 @@
 #include "timer.h"
 #include "tm4c123gh6pm.h"
 #include "stdint.h"
+#include "Keypad driver.h"
 #include "led driver.h"
 
 
+// define the port name and the pin number where the sw3 will connect
+#define sw3PortName E
+#define sw3PinNUM 0
+
+// define the states we will use in the switch conductions
 enum state{Idle, cooking, beefWeight, chickenWeight, cookingTime, pause, end};
 
 int main(void){
@@ -15,14 +21,14 @@ int main(void){
 		switch(state){
 			Idle:
 			//your code goes here
-			if ( Button_read( E,  0)=!0)//SW3 IS UP (CONNECTED on port E ,PIN0 )
+			if ( Button_read( sw3PortName, sw3PinNUM)=!0)//SW3 IS UP (CONNECTED on port E ,PIN0 )
 			{
 				if(KeypadScan()=='A')
 				{
 					lcd_send_string( "popcorn");
 					genericDelay( 2000);
 					//DELY FOR 1 MIN
-					statesDelay(A_delay()); //get the dalay for A and display the count down on the lcd
+					statesDelay(A_delay()); //get the delay for A and display the count down on the LCD
 					
 					if ( Button_read( F,  0)==0)//sw2 pressed
 					{
@@ -39,14 +45,14 @@ int main(void){
 				}
 				if(KeypadScan()=='D')
 				{
-					stata=cookingTime;
+					state = cookingTime;
 				}
 			}
 			break;
 			cooking:
 			//your code goes here
 			ArrayLED_ON(); //LEDS ON
-			if(Button_read( E,  0)=0)//door open
+			if(Button_read( sw3PortName,  sw3PinNUM)=0)//door open
 			{
 				state = pause;
 			}
@@ -62,14 +68,14 @@ int main(void){
 			beefWeight:
 			//your code goes here
 			lcd_send_string( "Beef weight?");
-		  //
-		  
-		   
-			 if ( Button_read( F,  0)==0)//sw2 pressed
-			 {
-				  state = cooking;
-			 }
-			//hint ,If an illegal number is entered,lcd_send_string( "Err"),stata=beefweight			
+			//
+			
+			
+			if ( Button_read( F,  0)==0)//sw2 pressed
+			{
+				state = cooking;
+			}
+			//hint ,If an illegal number is entered,lcd_send_string( "Err"),state = beef weight
 			break;
 			chickenWeight:
 			//your code goes here
@@ -80,7 +86,7 @@ int main(void){
 			if ( Button_read( F,  0)==0)//sw2 pressed
 			{
 				state = cooking;
-			}			
+			}
 			break;
 			cookingTime:
 			//your code goes here
@@ -91,19 +97,19 @@ int main(void){
 			if ( Button_read( F,  0)==0)//sw2 pressed
 			{
 				state = cooking;
-			}			
+			}
 			break;
 			pause:
 			//your code goes here
 			ArrayLED_Blink();//led blink
-			if(Button_read(unsigned char F, unsigned char 4)=0)//sw1 pressed 2'nd time
+			if(Button_read(F, 4)=0)//sw1 pressed 2nd time
 			{
-				 state = end;
+				state = end;
 			}
-			if(Button_read(unsigned char F, unsigned char 0)=0)//sw2 pressed
+			else if(Button_read(F, 0)=0)//sw2 pressed
 			{
-				 state = cooking;
-			}			
+				state = cooking;
+			}
 			break;
 			end:
 			//your code goes here
