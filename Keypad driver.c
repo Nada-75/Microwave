@@ -35,7 +35,7 @@ unsigned char KeypadScan()
 					if(i==0) 
 					return array[x][y];
 		}
-						return noPressed;}
+	}				return noPressed;
 						 
 }	
 	 
