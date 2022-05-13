@@ -10,7 +10,7 @@
 #define SET_BIT(REG,BIT) REG|=1<<BIT
 #define CLR_BIT(REG, BIT) REG&=~(1<<BIT)
 #define TOG_BIT(REG,BIT)  REG^= 1<<BIT
-#define READ_BIT(REG,BIT) REG&(1<<BIT)>>BIT
+#define READ_BIT(REG,BIT) (REG&(1<<BIT))>>BIT
 
 //Functions
 void Port_Init(unsigned char portname){
@@ -126,25 +126,30 @@ unsigned char ReadPort(unsigned char portname){
 		}
 }
 
-unsigned char ReadPin (unsigned char portName,unsigned pinNum)
-{ while(1)
-		switch (portName)
-			
-{   case 'A' :
-	 return READ_BIT(GPIO_PORTA_DATA_R,pinNum);
-    case 'B' :
-	  return READ_BIT(GPIO_PORTB_DATA_R,pinNum);
+unsigned char ReadPin (unsigned char portName,unsigned char pinNum)
+{
+	switch (portName)
+	{
+		case 'A' :
+		return READ_BIT(GPIO_PORTA_DATA_R,pinNum);
+		break;
+		case 'B' :
+		return READ_BIT(GPIO_PORTB_DATA_R,pinNum);
+		break;
 		case 'C' :
-	  return READ_BIT(GPIO_PORTC_DATA_R,pinNum);
+		return READ_BIT(GPIO_PORTC_DATA_R,pinNum);
+		break;
 		case 'D' :
-	 return READ_BIT(GPIO_PORTD_DATA_R,pinNum);
+		return READ_BIT(GPIO_PORTD_DATA_R,pinNum);
+		break;
 		case 'E' :
-	  return READ_BIT(GPIO_PORTE_DATA_R,pinNum);
+		return READ_BIT(GPIO_PORTE_DATA_R,pinNum);
+		break;
 		case 'F' :
-	  return READ_BIT(GPIO_PORTF_DATA_R,pinNum);
-}
-}
-	
+		return READ_BIT(GPIO_PORTF_DATA_R,pinNum);
+		break;
+	}
+}	
 void writePin(unsigned char portName,unsigned char pinNumber,unsigned char data)
 {
 	switch (portName)
