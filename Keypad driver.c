@@ -33,11 +33,8 @@ unsigned char KeypadScan()
 		{
 				i=ReadPin ('A',y+4);
 					if(i==0) 
-					{return array[x][y];
-								break;}
-					if(i==0)break;
-						return noPressed;
+					return array[x][y];
+		}
+						return noPressed;}
 						 
-		 }	
-	 }
-}		
+}	
