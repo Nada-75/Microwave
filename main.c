@@ -22,6 +22,7 @@ int main(void){
      Button_init(F,4);//sw1
      Button_init( sw3PortName, sw3PinNUM);//sw3
      LED_INIT()
+  Keypad_init();//keypad         
    int state = Idle;
 	while(1){
 		switch(state){
@@ -58,14 +59,19 @@ int main(void){
 			cooking:
 			//your code goes here
 			ArrayLED_ON(); //LEDS ON
-			if(Button_read( sw3PortName,  sw3PinNUM)==0)//door open
+if((Button_read( sw3PortName,  sw3PinNUM)==0)|(Button_read( F,  4)==0))//door open or sw1 pressed
 			{
 				state = pause;
 			}
-			if(Button_read( F,  4)==0)//sw1 pressed
-			{
-				state = pause;
-			}
+			//if(Button_read( F,  4)==0)//sw1 pressed
+			//{
+			//	state = pause;
+			//}
+			/*if((NVIC_ST_CTRL_R&0x00010000)==0)//wait
+			//{
+			//	state = cooking;
+	   	}*/
+			
 			if(NVIC_ST_CTRL_R&0x00010000//time out)
 			{
 				state = end;
@@ -79,9 +85,16 @@ int main(void){
 			
 			if ( Button_read( F,  0)==0)//sw2 pressed
 			{
-				state = cooking;
+			if ((KeypadScan()!= 'A' )& (KeypadScan()!= 'B') &( KeypadScan()!= 'C') & (KeypadScan()!= 'D') & (KeypadScan()!= '#' )& (KeypadScan()!= '*' ) & (KeypadScan()!= '0')) // enter a number from 1-9
+				// lcd show the entered number for 2 seconds
+							//lcd showing remaing time
+	state = cooking;
 			}
 			//hint ,If an illegal number is entered,lcd_send_string( "Err"),state = beef weight
+if ((KeypadScan()== 'A' )| (KeypadScan()== 'B') |( KeypadScan()== 'C') | (KeypadScan()== 'D') | (KeypadScan()== '#' )| (KeypadScan()== '*' ) | (KeypadScan()== '0')) // invalid number
+			 { //LCD error for 2 sec
+			 state = beefweight;
+			 }
 			break;
 			chickenWeight:
 			//your code goes here
@@ -91,9 +104,17 @@ int main(void){
 			
 			if ( Button_read( F,  0)==0)//sw2 pressed
 			{
-				state = cooking;
+if ((KeypadScan()!= 'A' )& (KeypadScan()!= 'B') &( KeypadScan()!= 'C') & (KeypadScan()!= 'D') & (KeypadScan()!= '#' )& (KeypadScan()!= '*' ) & (KeypadScan()!= '0')) // enter a number from 1-9
+				// lcd show the entered number for 2 seconds
+							//lcd showing remaing time			
+	state = cooking;
 			}
-			break;
+	if((KeypadScan()== 'A' )| (KeypadScan()== 'B') |( KeypadScan()== 'C') | (KeypadScan()== 'D') | (KeypadScan()== '#' )| (KeypadScan()== '*' ) | (KeypadScan()== '0')) // invalid number
+				{
+					//LCD error for 2 sec
+			  state = beefweight;
+				}		
+break;
 			cookingTime:
 			//your code goes here
 			lcd_send_string( "Cooking Time?");
