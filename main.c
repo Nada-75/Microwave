@@ -18,15 +18,16 @@ enum state{Idle, cooking, beefWeight, chickenWeight, cookingTime, pause, end};
 int main(void){
 	
 
-    void Button_init(F,0);
-    void Button_init(F,4);
+    void Button_init(F,0);//sw2
+    void Button_init(F,4);//sw1
+    void Button_init( sw3PortName, sw3PinNUM);//sw3
     void LED_INIT()
    int state = Idle;
 	while(1){
 		switch(state){
 			Idle:
 			//your code goes here
-			if ( Button_read( sw3PortName, sw3PinNUM)=!0)//SW3 IS UP (CONNECTED on port E ,PIN0 )
+			if ( Button_read( sw3PortName, sw3PinNUM)!=0)//SW3 IS UP (CONNECTED on port E ,PIN0 )
 			{
 				if(KeypadScan()=='A')
 				{
@@ -57,11 +58,11 @@ int main(void){
 			cooking:
 			//your code goes here
 			ArrayLED_ON(); //LEDS ON
-			if(Button_read( sw3PortName,  sw3PinNUM)=0)//door open
+			if(Button_read( sw3PortName,  sw3PinNUM)==0)//door open
 			{
 				state = pause;
 			}
-			if(Button_read( F,  4)=0)//sw1 pressed
+			if(Button_read( F,  4)==0)//sw1 pressed
 			{
 				state = pause;
 			}
@@ -107,11 +108,11 @@ int main(void){
 			pause:
 			//your code goes here
 			ArrayLED_Blink();//led blink
-			if(Button_read(F, 4)=0)//sw1 pressed 2nd time
+			if(Button_read(F, 4)==0)//sw1 pressed 2nd time
 			{
 				state = end;
 			}
-			else if(Button_read(F, 0)=0)//sw2 pressed
+			else if(Button_read(F, 0)==0)//sw2 pressed
 			{
 				state = cooking;
 			}
