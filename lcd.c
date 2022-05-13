@@ -33,9 +33,9 @@ void lcd_send_cmd(unsigned char cmd){
 void lcd_Init(void){
 		Port_Init(DataPins);
 		Port_Init(CTRLPins);
-		Set_portDirection(DataPins,0xFF);//set direction of pins as outputs
+		Set_portDir(DataPins,0xFF);//set direction of pins as outputs
 		Set_pinDirection(CTRLPins,E,1);//set enable to 1
-	        Set_portDir(CTRLPins,RS,1);//set direction of RS as output
+	        Set_pinDirection(CTRLPins,RS,1);//set direction of RS as output
 		Set_pinDirection(CTRLPins,RW,1);//set direction of RW as output
 		writePin(CTRLPins,RW,0);//active low to write data
 		lcd_send_cmd(Set_8bit); //using 8-bit mode
