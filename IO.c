@@ -4,6 +4,7 @@
 */
 //Included files 
 #include "tm4c123gh6pm.h"
+#include "IO.h"
 
 //macros 
 #define SET_BIT(REG,BIT) REG|=1<<BIT
