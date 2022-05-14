@@ -1,5 +1,4 @@
 //files included
-#include "IO.c"
 #include "stdio.h"
 #include "IO.h"
 #include "keypad driver.h"

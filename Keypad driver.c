@@ -1,5 +1,8 @@
-# include "C:\Keil\Labware\inc\tm4c123gh6pm.h"
-# include "stdint.h"
+//# include "tm4c123gh6pm.h"
+//# include "stdint.h"
+#include "lcd.h"
+
+
 unsigned char noPressed=0xFF;
 unsigned char  array [4][4]={{'1','2','3','A'},{'4','5','6','B'},{'7','8','9','C'},{'*','0','#','D'}};
 void Port_Init(unsigned char portname);
@@ -56,7 +59,7 @@ unsigned int KeypadConversionDigit()
 else {
 lcd_send_string("Err");//
 genericDelay(2000);//delay 2 sec
-Clear_display();
+Clear_display();//***********************************************************************************
  KeypadConversionDigit();
 }
 
@@ -64,6 +67,6 @@ Clear_display();
 unsigned long cookingtime_D(){
 unsigned int arr=[4];
 for
-while( Button_read( F,  4)!=0)//sw1 not pressed
+while( Button_read( 'F',  4)!=0)//sw1 not pressed
 {KeypadConversionDigit();
 arr[0]=
