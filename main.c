@@ -77,6 +77,7 @@ if((Button_read( sw3PortName,  sw3PinNUM)==0)|(Button_read( F,  4)==0))//door op
 				state = end;
 			}
 			break;
+			
 			beefWeight:
 			//your code goes here
 			lcd_send_string( "Beef weight?");
@@ -96,6 +97,7 @@ if ((KeypadScan()== 'A' )| (KeypadScan()== 'B') |( KeypadScan()== 'C') | (Keypad
 			 state = beefweight;
 			 }
 			break;
+			 
 			chickenWeight:
 			//your code goes here
 			lcd_send_string( "Chicken weight?");

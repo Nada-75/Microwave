@@ -1,11 +1,10 @@
 //files included
-#include "IO.c"
 #include "stdio.h"
 #include "IO.h"
 #include "keypad driver.h"
 #include "lcd.h"
 
-//initialize the systic timer 
+//initialize the sys tic timer 
 void SysTick_wait(unsigned long delay){ 
 	NVIC_ST_CTRL_R = 0x00;  
 	NVIC_ST_RELOAD_R = delay-1;  //Reload delay
@@ -18,10 +17,10 @@ void SysTick_wait(unsigned long delay){
  void genericDelay(unsigned long time){ 
 	int i;
  for(i=0;i<time ;i++) 
- SysTick_wait(16000); //one milli second delay 	
+ SysTick_wait(16000); //one millisecond delay 	
 }
 
-//function to make a delay AND update the lcd 
+//function to make a delay AND update the LCD 
 void statesDelay(unsigned long time){ //the function takes time in milliseconds
 	//used variables
 	int i;
@@ -29,7 +28,7 @@ void statesDelay(unsigned long time){ //the function takes time in milliseconds
 	int minutes;
 	//Equations
 	seconds	= time/1000 ; //get the time in seconds 
-	minutes = seconds/60; //get the minutes by dividing the whole seconde /60
+	minutes = seconds/60; //get the minutes by dividing the whole seconds /60
 	seconds =seconds%60; //get the remaining seconds by taking the reminder of the previous operation ###
 	char *s;  //char s which will have the displayed value
 	
@@ -57,21 +56,23 @@ void statesDelay(unsigned long time){ //the function takes time in milliseconds
 
 //A function to determine the delay for chicken and beef
 //this function will be called inside the genericDelay function to determine the time in seconds.
-unsigned long BC_delay(unsigned char state, int weight,unsigned long time ){
+unsigned long BC_delay(unsigned char state, int weight){
+	unsigned long time;
 	switch(state) {
+		
 		case 'B': return time =30* weight*1000;       //in case of beef, delay = weight* 0.5 min
 		case 'C' : return time =12*weight*1000;       //in case of corn, delay= weight * 0.2 min 
 	}
-	 return 0; } //if we enterd other inputs that B or C
+	 return 0; } //if we entered other inputs that B or C
 	 
 //A function to determine popcorn delay (just for further abstraction)	
-unsigned long A_delay(unsigned long time){
-return time=60*1000;	//60 sec dalay
+unsigned long A_delay(){unsigned long time;
+return time=60*1000;	//60 sec delay
 } 
 
 //A function to determine D(custom) delay 
-unsigned long D_delay (unsigned long time, int seconds, int minutes){ 
-	 time = 60*minutes + seconds; //times in seconds
+unsigned long D_delay ( int seconds, int minutes){ 
+	unsigned long time = 60*minutes + seconds; //times in seconds
 	return time *1000; //as function takes milliseconds
 }
 	
