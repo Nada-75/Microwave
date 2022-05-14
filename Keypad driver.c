@@ -65,8 +65,17 @@ Clear_display();//**************************************************************
 
 }
 unsigned long cookingtime_D(){
-unsigned int arr=[4];
-for
-while( Button_read( 'F',  4)!=0)//sw1 not pressed
-{KeypadConversionDigit();
-arr[0]=
+	unsigned int arr[4] = {0,0,0,0};
+	int i ;
+	while( Button_read( 'F',  4)!=0)//sw1 not pressed
+	{
+		for(i = 3 ; i>=0; i--)
+		{		
+			arr[i] = KeypadConversionDigit();	//we don't know if they(function and for loop) are in sync	
+		}
+	}
+	int min = arr[1] + arr[0] * 10;
+	int sec = arr[3] + arr[2] * 10;
+	statesDelay(D_delay (sec, min));
+}
+

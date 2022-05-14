@@ -1,5 +1,5 @@
 /* This is the driver for  our Input output usage
-   It contains functions to help managing ports' inialization 
+   It contains functions to help managing ports' initialization 
 	 and deal with registers
 */
 //Included files 
