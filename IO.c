@@ -1,11 +1,11 @@
 /* This is the driver for  our Input output usage
-   It contains functions to help managing ports' inialization 
+   It contains functions to help managing ports' initialization 
 	 and deal with registers
 */
 //Included files 
 #include "tm4c123gh6pm.h"
 #include "IO.h"
-
+# include "stdint.h"
 //macros 
 #define SET_BIT(REG,BIT) REG|=1<<BIT
 #define CLR_BIT(REG, BIT) REG&=~(1<<BIT)

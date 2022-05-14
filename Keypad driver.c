@@ -1,5 +1,8 @@
-# include "C:\Keil\Labware\inc\tm4c123gh6pm.h"
-# include "stdint.h"
+//# include "tm4c123gh6pm.h"
+//# include "stdint.h"
+#include "lcd.h"
+
+
 unsigned char noPressed=0xFF;
 unsigned char  array [4][4]={{'1','2','3','A'},{'4','5','6','B'},{'7','8','9','C'},{'*','0','#','D'}};
 void Port_Init(unsigned char portname);
@@ -46,3 +49,33 @@ unsigned int KeypadConversionWeight()
 	 a= x-'0';
 	return a ;
 }
+
+unsigned int KeypadConversionDigit()
+{ unsigned int a;
+	unsigned char x = KeypadScan();
+ if ((x!= 'A' )& (x!= 'B') &( KeypadScan()!= 'C') & (x!= 'D') & (x!= '#' )& (x!= '*' ) ){	//input '0'is will be handled
+ a= x-'0';
+	return a ;}
+else {
+lcd_send_string("Err");//
+genericDelay(2000);//delay 2 sec
+Clear_display();//***********************************************************************************
+ KeypadConversionDigit();
+}
+
+}
+unsigned long cookingtime_D(){
+	unsigned int arr[4] = {0,0,0,0};
+	int i ;
+	while( Button_read( 'F',  4)!=0)//sw1 not pressed
+	{
+		for(i = 3 ; i>=0; i--)
+		{		
+			arr[i] = KeypadConversionDigit();	//we don't know if they(function and for loop) are in sync	
+		}
+	}
+	int min = arr[1] + arr[0] * 10;
+	int sec = arr[3] + arr[2] * 10;
+	statesDelay(D_delay (sec, min));
+}
+

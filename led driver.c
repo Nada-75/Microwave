@@ -1,9 +1,9 @@
-#include "tm4c123gh6pm.h"
+//#include "tm4c123gh6pm.h"
 #include "timer.h"
-#include "IO.h"
-
+//#include "IO.h"
+#include "led driver.h"
 void LED_INIT(){
-	GPIO_PORTF_Dir_R |= 0x0E;
+	GPIO_PORTF_DIR_R |= 0x0E;
  }
 
 //on led
