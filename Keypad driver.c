@@ -46,3 +46,24 @@ unsigned int KeypadConversionWeight()
 	 a= x-'0';
 	return a ;
 }
+
+unsigned int KeypadConversionDigit()
+{ unsigned int a;
+	unsigned char x = KeypadScan();
+ if ((x!= 'A' )& (x!= 'B') &( KeypadScan()!= 'C') & (x!= 'D') & (x!= '#' )& (x!= '*' ) ){	//input '0'is will be handled
+ a= x-'0';
+	return a ;}
+else {
+lcd_send_string("Err");//
+genericDelay(2000);//delay 2 sec
+Clear_display();
+ KeypadConversionDigit();
+}
+
+}
+unsigned long cookingtime_D(){
+unsigned int arr=[4];
+for
+while( Button_read( F,  4)!=0)//sw1 not pressed
+{KeypadConversionDigit();
+arr[0]=
