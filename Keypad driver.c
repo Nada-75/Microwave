@@ -1,7 +1,8 @@
 //# include "tm4c123gh6pm.h"
 //# include "stdint.h"
 #include "lcd.h"
-
+#include "timer.h"
+#include "button driver.h"
 
 unsigned char noPressed=0xFF;
 unsigned char  array [4][4]={{'1','2','3','A'},{'4','5','6','B'},{'7','8','9','C'},{'*','0','#','D'}};
@@ -43,13 +44,9 @@ unsigned char KeypadScan()
 }	
 	 
 }		
-unsigned int KeypadConversionWeight()
-{ unsigned int a;
-	unsigned char x = KeypadScan();
-	 a= x-'0';
-	return a ;
-}
 
+
+//This function get the numeric input from keypad and return its integer value
 unsigned int KeypadConversionDigit()
 { unsigned int a;
 	unsigned char x = KeypadScan();
@@ -62,9 +59,11 @@ genericDelay(2000);//delay 2 sec
 Clear_display();//***********************************************************************************
  KeypadConversionDigit();
 }
-
+return 0;
 }
-unsigned long cookingtime_D(){
+
+//the function will take inputs for D, ddetermine minutes and seconds then display the countdown
+void cookingtime_D(){ 
 	unsigned int arr[4] = {0,0,0,0};
 	int i ;
 	while( Button_read( 'F',  4)!=0)//sw1 not pressed
@@ -74,8 +73,9 @@ unsigned long cookingtime_D(){
 			arr[i] = KeypadConversionDigit();	//we don't know if they(function and for loop) are in sync	
 		}
 	}
-	int min = arr[1] + arr[0] * 10;
-	int sec = arr[3] + arr[2] * 10;
-	statesDelay(D_delay (sec, min));
+	int min = arr[1] + arr[0] * 10; //get minutes from the array
+	int sec = arr[3] + arr[2] * 10; //get seconds from the array
+	statesDelay(D_delay (sec, min)); //get the delay for custom and display the countdown
 }
+
 

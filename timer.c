@@ -66,7 +66,8 @@ unsigned long BC_delay(unsigned char state, int weight){
 	 return 0; } //if we entered other inputs that B or C
 	 
 //A function to determine popcorn delay (just for further abstraction)	
-unsigned long A_delay(){unsigned long time;
+unsigned long A_delay()
+	{unsigned long time;
 return time=60*1000;	//60 sec delay
 } 
 

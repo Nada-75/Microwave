@@ -1,5 +1,5 @@
 //files included
-//#include "IO.h"
+#include "IO.h"
 #include "lcd.h"
 #include "timer.h"
 
