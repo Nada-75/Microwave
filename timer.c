@@ -1,7 +1,6 @@
-//files included
+//*/files included
 #include "stdio.h"
 #include "IO.h"
-#include "keypad driver.h"
 #include "lcd.h"
 
 //initialize the sys tic timer 
@@ -26,22 +25,40 @@ void statesDelay(unsigned long time){ //the function takes time in milliseconds
 	int i;
 	int seconds;
 	int minutes;
-	//Equations
-	seconds	= time/1000 ; //get the time in seconds 
-	minutes = seconds/60; //get the minutes by dividing the whole seconds /60
-	seconds =seconds%60; //get the remaining seconds by taking the reminder of the previous operation ###
-	char *s;  //char s which will have the displayed value
+	char s1;  //char s which will have the displayed value
+	char s2;
+	//LCD_Init(); //IF NOT IN MAIN
 	
+	//Equations
+	seconds	= time/1000; //get the time in seconds 
+	minutes = seconds/60; //get the minutes by dividing the whole seconds /60
+	seconds = seconds%60; //get the remaining seconds by taking the reminder of the previous operation ###
+	
+	LCD4bits_Cmd(lcd_clear);
+	LCD4bits_Cmd(0x80);
 	// now we have seconds and minutes in their variables
-	for(i=0; i<time;i++){
-		genericDelay(1000); //1 sec delay
+	//for(i=0; i<time;i++){
+		//genericDelay(3000); //1 sec delay
 		//Update lcd goes here to be updated each sec with the new seconds and minutes
 		
-		sprintf(s,"%u : %u",minutes,seconds);//put s in the format of min:sec in order to be printed ###
-		lcd_send_string(s); //display the string 
-		if(seconds>0 && minutes>=0) {seconds--;} //decrease seconds each one second
+		
+		//LCD Display 
+		s1 = seconds+'0';
+		s2 = minutes+'0';
+		
+		LCD4bits_Data(s2);//display the string 
+		LCD4bits_Cmd(RShiftCurs);
+		LCD4bits_Data(':');
+		LCD4bits_Cmd(RShiftCurs);
+		LCD4bits_Data(s1);
+		
+		//LCD4bits_Cmd(RShiftCurs);
+		
+		
+		
+		/*if(seconds>0 && minutes>=0) {seconds--;} //decrease seconds each one second
 		if(seconds ==0 && minutes>0) { //If seconds reached zero, decrease the minutes 
-			// After 1:00 comes 0:59
+			// After 1:00 comes 0:59888888888//*****
 			minutes --;
 			seconds =59;
 		}
@@ -49,9 +66,9 @@ void statesDelay(unsigned long time){ //the function takes time in milliseconds
 			//what to do when we finish goes here ###
 			break; //get out  from the for loop			
 			}
+		*/
 		
-		
-	}
+	//}
 }
 
 //A function to determine the delay for chicken and beef
@@ -76,4 +93,3 @@ unsigned long D_delay ( int seconds, int minutes){
 	unsigned long time = 60*minutes + seconds; //times in seconds
 	return time *1000; //as function takes milliseconds
 }
-	
