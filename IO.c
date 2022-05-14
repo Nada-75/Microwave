@@ -1,16 +1,15 @@
 /* This is the driver for  our Input output usage
-   It contains functions to help managing ports' initialization 
+   It contains functions to help managing ports' inialization 
 	 and deal with registers
 */
 //Included files 
-#include "tm4c123gh6pm.h"
-#include "IO.h"
-# include "stdint.h"
+#include "lcd.h"
+
 //macros 
 #define SET_BIT(REG,BIT) REG|=1<<BIT
 #define CLR_BIT(REG, BIT) REG&=~(1<<BIT)
 #define TOG_BIT(REG,BIT)  REG^= 1<<BIT
-#define READ_BIT(REG,BIT) (REG&(1<<BIT))>>BIT
+#define READ_BIT(REG,BIT) REG&(1<<BIT)>>BIT
 
 //Functions
 void Port_Init(unsigned char portname){
@@ -82,53 +81,48 @@ void Port_Init(unsigned char portname){
 unsigned char ReadPort(unsigned char portname){
 	switch(portname){
 		// port A
-		case 'A':
-		case 'a':
+		case'A':
+		case'a':
 		{
 			return GPIO_PORTA_DATA_R;
-			break;	
 		}
+		break;
 		// port B		
-		case 'B':
-		case 'b':
+		case'B':
+		case'b':
 		{
 			return GPIO_PORTB_DATA_R;
-			break;	
 		}
+		break;
 		// port C		
-		case 'C':
-		case 'c':
+		case'C':
+		case'c':
 		{
 			return GPIO_PORTC_DATA_R;
-			break;	
 		}
+		break;
 		// port D		
-		case 'D':
-		case 'd':
+		case'D':
+		case'd':
 		{
 			return GPIO_PORTD_DATA_R;
-			break;	
 		}
+		break;
 		// port E		
-		case 'E':
-		case 'e':
+		case'E':
+		case'e':
 		{
 			return GPIO_PORTE_DATA_R;
-			break;	
 		}
+		break;
 		// port F		
-		case 'F':
-		case 'f':
+		case'F':
+		case'f':
 		{
-			return GPIO_PORTF_DATA_R;
-			break;				
+			return GPIO_PORTF_DATA_R;	
 		}
-		default:
-		{
-			return GPIO_PORTF_DATA_R;
-			break;			
+		break;
 		}
-	}
 }
 
 unsigned char ReadPin (unsigned char portName,unsigned pinNum)
@@ -155,32 +149,31 @@ void writePin(unsigned char portName,unsigned char pinNumber,unsigned char data)
 	switch (portName)
 			
 {   case 'A' :
-	{ if (data ==1) SET_BIT(GPIO_PORTA_DIR_R,pinNumber) ;
-	 else  CLR_BIT(GPIO_PORTA_DIR_R,pinNumber);
-	break;} 
+	{ if (data ==1) SET_BIT(GPIO_PORTA_DATA_R,pinNumber) ;
+	 else  CLR_BIT(GPIO_PORTA_DATA_R,pinNumber);
+	}break; 
 		case 'B' :
-	  { if (data ==1) SET_BIT(GPIO_PORTB_DIR_R,pinNumber) ;
-	 else  CLR_BIT(GPIO_PORTB_DIR_R,pinNumber);
-		break; }
+	  { if (data ==1) SET_BIT(GPIO_PORTB_DATA_R,pinNumber) ;
+	 else  CLR_BIT(GPIO_PORTB_DATA_R,pinNumber);
+		}break; 
 		case 'C' :
-	 { if (data ==1) SET_BIT(GPIO_PORTC_DIR_R,pinNumber) ;
+	 { if (data ==1) SET_BIT(GPIO_PORTC_DATA_R,pinNumber) ;
 	 else  CLR_BIT(GPIO_PORTC_DIR_R,pinNumber);
-	 break; }
+	 }break; 
 		case 'D' :
-	 { if (data ==1) SET_BIT(GPIO_PORTD_DIR_R,pinNumber) ;
-	 else  CLR_BIT(GPIO_PORTD_DIR_R,pinNumber);
-	 break;} 
+	 { if (data ==1) SET_BIT(GPIO_PORTD_DATA_R,pinNumber) ;
+	 else  CLR_BIT(GPIO_PORTD_DATA_R,pinNumber);
+	 }break; 
 		case 'E' :
-	  { if (data ==1) SET_BIT(GPIO_PORTE_DIR_R,pinNumber) ;
-	 else  CLR_BIT(GPIO_PORTE_DIR_R,pinNumber);
-		break; }
+	  { if (data ==1) SET_BIT(GPIO_PORTE_DATA_R,pinNumber) ;
+	 else  CLR_BIT(GPIO_PORTE_DATA_R,pinNumber);
+		}break; 
 		case 'F':
-{ if (data ==1) SET_BIT(GPIO_PORTF_DIR_R,pinNumber) ;
-	 else  CLR_BIT(GPIO_PORTF_DIR_R,pinNumber);
-break;} 
+{ if (data ==1) SET_BIT(GPIO_PORTF_DATA_R,pinNumber) ;
+	 else  CLR_BIT(GPIO_PORTF_DATA_R,pinNumber);
+}break; 
 }
 }
-
 
 
 //Pull up pin function 
@@ -409,9 +402,6 @@ void write_lownibble(unsigned char port_name,unsigned char data){
 		}break;
 	}
 }
-
-// Set port function
-
 void Set_portDir(unsigned char port_name,unsigned char direction)
 {
 	switch(port_name){
@@ -449,6 +439,51 @@ void Set_portDir(unsigned char port_name,unsigned char direction)
 		case'f':
 		{
 			GPIO_PORTA_DIR_R=direction;
+		}
+		break;
+	}
+
+}
+
+
+// toggel the bin direction 
+void TOG_BinData (unsigned char port_name, unsigned char bin_num)
+{
+	switch(port_name){
+		case'A':
+		case'a':
+		{
+			TOG_BIT(GPIO_PORTA_DATA_R , bin_num);
+		}
+		break;
+   	case'B':
+		case'b':
+		{
+			void TOG_BinData (unsigned char port_name, unsigned char bin_num);
+		}
+		break;
+		case'C':
+		case'c':
+		{
+			void TOG_BinData (unsigned char port_name, unsigned char bin_num);
+		}
+		break;
+		case'D':
+		case'd':
+		{
+			void TOG_BinData (unsigned char port_name, unsigned char bin_num);
+		}
+		break;
+		case'E':
+		case'e':
+		{
+			void TOG_BinData (unsigned char port_name, unsigned char bin_num);
+		}
+		break;
+		case'F':
+		case'f':
+		{
+			void TOG_BinData (unsigned char port_name, unsigned char bin_num);
 		}
 		break;
 	}
