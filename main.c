@@ -15,7 +15,7 @@
 // define the states we will use in the switch conductions
 enum state{Idle, cooking, beefWeight, chickenWeight, cookingTime, pause, end};
 
-BuzzerConfig() // connect buzzer to A6
+void BuzzerConfig() // connect buzzer to A6
 { 
 	 Set_pinDirection('A',6,1); //output
 	writePin( 'A',6,1);//active high
@@ -151,6 +151,7 @@ break;
 			//your code goes here
 			ArrayLED_Flash();
 			//BUZZER ON
+		BuzzerConfig() ;
 			state = Idle;
 			
 			break;
