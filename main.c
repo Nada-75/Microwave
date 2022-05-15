@@ -15,9 +15,16 @@
 // define the states we will use in the switch conductions
 enum state{Idle, cooking, beefWeight, chickenWeight, cookingTime, pause, end};
 
+BuzzerConfig() // connect buzzer to A6
+{ 
+	 Set_pinDirection('A',6,1); //output
+	writePin( 'A',6,1);//active high
+  
+}
+
 int main(void){
 	
-
+Port_Init('A'); //for buzzer
      Button_init(F,0);//sw2
      Button_init(F,4);//sw1
      Button_init( sw3PortName, sw3PinNUM);//sw3
