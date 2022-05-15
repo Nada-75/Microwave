@@ -124,7 +124,7 @@ unsigned char ReadPort(unsigned char portname){
 		break;
 		}
 }
-
+// function to read a pin
 unsigned char ReadPin (unsigned char portName,unsigned pinNum)
 { while(1)
 		switch (portName)
@@ -143,7 +143,7 @@ unsigned char ReadPin (unsigned char portName,unsigned pinNum)
 	  return READ_BIT(GPIO_PORTF_DATA_R,pinNum);
 }
 }
-	
+//  function to write on a pin	
 void writePin(unsigned char portName,unsigned char pinNumber,unsigned char data)
 {
 	switch (portName)
@@ -158,7 +158,7 @@ void writePin(unsigned char portName,unsigned char pinNumber,unsigned char data)
 		}break; 
 		case 'C' :
 	 { if (data ==1) SET_BIT(GPIO_PORTC_DATA_R,pinNumber) ;
-	 else  CLR_BIT(GPIO_PORTC_DIR_R,pinNumber);
+	 else  CLR_BIT(GPIO_PORTC_DATA_R,pinNumber);
 	 }break; 
 		case 'D' :
 	 { if (data ==1) SET_BIT(GPIO_PORTD_DATA_R,pinNumber) ;
