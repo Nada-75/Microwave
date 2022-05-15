@@ -14,14 +14,21 @@ void write_lownibble(unsigned char port_name,unsigned char data);
 void writePin(unsigned char portName,unsigned char pinNumber,unsigned char data);
 
 	
-void Keypad_init(unsigned char portName)
-{ 
-	Port_Init('A');
-	Set_portDir('A',0x0F);
-	enable_PullUP ('A', 4);
-	enable_PullUP ('A', 5);
-	enable_PullUP ('A', 6);
-	enable_PullUP ('A', 7);
+void Keypad_init()
+{ Port_Init('D');
+	Port_Init('E');
+	Set_pinDirection('D',0,0);//D0-D3 input
+	Set_pinDirection('D',1,0);
+	Set_pinDirection('D',2,0);
+	Set_pinDirection('D',3,0);
+	Set_pinDirection('E',0,1);
+	Set_pinDirection('E',1,1);
+	Set_pinDirection('E',2,1);
+	Set_pinDirection('E',3,1);
+	enable_PullUP ('D', 0);//E0-E3 output
+	enable_PullUP ('D', 1);
+	enable_PullUP ('D', 2);
+	enable_PullUP ('D', 3);
 	
 }
 
@@ -30,21 +37,22 @@ unsigned char KeypadScan()
     unsigned char x,y,i;
 	while(1) {
 	for (x=0;x<4;x++)
-		{ 	 write_lownibble('A',0x0F);
-					writePin('A',x,0);
+		{ 
+		     	writePin( 'E',0, 1);
+			    writePin( 'E',1, 1);
+			     writePin( 'E',2, 1);
+			   writePin( 'E',3, 1);
+					writePin('E',x,0);
 		
 			for (y=0;y<4;y++)
 		{
-				i=ReadPin ('A',y+4);
+				i=ReadPin ('D',y);
 					if(i==0) 
 					return array[x][y];
 		}
 	}				return noPressed;
 						 
-}	
-	 
-}		
-
+}}
 
 //This function get the numeric input from keypad and return its integer value
 unsigned int KeypadConversionDigit()
