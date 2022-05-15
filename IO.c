@@ -77,6 +77,39 @@ void Port_Init(unsigned char portname){
 		}
 	}
 }
+
+/*unsigned char ReadPort(unsigned char portname){
+	while (1){
+	switch(portname){
+		// port A
+		case'A':
+		case'a':
+		
+			return GPIO_PORTA_DATA_R;
+		
+		// port B		
+		case'B':
+		case'b':
+			return GPIO_PORTB_DATA_R;
+		// port C		
+		case'C':
+		case'c':
+			return GPIO_PORTC_DATA_R;
+		// port D		
+		case'D':
+		case'd':
+			return GPIO_PORTD_DATA_R;
+		// port E		
+		case'E':
+		case'e':
+			return GPIO_PORTE_DATA_R;
+		// port F		
+		case'F':
+		case'f':
+			return GPIO_PORTF_DATA_R;	
+	
+		}
+	}} */
 // a function read the values of any port 
 unsigned char ReadPort(unsigned char portname){
 	switch(portname){
@@ -124,9 +157,9 @@ unsigned char ReadPort(unsigned char portname){
 		break;
 		}
 }
-
 unsigned char ReadPin (unsigned char portName,unsigned pinNum)
-{ while(1)
+{ while(1){
+
 		switch (portName)
 			
 {   case 'A' :
@@ -142,39 +175,74 @@ unsigned char ReadPin (unsigned char portName,unsigned pinNum)
 		case 'F' :
 	  return READ_BIT(GPIO_PORTF_DATA_R,pinNum);
 }
-}
-	
+}}
+//  function to write on a pin	
 void writePin(unsigned char portName,unsigned char pinNumber,unsigned char data)
 {
 	switch (portName)
 			
 {   case 'A' :
-	{ if (data ==1) SET_BIT(GPIO_PORTA_DATA_R,pinNumber) ;
-	 else  CLR_BIT(GPIO_PORTA_DATA_R,pinNumber);
-	}break; 
+		{if(data ==1)
+		{SET_BIT(GPIO_PORTA_DATA_R,pinNumber);
+		 break;
+		}
+		else
+			{CLR_BIT(GPIO_PORTA_DATA_R,pinNumber);
+		 break;
+		} 
+		}
 		case 'B' :
-	  { if (data ==1) SET_BIT(GPIO_PORTB_DATA_R,pinNumber) ;
-	 else  CLR_BIT(GPIO_PORTB_DATA_R,pinNumber);
-		}break; 
+	  {if(data ==1)
+		{SET_BIT(GPIO_PORTB_DATA_R,pinNumber);
+		 break;
+		}
+		else
+			{CLR_BIT(GPIO_PORTB_DATA_R,pinNumber);
+		 break;
+		} 
+		}
 		case 'C' :
-	 { if (data ==1) SET_BIT(GPIO_PORTC_DATA_R,pinNumber) ;
-	 else  CLR_BIT(GPIO_PORTC_DIR_R,pinNumber);
-	 }break; 
+	 {if(data ==1)
+		{SET_BIT(GPIO_PORTC_DATA_R,pinNumber);
+		 break;
+		}
+		else
+			{CLR_BIT(GPIO_PORTC_DATA_R,pinNumber);
+		 break;
+		} 
+		}
 		case 'D' :
-	 { if (data ==1) SET_BIT(GPIO_PORTD_DATA_R,pinNumber) ;
-	 else  CLR_BIT(GPIO_PORTD_DATA_R,pinNumber);
-	 }break; 
+	 {if(data ==1)
+		{SET_BIT(GPIO_PORTD_DATA_R,pinNumber);
+		 break;
+		}
+		else
+			{CLR_BIT(GPIO_PORTD_DATA_R,pinNumber);
+		 break;
+		} 
+		}
 		case 'E' :
-	  { if (data ==1) SET_BIT(GPIO_PORTE_DATA_R,pinNumber) ;
-	 else  CLR_BIT(GPIO_PORTE_DATA_R,pinNumber);
-		}break; 
+	  {if(data ==1)
+		{SET_BIT(GPIO_PORTE_DATA_R,pinNumber);
+		 break;
+		}
+		else
+			{CLR_BIT(GPIO_PORTE_DATA_R,pinNumber);
+		 break;
+		} 
+		}
 		case 'F':
-{ if (data ==1) SET_BIT(GPIO_PORTF_DATA_R,pinNumber) ;
-	 else  CLR_BIT(GPIO_PORTF_DATA_R,pinNumber);
-}break; 
+{if(data ==1)
+		{SET_BIT(GPIO_PORTA_DATA_R,pinNumber);
+		 break;
+		}
+		else
+			{CLR_BIT(GPIO_PORTA_DATA_R,pinNumber);
+		 break;
+		} 
+		}
 }
 }
-
 
 //Pull up pin function 
 void enable_PullUP (unsigned char port_name, unsigned char pin_num){ //set the  pullup pin in the wanted port to 1 

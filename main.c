@@ -15,8 +15,16 @@
 // define the states we will use in the switch conductions
 enum state{Idle, cooking, beefWeight, chickenWeight, cookingTime, pause, end};
 
+void BuzzerConfig() // connect buzzer to A6
+{ 
+	 Set_pinDirection('A',6,1); //output
+	writePin( 'A',6,1);//active high
+  
+}
+
 int main(void){
 	
+<<<<<<< HEAD
 
      Button_init('F',0);//sw2
      Button_init('F',4);//sw1
@@ -31,6 +39,22 @@ int main(void){
 				//making sure that state condition is always meeted
 				// ((Note from Omnia: if wold do nothing if these condition changed))
 				if ( Button_read( sw3PortName, sw3PinNUM)!=0)//SW3 IS UP (CONNECTED on port E ,PIN0 )
+=======
+Port_Init('A'); //for buzzer
+     Button_init(F,0);//sw2
+     Button_init(F,4);//sw1
+     Button_init( sw3PortName, sw3PinNUM);//sw3
+     LED_INIT()
+  Keypad_init();//keypad         
+   int state = Idle;
+	while(1){
+		switch(state){
+			Idle:
+			//your code goes here
+			if ( Button_read( sw3PortName, sw3PinNUM)!=0)//SW3 IS UP (CONNECTED on port E ,PIN0 )
+			{
+				if(KeypadScan()=='A')
+>>>>>>> f0fee43d59ef42d5a323fda891c1fd65cf0ea2c5
 				{
 					//Check for state
 					if(KeypadScan()=='A') //Popcorn state
@@ -152,6 +176,7 @@ break;
 			//your code goes here
 			ArrayLED_Flash();
 			//BUZZER ON
+		BuzzerConfig() ;
 			state = Idle;
 			
 			break;
