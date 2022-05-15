@@ -51,7 +51,7 @@ unsigned int KeypadConversionDigit()
 { unsigned int a;
 	unsigned char x = KeypadScan();
  if ((x!= 'A' )& (x!= 'B') &( KeypadScan()!= 'C') & (x!= 'D') & (x!= '#' )& (x!= '*' ) ){	//input '0'is will be handled
- a= x-'0';
+ a= x-'0'; 
 	return a ;}
 else {
 lcd_send_string("Err");//
