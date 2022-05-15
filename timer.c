@@ -52,13 +52,13 @@ void statesDelay(unsigned long time){ //the function takes time in seconds
 		m1=minutes%10;
 		
 		// we want the format to be m2 m1 : s2 s1
-		LCD4bits_Data(s2+'0'); //display the  second bit of minutes  
+		LCD4bits_Data(m2+'0'); //display the  second bit of minutes  
 		LCD4bits_Cmd(RShiftCurs);
-		LCD4bits_Data(s2+'0'); //display the first bit of minutes 
+		LCD4bits_Data(m1+'0'); //display the first bit of minutes 
 		LCD4bits_Cmd(RShiftCurs);
 		LCD4bits_Data(':'); // display : 
 		LCD4bits_Cmd(RShiftCurs);
-		LCD4bits_Data(s1+'0'); //display the second bit of seconds
+		LCD4bits_Data(s2+'0'); //display the second bit of seconds
 		LCD4bits_Cmd(RShiftCurs);
 		LCD4bits_Data(s1+'0'); //display the first bit of seconds
 		
