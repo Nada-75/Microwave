@@ -1,7 +1,13 @@
-#define RS 0x01				 	//RS -> PB0 (0x01)
-#define EN 0x04  		 	 	//EN -> PB2 (0x04)
-#define lcd_clear 0x01
 #include "tm4c123gh6pm.h"
+#include "IO.h"
+#include "timer.h"
+
+#define DataPins 'B'
+#define CTRLPins 'A'
+//macros of CTRLPins
+#define E  2
+#define RS 3
+#define RW 4
 
 //Macros of commands
 #define CLR_display   0x01
@@ -12,11 +18,16 @@
 #define Set_4bit      0x28
 #define Set_8bit      0x38
 #define CursOff_DisON 0x0c
+#define Return_Home   0x02
 
-void delay_micro(int n);
-void LCD_Write4bits(unsigned char data, unsigned char control);
-void LCD4bits_Data(unsigned char data);
-void lcd_send_string(char *str);
-void LCD4bits_Cmd(unsigned char command);
-void LCD_Init(void);
-void systick_delay_msec(int t);
+//Functions Prototype
+void LCD_write(unsigned char data);
+//void genericDelay(unsigned long time);
+void LCD_cmd(unsigned char cmd);
+void init_LCD(void);
+void LCD_WriteStr(char * str);
+//void lcd_send_char(unsigned char chr);
+//void lcd_send_string(char *str);
+//void lcd_move_curs(unsigned char row,unsigned char col);
+//void clear_display();
+void LCD_write(unsigned char data);
