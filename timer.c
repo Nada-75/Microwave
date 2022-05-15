@@ -38,7 +38,7 @@ void statesDelay(unsigned long time){ //the function takes time in milliseconds
 	// now we have seconds and minutes in their variables
 	 for(i=0; i<time;i++){
 		genericDelay(1000); //1 sec delay
-		//Update lcd goes here to be updated each sec with the new seconds and minutes
+		//Update LCD goes here to be updated each sec with the new seconds and minutes
 		
 		
 		
@@ -102,20 +102,20 @@ unsigned long BC_delay(unsigned char state, int weight){
 	unsigned long time;
 	switch(state) {
 		
-		case 'B': return time =30* weight*1000;       //in case of beef, delay = weight* 0.5 min
-		case 'C' : return time =12*weight*1000;       //in case of corn, delay= weight * 0.2 min 
+		case 'B': return time =30* weight;       //in case of beef, delay = weight* 0.5 min
+		case 'C' : return time =12*weight;       //in case of corn, delay= weight * 0.2 min 
 	}
 	 return 0; } //if we entered other inputs that B or C
 	 
 //A function to determine popcorn delay (just for further abstraction)	
 unsigned long A_delay()
 	{unsigned long time;
-return time=60*1000;	//60 sec delay
+return time=60;	//60 sec delay
 } 
 
 //A function to determine D(custom) delay 
 unsigned long D_delay ( int seconds, int minutes){ 
 	unsigned long time = 60*minutes + seconds; //times in seconds
-	return time *1000; //as function takes milliseconds
+	return time; //as function takes milliseconds
 }
 	
