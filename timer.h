@@ -6,4 +6,3 @@ unsigned long D_delay (int seconds, int minutes);//A function to determine D(cus
 
 void statesDelay(unsigned long time); ////function to make a delay AND update the lcd 
 void displayTime (int seconds, int minutes); //A function to display time in the wanted format
-
