@@ -8,7 +8,7 @@ void Keypad_init();
 unsigned char KeypadScan();
 unsigned char noPressed=0xFF;
 unsigned char  array [4][4]={{'1','2','3','A'},{'4','5','6','B'},{'7','8','9','C'},{'*','0','#','D'}};
-
+SystemInit();
 void Port_Init(unsigned char portname){
 	switch(portname)
 	{
@@ -308,10 +308,12 @@ unsigned char KeypadScan()
 			for (y=0;y<4;y++)
 		{
 				i=ReadPin ('D',y);
-					if(i==0) 
+					if(i==0) {
 					return array[x][y];
+					
+					}
 		}
-	}				return noPressed;
+	}			//	return noPressed;
 						 
 }}
 
@@ -350,32 +352,37 @@ int main(void)
 			{
 		
 				SET_BIT(GPIO_PORTF_DATA_R, 1);
+				break;
 			}
-			break;
+			
 
 			case 'B':			//Turn Blue LED On
 			{
 				SET_BIT(GPIO_PORTF_DATA_R, 2);
+				break;
 			}
-			break;
+			
 
 			case 'C':			//Turn Green LED On
 			{
 				SET_BIT(GPIO_PORTF_DATA_R, 3);
+				break;
 			}
-			break;
+			
 
 			case 'D':			//Turn All LEDs On
 			{
 				GPIO_PORTF_DATA_R |= 0x0E;
+				break;
 			}
-			break;
+			
 
 			case '0':			//Turn All LEDs Off
 			{
 				GPIO_PORTF_DATA_R &= ~0x0E;
+				break;
 			}
-			break;
+			
 		}
 	}
 }

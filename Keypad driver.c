@@ -64,7 +64,7 @@ unsigned int KeypadConversionDigit()
 else {
 lcd_send_string("Err");//
 genericDelay(2000);//delay 2 sec
-Clear_display();//***********************************************************************************
+LCD4bits_Cmd(lcd_clear);//***********************DONE***************************************
  KeypadConversionDigit();
 }
 return 0;

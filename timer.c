@@ -25,8 +25,7 @@ void statesDelay(unsigned long time){ //the function takes time in milliseconds
 	int i;
 	int seconds;
 	int minutes;
-	char s1,s2;  //char s which will have the displayed value
-	char m1,m2;
+	
 	//LCD_Init(); //IF NOT IN MAIN
 	
 	//Equations
@@ -38,63 +37,62 @@ void statesDelay(unsigned long time){ //the function takes time in milliseconds
 	// now we have seconds and minutes in their variables
 	 for(i=0; i<time;i++){
 		genericDelay(1000); //1 sec delay
-		//Update LCD goes here to be updated each sec with the new seconds and minutes
+	
+	//Condition Checks	
+		 
+		if(seconds>0 && minutes>=0) 
+     { 
+			 displayTime(seconds,minutes); //Display the current time on LCD
+			 seconds--;  //decrease seconds each one second
+		 } 
+		else if(seconds ==0 && minutes>0) { //If seconds reached zero, decrease the minutes 
+			// After 1:00 comes 0:59888888888//*****
+			displayTime(seconds,minutes); //Display the current time on LCD (Time here should be "minutes:00")
+			minutes --;
+			seconds =59;
+		}
+		else if(seconds==0 && minutes==0){//we finished counting down 
+			displayTime(seconds,minutes); //Display the current time on LCD (Time here should be 00:00)
+			//what to do when we finish goes here ###
+			
+		  break; //get out of loop
+			}
 		
 		
 		
-		s2= seconds/10;
-		s1=seconds%10;
 		
-		m2 = minutes/10;
-		m1 = minutes%10;
-		 //LCD Display 
-		LCD4bits_Cmd(lcd_clear);
-	  LCD4bits_Cmd(0x80);
-		
-		LCD4bits_Data(m2+'0');//display the string 
+	} 
+	 
+}
+
+
+//A function to display time 
+void displayTime (int seconds, int minutes){
+	//define first and second digit of seconds and minutes
+	char s1,s2;  //char s which will have the displayed value
+	char m1,m2;
+	//get first and second digit of seconds and minutes
+	 s2= seconds/10;
+	 s1=seconds%10;
+	 m2 = minutes/10;
+	 m1 = minutes%10;
+	//getting ready to display
+		LCD4bits_Cmd(lcd_clear); //clear the LCD
+	  LCD4bits_Cmd(0x80);      //start from first pixel
+	//Start displayting bit by bit
+	  LCD4bits_Data(m2+'0');   //display the second digit of minutes 
 		LCD4bits_Cmd(RShiftCurs);
-		LCD4bits_Data(m1+'0');//display the string 
+		LCD4bits_Data(m1+'0');   //display the first digit of minutes
 		LCD4bits_Cmd(RShiftCurs);
 		LCD4bits_Data(':');
 		LCD4bits_Cmd(RShiftCurs);
 		LCD4bits_Data(s2+'0');
 		LCD4bits_Cmd(RShiftCurs);
 		LCD4bits_Data(s1+'0');
-		
-		//LCD4bits_Cmd(RShiftCurs);
-		
-		
-		
-		if(seconds>0 && minutes>=0) {seconds--;} //decrease seconds each one second
-		if(seconds ==0 && minutes>0) { //If seconds reached zero, decrease the minutes 
-			// After 1:00 comes 0:59888888888//*****
-			minutes --;
-			seconds =59;
-		}
-		if(seconds==0 && minutes==0){//we finished counting down 
-			//what to do when we finish goes here ###
-			genericDelay(1000);	
-			LCD4bits_Cmd(lcd_clear);
-	  LCD4bits_Cmd(0x80);
-		
-		LCD4bits_Data('0');//display the string 
-		LCD4bits_Cmd(RShiftCurs);
-		LCD4bits_Data('0');//display the string 
-		LCD4bits_Cmd(RShiftCurs);
-		LCD4bits_Data(':');
-		LCD4bits_Cmd(RShiftCurs);
-		LCD4bits_Data('0');
-		LCD4bits_Cmd(RShiftCurs);
-		LCD4bits_Data('0');
-	  
-		break;
-			}
-		
-		
-		
-		
-	}
+
+
 }
+
 
 //A function to determine the delay for chicken and beef
 //this function will be called inside the genericDelay function to determine the time in seconds.
