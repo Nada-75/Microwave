@@ -1,5 +1,7 @@
-#include "lcd.h"
+#include "tm4c123gh6pm.h"
+#include "IO.h"
 #include "timer.h"
+#include "lcd.h"
 
 /*void SysTick_wait(unsigned long delay){
 	NVIC_ST_CTRL_R =0x00;
@@ -26,6 +28,24 @@ void LCD_cmd(unsigned char cmd){
 }
 
 void init_LCD(void){
+	SYSCTL_RCGCGPIO_R|=0x03;
+	while(!(SYSCTL_PRGPIO_R&0x03));
+	GPIO_PORTA_LOCK_R=0X4C4F434B;
+	GPIO_PORTA_CR_R=0xFF;
+	GPIO_PORTA_DEN_R=0xFF;
+	GPIO_PORTA_AMSEL_R&=~0xFF;
+	GPIO_PORTA_AFSEL_R&=~0xFF;
+	GPIO_PORTA_PCTL_R&=~0xFFFFFF00;
+	
+	GPIO_PORTB_LOCK_R=0X4C4F434B;
+	GPIO_PORTB_CR_R=0xFF;
+	GPIO_PORTB_DEN_R|=0xFF;
+	GPIO_PORTB_AMSEL_R&=~0xFF;
+	GPIO_PORTB_AFSEL_R&=~0xFF;
+	GPIO_PORTB_PCTL_R&=~0xFFFF; 
+	
+	GPIO_PORTB_DIR_R=0xFF;
+	GPIO_PORTA_DIR_R=0xFF;
 	
 	LCD_cmd(Set_8bit); //8-bit mode
 	genericDelay(1);
