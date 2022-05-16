@@ -3,4 +3,7 @@ void genericDelay(unsigned long time);  //A function to make a generic delay in 
 unsigned long BC_delay(unsigned char state, int weight); // the delay for chicken and beef
 unsigned long A_delay(); //determine the delay for popcorn
 unsigned long D_delay (int seconds, int minutes);//A function to determine D(custom) delay
+
 void statesDelay(unsigned long time); ////function to make a delay AND update the lcd 
+void displayTime (int seconds, int minutes); //A function to display time in the wanted format
+
