@@ -28,24 +28,24 @@ int main(void){
 	//statesDelay(65);
 	
 }
-	
-/*<<<<<<< HEAD
 
-     Button_init('F',0);//sw2
+
+    /* Button_init('F',0);//sw2
      Button_init('F',4);//sw1
      Button_init(sw3PortName,sw3PinNUM);//sw3
      LED_INIT(); //Needed to be checked ***
   //Keypad_init();//keypad   nedded to be changed***
 	
-   int state = Idle; //Initial state
+   int state = Idle; 
 		while(1){
 			switch(state){
-				Idle:
-				//making sure that state condition is always meeted
+				Idle:  
+				//making sure that states condition is always meeted
 				// ((Note from Omnia: if wold do nothing if these condition changed))
-				if ( Button_read( sw3PortName, sw3PinNUM)!=0)//SW3 IS UP (CONNECTED on port E ,PIN0 )
-=======
-Port_Init('A'); //for buzzer
+				if ( Button_read( sw3PortName, sw3PinNUM)!=0)//SW3 IS UP (CONNECTED on port E ,PIN0 ) */
+
+//=====================================================================
+/* Port_Init('A'); //for buzzer
      Button_init(F,0);//sw2
      Button_init(F,4);//sw1
      Button_init( sw3PortName, sw3PinNUM);//sw3
@@ -54,15 +54,14 @@ Port_Init('A'); //for buzzer
    int state = Idle;
 	while(1){
 		switch(state){
-			Idle:
+			Idle: // *********************************** Idle **************************
 			//your code goes here
 			if ( Button_read( sw3PortName, sw3PinNUM)!=0)//SW3 IS UP (CONNECTED on port E ,PIN0 )
 			{
 				if(KeypadScan()=='A')
->>>>>>> f0fee43d59ef42d5a323fda891c1fd65cf0ea2c5
 				{
 					//Check for state
-					if(KeypadScan()=='A') //Popcorn state
+					if(KeypadScan()=='A') // ****************** Popcorn state***************************
 					{
 						lcd_send_string( "popcorn");
 						genericDelay( 2000);
@@ -89,36 +88,36 @@ Port_Init('A'); //for buzzer
 			}  
 			break;
 			
-			cooking:
+			cooking:  // ***********************************Cooking**************************
 			
 			ArrayLED_ON(); //LEDS ON
 			//make sure conditions are met + same note from before
-if((Button_read( sw3PortName,  sw3PinNUM)==0)|(Button_read('F',4)==0))//door open or sw1 pressed
-			{
+      if((Button_read( sw3PortName,  sw3PinNUM)==0)|(Button_read('F',4)==0))//door open or sw1 pressed
+			  {
 				state = pause;
-			}
+			  }
 			if(Button_read('F',4)==0)//sw1 pressed
-			{
+			  {
 				state = pause;
-			}
+			  }
 			if((NVIC_ST_CTRL_R&0x00010000)==0)//wait
-			{
+			  {
 				state = cooking;
-	   	}
+	   	  }
 			
 			if(NVIC_ST_CTRL_R&0x00010000)  //time out
-			{
+			  {
 				state = end;
-			}
-			break; 
+			  }
+			  break; 
 			
-			beefWeight:
-			
+			beefWeight: // ***********************************BEEF**************************
+			int weightB=0; //define weight variable
+			//Displaying the sentence on screen
 			lcd_send_string( "Beef weight?");
-			//geting the weight from the user 
-			int weight; //define weight variable
-			weight= KeypadConversionDigit(); //assign weight to the input
-			statesDelay(BC_delay('B',weight)); //count down and display it
+			//geting the weight from the user  
+			weightB = KeypadConversionDigit(); //assign weight to the input
+			statesDelay(BC_delay('B',weightB)); //count down and display it
 			
 			
 			if ( Button_read( 'F',  0)==0)//sw2 pressed
@@ -135,12 +134,16 @@ if ((KeypadScan()== 'A' )| (KeypadScan()== 'B') |( KeypadScan()== 'C') | (Keypad
 			 }
 			break;
 			 
-			chickenWeight:
-			//your code goes here
+			chickenWeight: // ***********************************Chicken**************************
+			 int weightC =0; //define weight variable
+			//Displaying the sentence on screen
 			lcd_send_string( "Chicken weight?");
-			//
+			//taking the input as integer 
+			weightC=KeypadConversionDigit();
+			//get and display the delay for chicken
+			statesDelay(BC_delay('C', weightC));
 			
-			
+		
 			if ( Button_read( 'F',  0)==0)//sw2 pressed
 			{
 if ((KeypadScan()!= 'A' )& (KeypadScan()!= 'B') &( KeypadScan()!= 'C') & (KeypadScan()!= 'D') & (KeypadScan()!= '#' )& (KeypadScan()!= '*' ) & (KeypadScan()!= '0')) // enter a number from 1-9
@@ -153,11 +156,15 @@ if ((KeypadScan()!= 'A' )& (KeypadScan()!= 'B') &( KeypadScan()!= 'C') & (Keypad
 					//LCD error for 2 sec
 			  state = beefWeight;
 				}		
-break;
-			cookingTime:
+			break;
+			
+			
+			cookingTime: // ***********************************Custom Cooking**************************
+			
 			//your code goes here
 			lcd_send_string( "Cooking Time?");
-			//
+			// take input from the user and display it.
+			  cookingtime_D();
 			
 			
 			if ( Button_read( 'F',  0)==0)//sw2 pressed
@@ -165,7 +172,9 @@ break;
 				state = cooking;
 			}
 			break;
-			pause:
+			
+			
+			pause: // ***********************************Pause**************************
 			//your code goes here
 			ArrayLED_Blink();//led blink
 			if(Button_read('F', 4)==0)//sw1 pressed 2nd time
@@ -177,7 +186,8 @@ break;
 				state = cooking;
 			}
 			break;
-			end:
+			
+			end: // ***********************************End**************************
 			//your code goes here
 			ArrayLED_Flash();
 			//BUZZER ON
