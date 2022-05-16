@@ -77,18 +77,18 @@ void displayTime (int seconds, int minutes){
 	 m2 = minutes/10;
 	 m1 = minutes%10;
 	//getting ready to display
-		LCD4bits_Cmd(lcd_clear); //clear the LCD
-	  LCD4bits_Cmd(0x80);      //start from first pixel
+		LCD_cmd(CLR_display); //clear the LCD
+	  LCD_cmd(0x80);      //start from first pixel
 	//Start displayting bit by bit
-	  LCD4bits_Data(m2+'0');   //display the second digit of minutes 
-		LCD4bits_Cmd(RShiftCurs);
-		LCD4bits_Data(m1+'0');   //display the first digit of minutes
-		LCD4bits_Cmd(RShiftCurs);
-		LCD4bits_Data(':');
-		LCD4bits_Cmd(RShiftCurs);
-		LCD4bits_Data(s2+'0');
-		LCD4bits_Cmd(RShiftCurs);
-		LCD4bits_Data(s1+'0');
+	  LCD_write(m2+'0');   //display the second digit of minutes 
+		LCD_cmd(RShiftCurs);
+		LCD_write(m1+'0');   //display the first digit of minutes
+		LCD_cmd(RShiftCurs);
+		LCD_write(':');
+		LCD_cmd(RShiftCurs);
+		LCD_write(s2+'0');
+		LCD_cmd(RShiftCurs);
+		LCD_write(s1+'0');
 
 
 }
