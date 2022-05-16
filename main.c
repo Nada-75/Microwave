@@ -1,13 +1,13 @@
 #include "IO.h"
-#include "button driver.h"
+//#include "button driver.h"
 #include "lcd.h"
 #include "timer.h"
 #include "tm4c123gh6pm.h"
 #include "stdint.h"
 #include "Keypad driver.h"
-#include "led driver.h"
+//#include "led driver.h"
 
-
+/*
 // define the port name and the pin number where the sw3 will connect
 #define sw3PortName E
 #define sw3PinNUM 0
@@ -20,11 +20,16 @@ void BuzzerConfig() // connect buzzer to A6
 	 Set_pinDirection('A',6,1); //output
 	writePin( 'A',6,1);//active high
   
-}
+} */
 
 int main(void){
+   init_LCD();
+   LCD_WriteStr("Reem");	
+	//statesDelay(65);
 	
-<<<<<<< HEAD
+}
+	
+/*<<<<<<< HEAD
 
      Button_init('F',0);//sw2
      Button_init('F',4);//sw1
@@ -182,4 +187,4 @@ break;
 			break;
 		}
 	}
-}
+} */

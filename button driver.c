@@ -1,7 +1,7 @@
 //files included
 #include "IO.h" 
 #include "button driver.h"
-#include "D:\embedded\Microwave\tm4c123gh6pm.h"
+#include "tm4c123gh6pm.h"
 //initialization 
 void sw1_Init(void){
 SYSCTL_RCGCGPIO_R|=0x20; //INTIALIZE THE CLOCK OF PORTF
