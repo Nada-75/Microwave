@@ -63,10 +63,10 @@ unsigned int KeypadConversionDigit()
 { unsigned int a;
 	unsigned char x = KeypadScan();
  if ((x!= 'A' )& (x!= 'B') &( KeypadScan()!= 'C') & (x!= 'D') & (x!= '#' )& (x!= '*' ) ){	//input '0'is will be handled
- a= x-'0'; 
+   a= x-'0'; //********************************************
 	return a ;}
 else {
-LCD_WriteStr("Err");//
+LCD_WriteStr("Err"); //
 genericDelay(2000);//delay 2 sec
 LCD_cmd(CLR_display );//***********************DONE***************************************
  KeypadConversionDigit();
@@ -75,19 +75,27 @@ return 0;
 }
 
 //the function will take inputs for D, ddetermine minutes and seconds then display the countdown
-/*void cookingtime_D(){ 
-	unsigned int arr[4] = {0,0,0,0};
-	int i ;
-	while( Button_read( 'F',  4)!=0)//sw1 not pressed
+void cookingtime_D(){ 
+//	unsigned int arr[4] = {0,0,0,0};
+	int number=0; //the 16 bit digit
+	int i=0;
+	int j;
+ 	
+	while(KeypadScan()!='A')//sw1 not pressed
 	{
-		for(i = 3 ; i>=0; i--)
-		{		
-			arr[i] = KeypadConversionDigit();	//we don't know if they(function and for loop) are in sync	
+		for(j = 3 ; j>=0; j--)
+		{	
+			i = KeypadConversionDigit();	//take the input every cycle
+			number = (number<<4) | i; 
+			//arr[i] = KeypadConversionDigit();	//we don't know if they(function and for loop) are in sync	
 		}
 	}
-	int min = arr[1] + arr[0] * 10; //get minutes from the array
-	int sec = arr[3] + arr[2] * 10; //get seconds from the array
+	int sec= number | 0xF + (number | 0xF0)*10; 
+	int min= number | 0xF00+ (number | 0xF000)*10;
+	
+	//int min = arr[1] + arr[0] * 10; //get minutes from the array
+	//int sec = arr[3] + arr[2] * 10; //get seconds from the array
 	statesDelay(D_delay (sec, min)); //get the delay for custom and display the countdown
 }
-*/
+
 
