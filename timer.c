@@ -1,6 +1,5 @@
 //*/files included
-#include "stdio.h"
-#include "IO.h"
+#include "tm4c123gh6pm.h"
 #include "lcd.h"
 
 //initialize the sys tic timer 
@@ -18,56 +17,8 @@ void SysTick_wait(unsigned long delay){
  for(i=0;i<time ;i++) 
  SysTick_wait(16000); //one millisecond delay 	
 }
-
-//function to make a delay AND update the LCD 
-void statesDelay(unsigned long time){ //the function takes time in milliseconds
-	//used variables
-	int i;
-	int seconds;
-	int minutes;
-	
-	//LCD_Init(); //IF NOT IN MAIN
-	
-	//Equations
-	seconds	= time%60; //get the time in seconds 
-	minutes = time/60; //get the minutes by dividing the whole seconds /60
-	
-	
-	
-	// now we have seconds and minutes in their variables
-	 for(i=0; i<time;i++){
-		genericDelay(1000); //1 sec delay
-	
-	//Condition Checks	
-		 
-		if(seconds>0 && minutes>=0) 
-     { 
-			 displayTime(seconds,minutes); //Display the current time on LCD
-			 seconds--;  //decrease seconds each one second
-		 } 
-		else if(seconds ==0 && minutes>0) { //If seconds reached zero, decrease the minutes 
-			// After 1:00 comes 0:59888888888//*****
-			displayTime(seconds,minutes); //Display the current time on LCD (Time here should be "minutes:00")
-			minutes --;
-			seconds =59;
-		}
-		else if(seconds==0 && minutes==0){//we finished counting down 
-			displayTime(seconds,minutes); //Display the current time on LCD (Time here should be 00:00)
-			//what to do when we finish goes here ###
-			
-		  break; //get out of loop
-			}
-		
-		
-		
-		
-	} 
-	 
-}
-
-
 //A function to display time 
-void displayTime (int seconds, int minutes){
+void displayTime(int seconds, int minutes){
 	//define first and second digit of seconds and minutes
 	char s1,s2;  //char s which will have the displayed value
 	char m1,m2;
@@ -89,10 +40,52 @@ void displayTime (int seconds, int minutes){
 		LCD_write(s2+'0');
 		LCD_cmd(RShiftCurs);
 		LCD_write(s1+'0');
-
-
 }
-
+//function to make a delay AND update the LCD 
+void statesDelay(unsigned long time){ //the function takes time in milliseconds
+	//used variables
+	int i;
+	int seconds;
+	int minutes;
+	
+	//LCD_Init(); //IF NOT IN MAIN
+	
+	//Equations
+	seconds	= time%60; //get the time in seconds 
+	minutes = time/60; //get the minutes by dividing the whole seconds /60
+	
+	
+	
+	// now we have seconds and minutes in their variables
+	 for(i=0; i<=time;i++){
+		genericDelay(1000); //1 sec delay
+	
+	//Condition Checks	
+		 
+		if(seconds>0 && minutes>=0) 
+     { 
+			 displayTime(seconds,minutes); //Display the current time on LCD
+			 seconds--;  //decrease seconds each one second
+		 } 
+		else if(seconds ==0 && minutes>0) { //If seconds reached zero, decrease the minutes 
+			// After 1:00 comes 0:59888888888//*****
+			displayTime(seconds,minutes); //Display the current time on LCD (Time here should be "minutes:00")
+			minutes --;
+			seconds =59;
+		}
+		else if(seconds==0 && minutes==0){//we finished counting down 
+			displayTime(seconds,minutes); //Display the current time on LCD (Time here should be 00:00)
+			//what to do when we finish goes here ###
+			
+		 // break; //get out of loop
+			}
+		
+		
+		
+		
+	} 
+	 
+}
 
 //A function to determine the delay for chicken and beef
 //this function will be called inside the genericDelay function to determine the time in seconds.
@@ -116,4 +109,3 @@ unsigned long D_delay ( int seconds, int minutes){
 	unsigned long time = 60*minutes + seconds; //times in seconds
 	return time; //as function takes milliseconds
 }
-	
