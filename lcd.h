@@ -1,7 +1,3 @@
-#include "tm4c123gh6pm.h"
-#include "IO.h"
-#include "timer.h"
-
 #define DataPins 'B'
 #define CTRLPins 'A'
 //macros of CTRLPins
