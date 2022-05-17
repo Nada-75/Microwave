@@ -19,15 +19,15 @@ void UART0Init(){
 
 
 uint8_t UART0_READAvailable(){
-  return ((UART0_FR_R &UART_FR_RXFE)==UART_FR_RXFE)? 0:1;//true if FIFO is empty
+  return ((UART0_FR_R &UART_FR_RXFE)==UART_FR_RXFE)? 0:1;
 }
 
 char UART0_READ(){
 	while(UART0_READAvailable() !=1){};
-    return (char) (UART0_DR_R & 0xFF);//you can remove (char)
+    return (char) (UART0_DR_R & 0xFF);
 }
 void UART0_WRITE(char c){
-  	while((UART0_FR_R & UART_FR_TXFE) ==UART_FR_TXFF);//if buffer is full, you can't write
+  	while((UART0_FR_R & UART_FR_TXFE) ==UART_FR_TXFF);
 	UART0_DR_R =c;
 }
 
@@ -36,12 +36,12 @@ void getCommand(char *str, uint8_t maxlen){
 	int8_t i;
 	for(i=0;i<maxlen;i++){
 		c = UART0_READ();
-		if(c=='\n'||c=='\r')// \n-->Linux, \r-->windows
+		if(c=='\n'||c=='\r')
 		{
 			break;
 		}
 		else str[i]=c;
-		UART0_WRITE(c);//WHY? to write on uart serial
+		UART0_WRITE(c);
 	}
 }
 void UART_printStr(char *str){
