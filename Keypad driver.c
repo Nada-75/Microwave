@@ -4,16 +4,17 @@
 #include "timer.h"
 #include "button driver.h"
 #include "IO.h"
+#include "keypad driver.h"
 
 #define noPressed  0xFF  
 
 
-void Port_Init(unsigned char portname);
+/*void Port_Init(unsigned char portname);
 unsigned char ReadPin (unsigned char portName,unsigned pinNum);
 void Set_portDir(unsigned char port_name,unsigned char dierction);
 void enable_PullUP (unsigned char port_name ,unsigned char pin_number);
 void write_lownibble(unsigned char port_name,unsigned char data);
-void writePin(unsigned char portName,unsigned char pinNumber,unsigned char data);
+void writePin(unsigned char portName,unsigned char pinNumber,unsigned char data);*/
 
 	
 void Keypad_init()
