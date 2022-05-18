@@ -19,7 +19,7 @@
 #define GPIO_PORTF_PIN4_EN 0x10    //Enable SW1
 
 
-//initialize the sys tic timer 
+//initialize the systic timer 
 void SysTick_wait(unsigned long delay){ 
 	NVIC_ST_CTRL_R = 0x00;  
 	NVIC_ST_RELOAD_R = delay-1;  //Reload delay
@@ -73,7 +73,8 @@ void ONbuzzer(void){
 	GPIO_PORTA_CR_R |= 0x80;	//Allow changing 
 	GPIO_PORTA_AMSEL_R &=~0x80; //disable the analog function
 	GPIO_PORTA_PCTL_R &=~0xF0000000;
-	GPIO_PORTA_AFSEL_R &=~0x80;	
+	GPIO_PORTA_AFSEL_R &=~0x80;	  //disable the alternative    function
+
 	GPIO_PORTA_DIR_R |= 0x80;	
 	GPIO_PORTA_DEN_R |=0x80;
 	GPIO_PORTA_DATA_R |=0x80;//ON
