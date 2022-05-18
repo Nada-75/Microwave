@@ -42,7 +42,7 @@ void displayTime(int seconds, int minutes){
 		LCD_write(s1+'0');
 }
 //function to make a delay AND update the LCD 
-void statesDelay(unsigned long time){ //the function takes time in milliseconds
+void statesDelay(int time){ //the function takes time in milliseconds
 	//used variables
 	int i;
 	int seconds;
@@ -87,23 +87,31 @@ void statesDelay(unsigned long time){ //the function takes time in milliseconds
 
 //A function to determine the delay for chicken and beef
 //this function will be called inside the genericDelay function to determine the time in seconds.
-unsigned long BC_delay(unsigned char state, int weight){
-	unsigned long time;
+int BC_delay(unsigned char state, int weight){//UNSIGNED LONG
+	int time=0;//UNSIGNED LONG
 	switch(state) {
 		
-		case 'B': return time =30* weight;       //in case of beef, delay = weight* 0.5 min
-		case 'C' : return time =12*weight;       //in case of corn, delay= weight * 0.2 min 
+		case 'B': 
+		{
+			time =30* weight;
+			return time;       //in case of beef, delay = weight* 0.5 min
+		}
+		case 'C' : 
+		{
+			time =12*weight;
+			return time ;      //in case of corn, delay= weight * 0.2 min 
+		}
 	}
 	 return 0; } //if we entered other inputs that B or C
 	 
 //A function to determine popcorn delay (just for further abstraction)	
-unsigned long A_delay()
-	{unsigned long time;
+int A_delay()//UNSIGNED LONG
+	{int time;//UNSIGNED LONG
 return time=60;	//60 sec delay
 } 
 
 //A function to determine D(custom) delay 
-unsigned long D_delay ( int seconds, int minutes){ 
-	unsigned long time = 60*minutes + seconds; //times in seconds
+int D_delay ( int seconds, int minutes){ //UNSIGNED LONG
+	int time = 60*minutes + seconds; //UNSIGNED LONG //times in seconds 
 	return time; //as function takes milliseconds
 }
