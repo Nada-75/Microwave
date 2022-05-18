@@ -22,6 +22,26 @@
 #define GPIO_PORTF_PIN2_EN 0x04    //Enable BLUE LED
 #define GPIO_PORTF_PIN3_EN 0x08    //Enable GREEN LED
 #define GPIO_PORTF_PIN4_EN 0x10    //Enable SW1
+<<<<<<< HEAD
+=======
+
+
+//initialize the systic timer 
+void SysTick_wait(unsigned long delay){ 
+	NVIC_ST_CTRL_R = 0x00;  
+	NVIC_ST_RELOAD_R = delay-1;  //Reload delay
+	NVIC_ST_CURRENT_R =0; 
+	NVIC_ST_CTRL_R = 0x05; 
+	while((NVIC_ST_CTRL_R&0x00010000)==0){} 
+ } 
+
+//A function to make a generic delay in seconds
+ void genericDelay(unsigned long time){ 
+	int i;
+	for(i=0;i<time ;i++) 
+	SysTick_wait(16000); //one millisecond delay 	
+}
+>>>>>>> 43b974c192ef3986f125494c2a574948e9f87c1d
  
 //initialize port f
 void PORTF_Init(void)
@@ -179,6 +199,7 @@ void Set_pinDirection (unsigned char port_name, unsigned char pin_num, unsigned 
 		} 
 		}	
 
+<<<<<<< HEAD
 	} 
   }
 void enable_PullUP (unsigned char port_name, unsigned char pin_num){ //set the  pullup pin in the wanted port to 1 
@@ -220,6 +241,23 @@ void enable_PullUP (unsigned char port_name, unsigned char pin_num){ //set the  
 		 break;
 		}
 	}
+=======
+// this function makes buzzer on
+void ONbuzzer(void){
+	//buzzer is at pin A7
+	SYSCTL_RCGCGPIO_R|=0x01; //INTIALIZE THE CLOCK OF PORTF
+	while((SYSCTL_PRGPIO_R & 0x01)==0); //delay
+	GPIO_PORTA_LOCK_R = 0x4C4F434B; //unlocking the ports have the same value
+	GPIO_PORTA_CR_R |= 0x80;	//Allow changing 
+	GPIO_PORTA_AMSEL_R &=~0x80; //disable the analog function
+	GPIO_PORTA_PCTL_R &=~0xF0000000;
+	GPIO_PORTA_AFSEL_R &=~0x80;	  //disable the alternative    function
+
+	GPIO_PORTA_DIR_R |= 0x80;	
+	GPIO_PORTA_DEN_R |=0x80;  //Enable digital for pin A7
+	GPIO_PORTA_DATA_R |=0x80;//ON
+}
+>>>>>>> 43b974c192ef3986f125494c2a574948e9f87c1d
 
 }
 unsigned char ReadPin (unsigned char portName,unsigned pinNum)
@@ -453,6 +491,7 @@ int main(void){
 		switch(state){
 			case Idle:
 			//your code goes here
+<<<<<<< HEAD
 		GPIO_PORTF_DATA_R &=~ 0x0E;   //Turn on  LEDS
 		switch (PressedKey)
 		{
@@ -506,6 +545,10 @@ int main(void){
 		}
 
 			if(!SW2&&SW3){
+=======
+			GPIO_PORTF_DATA_R &=~ 0x0E;   //Turn on  LEDS
+			if(!SW2&&SW3)//Sw2 is pressed and door closed{
+>>>>>>> 43b974c192ef3986f125494c2a574948e9f87c1d
 			state = cooking;
 			}
 			break;
@@ -513,6 +556,7 @@ int main(void){
 			case cooking:
 			//your code goes here
 			GPIO_PORTF_DATA_R = 0x0E;   //Turn on  LEDS
+<<<<<<< HEAD
 			switch(type){
 				case 1:
 					genericDelay(1000);
@@ -541,9 +585,12 @@ int main(void){
 								state = end;
 					break;}
 			if(!SW1){
+=======
+			if(!SW1)//SW1 is pressed for first time{
+>>>>>>> 43b974c192ef3986f125494c2a574948e9f87c1d
 				state = pause;
 			}
-			else if (!SW3){
+			else if (!SW3) //if door is opened{
 				flag=0;
 				state = pause;}
 			break;
@@ -589,11 +636,16 @@ int main(void){
 			//flag++;
 			blink();
 			//genericDelay(10000);
-			if(!SW2){
+			if(!SW2)//SW2 is pressed after SW1{
 			//flag--;
 				state = cooking;		
 			}
+<<<<<<< HEAD
 		  else if(!SW1){        
+=======
+		  else if(!SW1)//SW1 is pressed for second time{
+        
+>>>>>>> 43b974c192ef3986f125494c2a574948e9f87c1d
 			flag=flag+1;}
 				if(flag%2){
 			state = end;	
