@@ -23,17 +23,14 @@ void ArrayLED_OFF(){
 	GPIO_PORTF_DATA_R &= ~0x0E;
 	
 	}
-
-// flash leds for 3 times  
-	void ArrayLED_Flash(){
-   int i;
-   for(i=0;i<7;i++)
-		{
-        GPIO_PORTF_DATA_R=GPIO_PORTF_DATA_R ^0x0E;
-    	genericDelay(500); //0.5sec  
-		
-		} 
+// this function makes the array of leds blink
+void blink(){
+			GPIO_PORTF_DATA_R = 0x0E;   //Turn on  LEDS
+			genericDelay(200);					//Delay 0.5sec
+			GPIO_PORTF_DATA_R = 0x00;		//Turn oFF LEDS
+			genericDelay(200);					//Delay 0.5sec
 }
+
 //this function makes the array of leds blinks for 3 times
 void ArrayLED_Flash(){
    int i;

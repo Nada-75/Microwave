@@ -1,6 +1,6 @@
-#include "C:\Users\dell\Downloads\tm4c123gh6pm.h"
+#include "tm4c123gh6pm.h"
 
-
+// this function makes buzzer on
 void ONbuzzer(void){
 	//buzzer is at pin A7
 	SYSCTL_RCGCGPIO_R|=0x01; //INTIALIZE THE CLOCK OF PORTF
@@ -29,5 +29,4 @@ void OFFbuzzer(void){
 	GPIO_PORTA_DEN_R |=0x80;
 	GPIO_PORTA_DATA_R &=~0x80;//OFF
 	
-}
 }
