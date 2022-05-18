@@ -22,7 +22,7 @@ void BuzzerConfig() // connect buzzer to A6
   
 } */
 
-int main(void){
+/*int main(void){
    init_LCD();
    LCD_WriteStr("Reem");	
 	//statesDelay(65);

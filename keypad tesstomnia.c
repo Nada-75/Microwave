@@ -338,10 +338,9 @@ void RGBLEDS_Init(void)
 
 unsigned int KeypadConversionDigit()
 { unsigned int a;
-	unsigned char x;
-  x	= KeypadScan(); 
+	unsigned char x = KeypadScan(); 
  if ((x!= 'A' )& (x!= 'B') &( KeypadScan()!= 'C') & (x!= 'D') & (x!= '#' )& (x!= '*' ) ){	//input '0'is will be handled
-   a = x-'0'; //********************************************
+   a= x-48; //********************************************
 	return a ;}
 else {
 LCD_WriteStr("Err"); //
@@ -351,7 +350,6 @@ LCD_cmd(CLR_display );//***********************DONE*****************************
 }
 return 0;
 }
-
 
 //the function will take inputs for D, ddetermine minutes and seconds then display the countdown
 void cookingtime_D(){ 
@@ -427,8 +425,9 @@ int main(void)
         LCD_cmd(CursOff_DisON);
 		    LCD_cmd(Curs_1stRow);
 				LCD_write(weightB+'0');
-				genericDelay(2000);
-				statesDelay(BC_delay('B',weightB));
+				
+				
+				//statesDelay(BC_delay('B',weightB));
 				
 				
 				

@@ -18,20 +18,22 @@ void writePin(unsigned char portName,unsigned char pinNumber,unsigned char data)
 
 	
 void Keypad_init()
-{ Port_Init('D');
+{ Port_Init('C');
 	Port_Init('E');
-	Set_pinDirection('D',0,0); //D0-D3 input
-	Set_pinDirection('D',1,0);
-	Set_pinDirection('D',2,0);
-	Set_pinDirection('D',3,0);
-	Set_pinDirection('E',0,1);
+	Set_pinDirection('C',4,0); //C4-C7 input
+	Set_pinDirection('C',5,0);
+	Set_pinDirection('C',6,0);
+	Set_pinDirection('C',7,0);
+	
+	Set_pinDirection('E',0,1); //E0-E3 output
 	Set_pinDirection('E',1,1);
 	Set_pinDirection('E',2,1);
-	Set_pinDirection('E',3,1);
-	enable_PullUP ('D', 0);   //E0-E3 output
-	enable_PullUP ('D', 1);
-	enable_PullUP ('D', 2);
-	enable_PullUP ('D', 3);
+	Set_pinDirection('E',3,1); 
+	
+	enable_PullUP ('C', 4);   
+	enable_PullUP ('C', 5);
+	enable_PullUP ('C', 6);
+	enable_PullUP ('C', 7);
 	
 }
 
@@ -50,7 +52,7 @@ unsigned char KeypadScan()
 		
 			for (y=0;y<4;y++)
 		{
-				i=ReadPin ('D',y);
+				i=ReadPin ('C',y+4);
 					if(i==0) {
 					returnvalue = array[x][y];
 					return returnvalue; }

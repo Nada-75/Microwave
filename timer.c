@@ -57,7 +57,7 @@ void statesDelay(unsigned long time){ //the function takes time in milliseconds
 	
 	
 	// now we have seconds and minutes in their variables
-	 for(i=0; i<=time;i++){
+	 for(i=0; i<=time+1;i++){
 		genericDelay(1000); //1 sec delay
 	
 	//Condition Checks	
@@ -79,8 +79,6 @@ void statesDelay(unsigned long time){ //the function takes time in milliseconds
 			
 		 // break; //get out of loop
 			}
-		
-		
 		
 		
 	} 
