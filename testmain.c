@@ -76,7 +76,7 @@ void ONbuzzer(void){
 	GPIO_PORTA_AFSEL_R &=~0x80;	  //disable the alternative    function
 
 	GPIO_PORTA_DIR_R |= 0x80;	
-	GPIO_PORTA_DEN_R |=0x80;
+	GPIO_PORTA_DEN_R |=0x80;  //Enable digital for pin A7
 	GPIO_PORTA_DATA_R |=0x80;//ON
 }
 
@@ -122,17 +122,17 @@ int main(void){
 			case Idle:
 			//your code goes here
 			GPIO_PORTF_DATA_R &=~ 0x0E;   //Turn on  LEDS
-			if(!SW2&&SW3){
+			if(!SW2&&SW3)//Sw2 is pressed and door closed{
 			state = cooking;
 			}
 			break;
 			case cooking:
 			//your code goes here
 			GPIO_PORTF_DATA_R = 0x0E;   //Turn on  LEDS
-			if(!SW1){
+			if(!SW1)//SW1 is pressed for first time{
 				state = pause;
 			}
-			else if (!SW3){
+			else if (!SW3) //if door is opened{
 				flag=0;
 				state = pause;}
 			break;
@@ -150,11 +150,11 @@ int main(void){
 			//flag++;
 			blink();
 			//genericDelay(10000);
-			if(!SW2){
+			if(!SW2)//SW2 is pressed after SW1{
 			//flag--;
 				state = cooking;		
 			}
-		  else if(!SW1){
+		  else if(!SW1)//SW1 is pressed for second time{
         
 			flag=flag+1;}
 				if(flag%2){
