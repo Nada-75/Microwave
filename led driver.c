@@ -34,9 +34,13 @@ void ArrayLED_OFF(){
 		
 		} 
 }
-// leds blink
-void ArrayLED_Blink(){
- 
-	GPIO_PORTF_DATA_R=GPIO_PORTF_DATA_R ^0x0E;
-    	genericDelay(1000); //1sec 
-}	      
+//this function makes the array of leds blinks for 3 times
+void ArrayLED_Flash(){
+   int i;
+   for(i=0;i<6;i++)
+		{
+        GPIO_PORTF_DATA_R = GPIO_PORTF_DATA_R ^0x0E;
+				genericDelay(500); //0.5sec  	
+		} 
+}
+	      

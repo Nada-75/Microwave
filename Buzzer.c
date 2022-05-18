@@ -2,7 +2,7 @@
 
 
 void ONbuzzer(void){
-	//buzzer A4=10
+	//buzzer is at pin A7
 	SYSCTL_RCGCGPIO_R|=0x01; //INTIALIZE THE CLOCK OF PORTF
 	while((SYSCTL_PRGPIO_R & 0x01)==0); //delay
 	GPIO_PORTA_LOCK_R = 0x4C4F434B; //unlocking the ports have the same value
@@ -13,7 +13,6 @@ void ONbuzzer(void){
 	GPIO_PORTA_DIR_R |= 0x80;	
 	GPIO_PORTA_DEN_R |=0x80;
 	GPIO_PORTA_DATA_R |=0x80;//ON
-	
 }
 
 
@@ -30,4 +29,5 @@ void OFFbuzzer(void){
 	GPIO_PORTA_DEN_R |=0x80;
 	GPIO_PORTA_DATA_R &=~0x80;//OFF
 	
+}
 }
