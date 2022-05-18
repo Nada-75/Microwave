@@ -1,5 +1,6 @@
-# include "C:\Keil\Labware\inc\tm4c123gh6pm.h"
-# include "stdint.h"
+#include "tm4c123gh6pm.h"
+#include "C:\Keil\Labware\inc\tm4c123gh6pm.h"
+#include "stdint.h" 
 #include "lcd.h"
 #include "timer.h"
 
@@ -263,7 +264,7 @@ void writePin(unsigned char portName,unsigned char pinNumber,unsigned char data)
 		else
 			{CLR_BIT(GPIO_PORTE_DATA_R,pinNumber);
 		 break;
-		} 
+		}  
 		}
 		case 'F':
 {if(data ==1)
@@ -336,11 +337,11 @@ void RGBLEDS_Init(void)
   GPIO_PORTF_DATA_R &= ~0x0E;     			//Initialize LEDs to be OFF
 }
 
-unsigned int KeypadConversionDigit()
-{ unsigned int a;
+int KeypadConversionDigit()
+{ int a;
 	unsigned char x = KeypadScan(); 
  if ((x!= 'A' )& (x!= 'B') &( KeypadScan()!= 'C') & (x!= 'D') & (x!= '#' )& (x!= '*' ) ){	//input '0'is will be handled
-   a= x-48; //********************************************
+   a= (int) x-'0'; //********************************************
 	return a ;}
 else {
 LCD_WriteStr("Err"); //
@@ -351,35 +352,53 @@ LCD_cmd(CLR_display );//***********************DONE*****************************
 return 0;
 }
 
+
 //the function will take inputs for D, ddetermine minutes and seconds then display the countdown
 void cookingtime_D(){ 
-//	unsigned int arr[4] = {0,0,0,0};
-	int number=0; //the 16 bit digit
+   int arr[4] = {0,0,0,0};
+	int number=0x00; //the 16 bit digit
 	int i=0;
 	int j;
  	int min;
 	int sec;
-	while(KeypadScan()!='*')//sw1 not pressed
+	int s1;
+	int s2;
+	int m1;
+	int m2;
+	LCD_cmd(CLR_display);
+	LCD_cmd(Curs_1stRow);
+	LCD_cmd(CursOff_DisON);
+	for(j = 3 ; j>=0; j--)
+	//sw1 not pressed
 	{
-		for(j = 3 ; j>=0; j--)
+		while(KeypadScan()==noPressed) genericDelay(5000); 
+		while(KeypadScan()!='*')
 		{	
-			i = KeypadConversionDigit();	//take the input every cycle
-			number = (number<<4) | i; 
+			while(KeypadScan()==noPressed) genericDelay(5000);
+			arr[j] = KeypadConversionDigit();	//take the input every 
+			if(KeypadScan()=='#') continue;
+			
+			LCD_write(arr[j]+'0');
+			LCD_cmd(RShiftCurs);
+			genericDelay(2000);
+			//number = (number<<4) | i; 
 			//arr[i] = KeypadConversionDigit();	//we don't know if they(function and for loop) are in sync	
 		}
 	}
-	
-	sec = number | 0xF + (number | 0xF0)*10; 
-	
-	min = number | 0xF00+ (number | 0xF000)*10;
+/*	s1=number&~0xFFF0;
+	s2=number&~0xFF0F;
+	m1=number&~0xF0FF;
+	m2=number&~0x0FFF;
+	//sec = number | 0xF + (number | 0xF0)*10; 
+	sec = s1+ s2*10; 
+	min = m1+ m2*10;
 	
 	//int min = arr[1] + arr[0] * 10; //get minutes from the array
 	//int sec = arr[3] + arr[2] * 10; //get seconds from the array
-	statesDelay(D_delay (sec, min)); //get the delay for custom and display the countdown
+	statesDelay(D_delay (sec, min)); //get the delay for custom and display the countdown */
 }
 
 
-void SystemInit(void){}
 
 int main(void)
 { unsigned char PressedKey;
@@ -414,36 +433,35 @@ int main(void)
 
 			case 'B':			//Turn Blue LED On
 			{
-				int weightB;
+				int weightB=0;
 				SET_BIT(GPIO_PORTF_DATA_R, 2);
 				//LCD_cmd();
 				
 				LCD_WriteStr("Beef Weight?");
 				genericDelay(5000);
 				weightB=KeypadConversionDigit();
-				LCD_cmd(CLR_display);
+				LCD_cmd(CLR_display); 
+				LCD_cmd(Curs_1stRow);
         LCD_cmd(CursOff_DisON);
-		    LCD_cmd(Curs_1stRow);
-				LCD_write(weightB+'0');
-				
-				
-				//statesDelay(BC_delay('B',weightB));
-				
-				
-				
-				
-				
+				//LCD_write(weightB+'0');
+				//genericDelay(500);
+				statesDelay(BC_delay('B',weightB));
+					
 				break;
 			}
 			
 
 			case 'C':			//Turn Green LED On
-			{ int weightC;
+			{ int weightC=0;
 				//SET_BIT(GPIO_PORTF_DATA_R, 3)
 				LCD_WriteStr("Chicken Weight?");
-				genericDelay(1000);
+				genericDelay(5000);
 				weightC=KeypadConversionDigit();
+				LCD_cmd(CLR_display);
+				LCD_cmd(Curs_1stRow);
+        LCD_cmd(CursOff_DisON);
 				statesDelay(BC_delay('C',weightC));
+				
 				break;
 			}
 			
@@ -453,6 +471,9 @@ int main(void)
 				GPIO_PORTF_DATA_R |= 0x0E;
 				
 				LCD_WriteStr("Cooking time?");
+				while(KeypadScan()==noPressed) genericDelay(5000);
+				LCD_cmd(Curs_1stRow);
+        LCD_cmd(CursOff_DisON);
 				cookingtime_D();
 				
 				
