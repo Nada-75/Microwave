@@ -45,8 +45,22 @@
 		 SW1 = GPIO_PORTF_DATA_R & 0x10;
 		 SW3 = GPIO_PORTE_DATA_R & 0x10;
      if((SW1==0x00) || (SW3 == 0x00)) {
-			 LCD_WriteStr("You are in pause now");
-				genericDelay(5000);
+			 //pause here 
+			 
+			//flag++;
+			blink();
+			//genericDelay(10000);
+			if(SW2==0x00)//SW2 is pressed after SW1{
+			//flag--;
+				continue;		
+
+		  else if(SW1==0x00) //SW1 is pressed for second time
+			   seconds=0;
+			   minutes=0;
+			   continue; 
+			//state = end;	
+			
+		
 			 
 		 }
 		 else{
@@ -293,7 +307,7 @@ int main(void){
 			} //end of case cooking
 			
 			//*************************************************PAUSE STATE*******************************************************************
-			case pause:
+		/*	case pause:
 			{
 			//flag++;
 			blink();
@@ -307,7 +321,7 @@ int main(void){
 				if(flag%2){
 			state = end;	
 			}break;
-		} //end of case pause
+		} //end of case pause */
 			
 			//******************************************************END STATE************************************************************
 			case end:
