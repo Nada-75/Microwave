@@ -107,14 +107,14 @@ char arr[4] = {'0','0','0','0'};
 int i;
 init_LCD();
 do
-{ while(keypadscan()==nopressed);
-	arr[3]=KeypadConversionDigit();
-	while(keypadscan()==nopressed);
-	arr[2]=keypadscan();
-	while(keypadscan()==nopressed);
-	arr[1]=keypadscan();
-	while(keypadscan()==nopressed);
-	arr[0]=keypadscan();
+{ while(KeypadScan()==noPressed);
+	arr[3]=KeypadScan();
+	while(KeypadScan()==noPressed);
+	arr[2]=KeypadScan();
+	while(KeypadScan()==noPressed);
+	arr[1]=KeypadScan();
+	while(KeypadScan()==noPressed);
+	arr[0]=KeypadScan();
 	LCD_WriteStr(arr);
 
 }
