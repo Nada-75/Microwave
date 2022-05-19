@@ -125,6 +125,25 @@ void writePin(unsigned char portName,unsigned char pinNumber,unsigned char data)
 		
 }
 }
+unsigned char ReadPin (unsigned char portName,unsigned pinNum)
+{ while(1){
+
+		switch(portName)
+			
+{   case 'A' :
+	 return READ_BIT(GPIO_PORTA_DATA_R,pinNum);
+    case 'B' :
+	  return READ_BIT(GPIO_PORTB_DATA_R,pinNum);
+		case 'C' :
+	  return READ_BIT(GPIO_PORTC_DATA_R,pinNum);
+		case 'D' :
+	 return READ_BIT(GPIO_PORTD_DATA_R,pinNum);
+		case 'E' :
+	  return READ_BIT(GPIO_PORTE_DATA_R,pinNum);
+		case 'F' :
+	  return READ_BIT(GPIO_PORTF_DATA_R,pinNum);
+}
+}}
 
 //################################################STATESDELAY FUNCTION FROM TIMER####################################################################
 //function to make a delay AND update the LCD 
