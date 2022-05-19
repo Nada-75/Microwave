@@ -101,4 +101,20 @@ void cookingtime_D(){
 	statesDelay(D_delay (sec, min)); //get the delay for custom and display the countdown
 }
 
+void cookingtime_Dtest(){ 
+	 
+char arr[4] = {'0','0','0','0'};
+int i;
+init_LCD();
+do
+{ while(keypadscan()==nopressed);
+	arr[3]=KeypadConversionDigit();
+	while(keypadscan()==nopressed);
+	arr[2]=keypadscan();
+	while(keypadscan()==nopressed);
+	arr[1]=keypadscan();
+	while(keypadscan()==nopressed);
+	arr[0]=keypadscan();
+	LCD_WriteStr(arr);
 
+}
