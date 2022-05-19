@@ -511,11 +511,9 @@ int main(void){
 				LCD_WriteStr("Popcorn");
 				genericDelay(2000);
 			  type = 1;
-				if((!SW2)&&(SW3)){ ////Sw2 is pressed and door closed
-				state = cooking;
-				}
-                                else if {
-                                state =Idle ;}
+				
+                    while((SW2)||(!SW3)){}
+                    state = cooking;
 				break;
 			}
 			
@@ -570,10 +568,8 @@ int main(void){
 			  LCD_write(weight+'0');
 			  genericDelay(2000);
 			//when sw2 is pressed and we know the door is closed: start cooking
-				if((!SW2)&&(SW3)){
-					state = cooking;}
-                                else if {
-                    			state =  beefWeight;}
+				while((SW2)||(!SW3)){}
+                                state = cooking;
 				break; } //end of case beefWeight
 				//********************************************************CHICKENWEIGHT STATE**************************************************************
 			case chickenWeight: 
@@ -591,10 +587,8 @@ int main(void){
         LCD_cmd(CursOff_DisON);
 			  LCD_write(weight+'0');
 			  genericDelay(2000);
-				if((!SW2)&&(SW3)){ //if sw2 is pressed and the door is closed start cooking
-					state = cooking;}
-				else if {
-                                    state =chickenWeight ;}
+				while((SW2)||(!SW3)){}
+                               state = cooking;
 				break; } //end of case chickenweight
 			
 			//**************************************************COOKINGTIME STATE******************************************************************
