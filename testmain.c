@@ -581,8 +581,6 @@ int main(void){
 		 do{weight=KeypadConversionDigit();} while (weight==0);	
 			
 			//show the user the wait he choose
-		    LCD_WriteStr("this is case C");
-		    genericDelay(1000);
 			  LCD_cmd(CLR_display);
 				LCD_cmd(Curs_1stRow);
         LCD_cmd(CursOff_DisON);
