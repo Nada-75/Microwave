@@ -15,27 +15,6 @@
 #define pause 5
 #define end 6
 
-
-
-// define port f pins
-#define GPIO_PORTF_CLK_EN  0x20    //clock enable of PORTF
-#define GPIO_PORTF_PIN0_EN 0x01    //Enable SW2
-#define GPIO_PORTF_PIN1_EN 0x02    //Enable RED LED
-#define GPIO_PORTF_PIN2_EN 0x04    //Enable BLUE LED
-#define GPIO_PORTF_PIN3_EN 0x08    //Enable GREEN LED
-#define GPIO_PORTF_PIN4_EN 0x10    //Enable SW1
-
-//initialize port f
-void PORTF_Init(void)
-{
-	SYSCTL_RCGCGPIO_R |= GPIO_PORTF_CLK_EN;   //enable clock of PORTF
-	GPIO_PORTF_LOCK_R = 0x4C4F434B;           //unlock GPIO of PORTF
-	GPIO_PORTF_CR_R = 0x01;                   //Enable GPIOPUR register enable to commit
-	GPIO_PORTF_PUR_R |= GPIO_PORTF_PIN0_EN + GPIO_PORTF_PIN4_EN;   //Enable Pull Up SW1,SW2
-	GPIO_PORTF_DIR_R |= GPIO_PORTF_PIN1_EN + GPIO_PORTF_PIN2_EN + GPIO_PORTF_PIN3_EN;   //Make PF1,PF2,PF3 as output and PF4 as input by default
-	GPIO_PORTF_DEN_R |= GPIO_PORTF_PIN0_EN + GPIO_PORTF_PIN1_EN + GPIO_PORTF_PIN2_EN+ GPIO_PORTF_PIN3_EN + GPIO_PORTF_PIN4_EN; //enable PF1,PF2,PF3,PF4 pins as digital GPIO 
-}
-
 //Macros and prototypes for keypad
 #define SET_BIT(REG,BIT) REG|=1<<BIT
 #define CLR_BIT(REG, BIT) REG&=~(1<<BIT)
@@ -51,26 +30,7 @@ unsigned char  array [4][4]={{'1','2','3','A'},{'4','5','6','B'},{'7','8','9','C
 void Port_Init(unsigned char portname){
 	switch(portname)
 	{
-		case 'A':
-		case 'a':
-		{
-			SET_BIT(SYSCTL_RCGCGPIO_R,0);
-			while(!(READ_BIT(SYSCTL_RCGCGPIO_R,0)));
-			GPIO_PORTA_LOCK_R=0X4C4F434B;
-			GPIO_PORTA_CR_R=0xFF;
-			GPIO_PORTA_DEN_R=0xFF;
-			break;
-		}
-		case 'B':
-		case 'b':
-		{
-			SET_BIT(SYSCTL_RCGCGPIO_R,1);
-			while(!(READ_BIT(SYSCTL_RCGCGPIO_R,1)));
-			GPIO_PORTB_LOCK_R=0X4C4F434B;
-			GPIO_PORTB_CR_R=0xFF;
-			GPIO_PORTB_DEN_R=0xFF;
-			break;
-		}
+		
 		case 'C':
 		case 'c':
 		{
@@ -79,16 +39,6 @@ void Port_Init(unsigned char portname){
 			GPIO_PORTC_LOCK_R=0X4C4F434B;
 			GPIO_PORTC_CR_R=0xFF;
 			GPIO_PORTC_DEN_R=0xFF;
-			break;
-		}
-		case 'D':
-		case 'd':
-		{
-			SET_BIT(SYSCTL_RCGCGPIO_R,3);
-			while(!(READ_BIT(SYSCTL_RCGCGPIO_R,3)));
-			GPIO_PORTD_LOCK_R=0X4C4F434B;
-			GPIO_PORTD_CR_R=0xFF;
-			GPIO_PORTD_DEN_R=0xFF;
 			break;
 		}
 		case 'E':
@@ -101,43 +51,13 @@ void Port_Init(unsigned char portname){
 			GPIO_PORTE_DEN_R=0xFF;
 			break;
 		}
-		case 'F':
-		case 'f':
-		{
-			SET_BIT(SYSCTL_RCGCGPIO_R,5);
-			while(!(READ_BIT(SYSCTL_RCGCGPIO_R,5)));
-			GPIO_PORTF_LOCK_R=0X4C4F434B;
-			GPIO_PORTF_CR_R=0xFF;
-			GPIO_PORTF_DEN_R=0xFF;
-			break;
-		}
+		
 	}
 }
 //general pin direction function
 void Set_pinDirection (unsigned char port_name, unsigned char pin_num, unsigned char direction){ //set the bin in the wanted port to 1 or 0
 	switch (port_name){
-		//A
-		case 'A':
-		case 'a': 
-		{if(direction ==1)
-		{SET_BIT(GPIO_PORTA_DIR_R, pin_num);
-		 break;
-		}
-		else
-			{CLR_BIT(GPIO_PORTA_DIR_R, pin_num);
-		 break;
-		} }
-		//B
-		case 'B':
-		case 'b': 
-		{if(direction ==1)
-		{SET_BIT(GPIO_PORTB_DIR_R, pin_num);
-		 break;
-		}
-		else
-			{CLR_BIT(GPIO_PORTB_DIR_R, pin_num);
-		 break;
-		} }
+		
 		//C
 		case 'C':
 		case 'c': 
@@ -147,17 +67,6 @@ void Set_pinDirection (unsigned char port_name, unsigned char pin_num, unsigned 
 		}
 		else
 			{CLR_BIT(GPIO_PORTC_DIR_R, pin_num);
-		 break;
-		} }	
-		//D
-		case 'D':
-		case 'd': 
-		{if(direction ==1)
-		{SET_BIT(GPIO_PORTD_DIR_R, pin_num);
-		 break;
-		}
-		else
-			{CLR_BIT(GPIO_PORTD_DIR_R, pin_num);
 		 break;
 		} }	
 			//E
@@ -171,97 +80,21 @@ void Set_pinDirection (unsigned char port_name, unsigned char pin_num, unsigned 
 			{CLR_BIT(GPIO_PORTE_DIR_R, pin_num);
 		 break;
 		} }	
-		//F
-		case 'F':
-		case 'f': 
-		{if(direction ==1)
-		{SET_BIT(GPIO_PORTF_DIR_R, pin_num);
-		 break;
-		}
-		else
-			{CLR_BIT(GPIO_PORTF_DIR_R, pin_num);
-		 break;
-		} 
-		}	
 	} 
   }
 //function to enable the pull up for pin
 void enable_PullUP (unsigned char port_name, unsigned char pin_num){ //set the  pullup pin in the wanted port to 1 
 	switch (port_name){
-		//A
-		case 'A':
-		case 'a': 
-		{SET_BIT(GPIO_PORTA_PUR_R, pin_num);
-		 break;
-		}
-	  //B
-		case 'B':
-		case 'b': 
-		{SET_BIT(GPIO_PORTB_PUR_R, pin_num);
-		 break;
-		}
+		
 	  //C
 		case 'C':
 		case 'c': 
 		{SET_BIT(GPIO_PORTC_PUR_R, pin_num);
 		 break;
 		}
-	 //D
-		case 'D':
-		case 'd': 
-		{SET_BIT(GPIO_PORTD_PUR_R, pin_num);
-		 break;
-		}
-	//E
-		case 'E':
-		case 'e': 
-		{SET_BIT(GPIO_PORTE_PUR_R, pin_num);
-		 break;
-		}
-   //F
-		case 'F':
-		case 'f': 
-		{SET_BIT(GPIO_PORTF_PUR_R, pin_num);
-		 break;
-		}
 	} }
 
-// this function makes buzzer on
-/*void ONbuzzer(void){
-	//buzzer is at pin A7
-	SYSCTL_RCGCGPIO_R|=0x01; //INTIALIZE THE CLOCK OF PORTF
-	while((SYSCTL_PRGPIO_R & 0x01)==0); //delay
-	GPIO_PORTA_LOCK_R = 0x4C4F434B; //unlocking the ports have the same value
-	GPIO_PORTA_CR_R |= 0x80;	//Allow changing 
-	GPIO_PORTA_AMSEL_R &=~0x80; //disable the analog function
-	GPIO_PORTA_PCTL_R &=~0xF0000000;
-	GPIO_PORTA_AFSEL_R &=~0x80;	  //disable the alternative    function
 
-	GPIO_PORTA_DIR_R |= 0x80;	
-	GPIO_PORTA_DEN_R |=0x80;  //Enable digital for pin A7
-	GPIO_PORTA_DATA_R |=0x80;//ON
-} */
-
-//Function to read the pin in any port
-unsigned char ReadPin (unsigned char portName,unsigned pinNum)
-{ while(1){
-
-		switch (portName)
-			
-{   case 'A' :
-	 return READ_BIT(GPIO_PORTA_DATA_R,pinNum);
-    case 'B' :
-	  return READ_BIT(GPIO_PORTB_DATA_R,pinNum);
-		case 'C' :
-	  return READ_BIT(GPIO_PORTC_DATA_R,pinNum);
-		case 'D' :
-	 return READ_BIT(GPIO_PORTD_DATA_R,pinNum);
-		case 'E' :
-	  return READ_BIT(GPIO_PORTE_DATA_R,pinNum);
-		case 'F' :
-	  return READ_BIT(GPIO_PORTF_DATA_R,pinNum);
-}
-}}
 
 //function to write the pin in any port
 void writePin(unsigned char portName,unsigned char pinNumber,unsigned char data)
@@ -278,36 +111,7 @@ void writePin(unsigned char portName,unsigned char pinNumber,unsigned char data)
 		 break;
 		} 
 		}
-		case 'B' :
-	  {if(data ==1)
-		{SET_BIT(GPIO_PORTB_DATA_R,pinNumber);
-		 break;
-		}
-		else
-			{CLR_BIT(GPIO_PORTB_DATA_R,pinNumber);
-		 break;
-		} 
-		}
-		case 'C' :
-	 {if(data ==1)
-		{SET_BIT(GPIO_PORTC_DATA_R,pinNumber);
-		 break;
-		}
-		else
-			{CLR_BIT(GPIO_PORTC_DATA_R,pinNumber);
-		 break;
-		} 
-		}
-		case 'D' :
-	 {if(data ==1)
-		{SET_BIT(GPIO_PORTD_DATA_R,pinNumber);
-		 break;
-		}
-		else
-			{CLR_BIT(GPIO_PORTD_DATA_R,pinNumber);
-		 break;
-		} 
-		}
+		
 		case 'E' :
 	  {if(data ==1)
 		{SET_BIT(GPIO_PORTE_DATA_R,pinNumber);
@@ -318,32 +122,10 @@ void writePin(unsigned char portName,unsigned char pinNumber,unsigned char data)
 		 break;
 		}  
 		}
-		case 'F':
-{if(data ==1)
-		{SET_BIT(GPIO_PORTA_DATA_R,pinNumber);
-		 break;
-		}
-		else
-			{CLR_BIT(GPIO_PORTA_DATA_R,pinNumber);
-		 break;
-		} 
-		}
+		
 }
 }
-//initialization for the leds
-void RGBLEDS_Init(void)
-{
-  SYSCTL_RCGCGPIO_R |= 0x20; 						//1) Activate Clock for Port F
-  while ((SYSCTL_PRGPIO_R & 0x20) == 0); // Delay to Allow Time for Clock to Start
-  GPIO_PORTF_LOCK_R = 0x4C4F434B;   		//2) Unlock GPIO Port F
-  GPIO_PORTF_CR_R |= 0x0E;          		//Allow Changes to PF3-1
-  GPIO_PORTF_AMSEL_R |= ~0x0E; 					//3)Disable Analog on Port F
-  GPIO_PORTF_PCTL_R &= ~0x0000FFF0; 		//4)Clear Bits of PCTL GPIO on PF123
-  GPIO_PORTF_AFSEL_R &= ~0x0E; 					//5)Disable Alternate Function on PF123
-  GPIO_PORTF_DIR_R |= 0x0E; 						//6)Set PF1 , PF2 and PF3 as Outputs
-  GPIO_PORTF_DEN_R |= 0x0E; 						//7)Enable Digital I/O on PF1 , PF2 and PF3
-  GPIO_PORTF_DATA_R &= ~0x0E;     			//Initialize LEDs to be OFF
-}
+
 //################################################STATESDELAY FUNCTION FROM TIMER####################################################################
 //function to make a delay AND update the LCD 
 /* int statesDelay(int time){ //the function takes time in milliseconds
