@@ -22,27 +22,7 @@
 #define GPIO_PORTF_PIN2_EN 0x04    //Enable BLUE LED
 #define GPIO_PORTF_PIN3_EN 0x08    //Enable GREEN LED
 #define GPIO_PORTF_PIN4_EN 0x10    //Enable SW1
-<<<<<<< HEAD
-=======
 
-
-//initialize the systic timer 
-void SysTick_wait(unsigned long delay){ 
-	NVIC_ST_CTRL_R = 0x00;  
-	NVIC_ST_RELOAD_R = delay-1;  //Reload delay
-	NVIC_ST_CURRENT_R =0; 
-	NVIC_ST_CTRL_R = 0x05; 
-	while((NVIC_ST_CTRL_R&0x00010000)==0){} 
- } 
-
-//A function to make a generic delay in seconds
- void genericDelay(unsigned long time){ 
-	int i;
-	for(i=0;i<time ;i++) 
-	SysTick_wait(16000); //one millisecond delay 	
-}
->>>>>>> 43b974c192ef3986f125494c2a574948e9f87c1d
- 
 //initialize port f
 void PORTF_Init(void)
 {
@@ -54,6 +34,7 @@ void PORTF_Init(void)
 	GPIO_PORTF_DEN_R |= GPIO_PORTF_PIN0_EN + GPIO_PORTF_PIN1_EN + GPIO_PORTF_PIN2_EN+ GPIO_PORTF_PIN3_EN + GPIO_PORTF_PIN4_EN; //enable PF1,PF2,PF3,PF4 pins as digital GPIO 
 }
 
+//Macros and prototypes for keypad
 #define SET_BIT(REG,BIT) REG|=1<<BIT
 #define CLR_BIT(REG, BIT) REG&=~(1<<BIT)
 #define READ_BIT(REG,BIT) (REG&(1<<BIT))>>BIT
@@ -62,7 +43,9 @@ void Keypad_init();
 unsigned char KeypadScan();
 unsigned char noPressed=0xFF;
 unsigned char  array [4][4]={{'1','2','3','A'},{'4','5','6','B'},{'7','8','9','C'},{'*','0','#','D'}};
-//SystemInit();
+
+
+//General port initialization function
 void Port_Init(unsigned char portname){
 	switch(portname)
 	{
@@ -128,7 +111,7 @@ void Port_Init(unsigned char portname){
 		}
 	}
 }
-
+//general pin direction function
 void Set_pinDirection (unsigned char port_name, unsigned char pin_num, unsigned char direction){ //set the bin in the wanted port to 1 or 0
 	switch (port_name){
 		//A
@@ -198,10 +181,9 @@ void Set_pinDirection (unsigned char port_name, unsigned char pin_num, unsigned 
 		 break;
 		} 
 		}	
-
-<<<<<<< HEAD
 	} 
   }
+//function to enable the pull up for pin
 void enable_PullUP (unsigned char port_name, unsigned char pin_num){ //set the  pullup pin in the wanted port to 1 
 	switch (port_name){
 		//A
@@ -241,7 +223,7 @@ void enable_PullUP (unsigned char port_name, unsigned char pin_num){ //set the  
 		 break;
 		}
 	}
-=======
+
 // this function makes buzzer on
 void ONbuzzer(void){
 	//buzzer is at pin A7
@@ -257,9 +239,8 @@ void ONbuzzer(void){
 	GPIO_PORTA_DEN_R |=0x80;  //Enable digital for pin A7
 	GPIO_PORTA_DATA_R |=0x80;//ON
 }
->>>>>>> 43b974c192ef3986f125494c2a574948e9f87c1d
-
 }
+//Function to read the pin in any port
 unsigned char ReadPin (unsigned char portName,unsigned pinNum)
 { while(1){
 
@@ -280,6 +261,7 @@ unsigned char ReadPin (unsigned char portName,unsigned pinNum)
 }
 }}
 
+//function to write the pin in any port
 void writePin(unsigned char portName,unsigned char pinNumber,unsigned char data)
 {
 	switch (portName)
@@ -346,6 +328,24 @@ void writePin(unsigned char portName,unsigned char pinNumber,unsigned char data)
 		}
 }
 }
+//initialization for the leds
+void RGBLEDS_Init(void)
+{
+  SYSCTL_RCGCGPIO_R |= 0x20; 						//1) Activate Clock for Port F
+  while ((SYSCTL_PRGPIO_R & 0x20) == 0); // Delay to Allow Time for Clock to Start
+  GPIO_PORTF_LOCK_R = 0x4C4F434B;   		//2) Unlock GPIO Port F
+  GPIO_PORTF_CR_R |= 0x0E;          		//Allow Changes to PF3-1
+  GPIO_PORTF_AMSEL_R |= ~0x0E; 					//3)Disable Analog on Port F
+  GPIO_PORTF_PCTL_R &= ~0x0000FFF0; 		//4)Clear Bits of PCTL GPIO on PF123
+  GPIO_PORTF_AFSEL_R &= ~0x0E; 					//5)Disable Alternate Function on PF123
+  GPIO_PORTF_DIR_R |= 0x0E; 						//6)Set PF1 , PF2 and PF3 as Outputs
+  GPIO_PORTF_DEN_R |= 0x0E; 						//7)Enable Digital I/O on PF1 , PF2 and PF3
+  GPIO_PORTF_DATA_R &= ~0x0E;     			//Initialize LEDs to be OFF
+}
+
+//########################################################KEYPAD FUNCTIONS#################################################################################
+
+//keypad initilization in port C and E
 void Keypad_init()
 { Port_Init('C');
 	Port_Init('E');
@@ -366,6 +366,7 @@ void Keypad_init()
 	
 }
 
+//Keypad  general scan 
 unsigned char KeypadScan()
 {	unsigned char returnvalue = noPressed;
 	unsigned char  array [4][4]={{'1','2','3','A'},{'4','5','6','B'},{'7','8','9','C'},{'*','0','#','D'}};
@@ -391,20 +392,8 @@ unsigned char KeypadScan()
 }
 
 
-void RGBLEDS_Init(void)
-{
-  SYSCTL_RCGCGPIO_R |= 0x20; 						//1) Activate Clock for Port F
-  while ((SYSCTL_PRGPIO_R & 0x20) == 0); // Delay to Allow Time for Clock to Start
-  GPIO_PORTF_LOCK_R = 0x4C4F434B;   		//2) Unlock GPIO Port F
-  GPIO_PORTF_CR_R |= 0x0E;          		//Allow Changes to PF3-1
-  GPIO_PORTF_AMSEL_R |= ~0x0E; 					//3)Disable Analog on Port F
-  GPIO_PORTF_PCTL_R &= ~0x0000FFF0; 		//4)Clear Bits of PCTL GPIO on PF123
-  GPIO_PORTF_AFSEL_R &= ~0x0E; 					//5)Disable Alternate Function on PF123
-  GPIO_PORTF_DIR_R |= 0x0E; 						//6)Set PF1 , PF2 and PF3 as Outputs
-  GPIO_PORTF_DEN_R |= 0x0E; 						//7)Enable Digital I/O on PF1 , PF2 and PF3
-  GPIO_PORTF_DATA_R &= ~0x0E;     			//Initialize LEDs to be OFF
-}
 
+//Keypad digit scan
 int KeypadConversionDigit()
 { int a;
 	unsigned char x = KeypadScan(); 
@@ -414,14 +403,14 @@ int KeypadConversionDigit()
 else {
 LCD_WriteStr("Err"); //
 genericDelay(2000);//delay 2 sec
-LCD_cmd(CLR_display );//***********************DONE***************************************
+LCD_cmd(CLR_display );
  KeypadConversionDigit();
 }
 return 0;
 }
 
 
-//the function will take inputs for D, ddetermine minutes and seconds then display the countdown
+//the function will take inputs for D in keypad, ddetermine minutes and seconds then display the countdown
 void cookingtime_D(){ 
    int arr[4] = {0,0,0,0};
 	int number=0x00; //the 16 bit digit
@@ -467,19 +456,22 @@ void cookingtime_D(){
 }
 
 
+//###################################################################Main##############################################################################
 int main(void){
-	int state = Idle;
+	int state = Idle; //initial state 
 	unsigned char flag=1 ;
 	unsigned int SW1, SW2, SW3;
 	unsigned int type=0;
 	int weightB = 0;
 	int weightC=0;
-	unsigned char PressedKey ;		
-	init_LCD();
+	unsigned char PressedKey ;	
+	//initial LCD/RGB/Keypad/ needed ports and switches
+	init_LCD();  
   RGBLEDS_Init();
-	Keypad_init();		//use your keypad initialization function
+	Keypad_init();		
 	PORTF_Init();
 	sw3_Init();
+	
 	while(1){
 		LCD_cmd(CLR_display);
     LCD_cmd(CursOff_DisON);
@@ -489,149 +481,144 @@ int main(void){
 		SW2 = GPIO_PORTF_DATA_R & 0x01;
 		SW3 = GPIO_PORTE_DATA_R & 0x10;
 		switch(state){
-			case Idle:
-			//your code goes here
-<<<<<<< HEAD
-		GPIO_PORTF_DATA_R &=~ 0x0E;   //Turn on  LEDS
+			case Idle: // ************************************************IDLE STATE**************************************************************
+			//What to do in Idle state
+ 
 		switch (PressedKey)
 		{
-			case 'A':			//Turn Red LED On
+			//POPCORN
+			case 'A':			
 			{		
-				//SET_BIT(GPIO_PORTF_DATA_R, 1);
+				
 				LCD_WriteStr("Popcorn");
 				genericDelay(2000);
 			  type = 1;
-				if(!SW2&&SW3){
+				if(!SW2&&SW3){ ////Sw2 is pressed and door closed
 				state = cooking;
 				}
 				break;
 			}
-			case 'B':			//Turn Blue LED On
+			
+			//BEEF
+			case 'B':			
 			{
-
-				//SET_BIT(GPIO_PORTF_DATA_R, 2);
-				//LCD_cmd();
-				
 				LCD_WriteStr("Beef Weight?");
 				genericDelay(2000);
 				type = 2;
 				
-				state = beefWeight;
+				state = beefWeight; //We go there to take the weight from the user
 					
 				break;
 			}
 			
-
+      //CHICKEN
 			case 'C':			
 			{ 
-				//SET_BIT(GPIO_PORTF_DATA_R, 3)
+			
 				LCD_WriteStr("Chicken Weight?");
 				genericDelay(2000);
 				type = 3;
-				state = chickenWeight;
+				state = chickenWeight; //We go there to take the weight from the user
 				
 				break;
 			}
-			case 'D':			//Turn All LEDs On
+			//CUSTOM
+			case 'D':			
 			{
-				//GPIO_PORTF_DATA_R |= 0x0E;
-				
 				LCD_WriteStr("Cooking time?");
 				type = 4;
 				
-							
+				state = cookingTime;
+						
 				break;
 			}			
 		}
-
-			if(!SW2&&SW3){
-=======
-			GPIO_PORTF_DATA_R &=~ 0x0E;   //Turn on  LEDS
-			if(!SW2&&SW3)//Sw2 is pressed and door closed{
->>>>>>> 43b974c192ef3986f125494c2a574948e9f87c1d
-			state = cooking;
-			}
-			break;
-			
-			case cooking:
+		
+			case cooking: //*********************************************Cooking State***************************************************
 			//your code goes here
 			GPIO_PORTF_DATA_R = 0x0E;   //Turn on  LEDS
-<<<<<<< HEAD
 			switch(type){
-				case 1:
+				case 1: //POPCORN
 					genericDelay(1000);
-					statesDelay(A_delay());
-				state = end;
+					statesDelay(A_delay()); //Show the countdown for popcorn
+				  state = end;
 					break;
-				case 2:
+				
+				case 2: //BEEF
 				LCD_cmd(CLR_display); 
 				LCD_cmd(Curs_1stRow);
         LCD_cmd(CursOff_DisON);
-				statesDelay(BC_delay('B',weightB));
+				
+				statesDelay(BC_delay('B',weightB)); //show the countdown for Beef
 								state = end;
 					break;
-				case 3:
+				case 3: //CHICKEN
 				LCD_cmd(CLR_display);
 				LCD_cmd(Curs_1stRow);
         LCD_cmd(CursOff_DisON);
-				statesDelay(BC_delay('C',weightC));
+				statesDelay(BC_delay('C',weightC)); //show the countdown for chicken
 								state = end;
 					break;
-				case 4:
+				case 4: //CUSTOM
 					while(KeypadScan()==noPressed) genericDelay(5000);
 				LCD_cmd(Curs_1stRow);
         LCD_cmd(CursOff_DisON);
-				cookingtime_D();
+				cookingtime_D(); //calculate the time and show it //still needing edit here.
 								state = end;
 					break;}
-			if(!SW1){
-=======
+			
+       //Pause condition still needs edit 
+					
 			if(!SW1)//SW1 is pressed for first time{
->>>>>>> 43b974c192ef3986f125494c2a574948e9f87c1d
 				state = pause;
 			}
 			else if (!SW3) //if door is opened{
 				flag=0;
 				state = pause;}
 			break;
+				
+			//***************************************************BEEFWEIGHT STATE*********************************************************************
 			case beefWeight:
-			//your code goes here
+			//we will take the inpt weight from the user 
 			genericDelay(500);	
-			weightB=KeypadConversionDigit();			
-			while(weightB==0){
+			weightB=KeypadConversionDigit();			//take the weight
+			while(weightB==0){ //keep taking the weight until you take any number but zero
 					weightB=KeypadConversionDigit();	
 			}
+			//show the user the weight he enterd
 			LCD_cmd(CLR_display);
 				LCD_cmd(Curs_1stRow);
         LCD_cmd(CursOff_DisON);
 			  LCD_write(weightB+'0');
 			  genericDelay(2000);
-			
+			//when sw2 is pressed and we know the door is closed: start cooking
 				if(!SW2&&SW3){
-				state = cooking;
+					state = cooking;
 				}			
 				break;
+				//********************************************************CHICKENWEIGHT STATE**************************************************************
 			case chickenWeight:
 			//your code goes here
 				genericDelay(500);
-			weightC=KeypadConversionDigit();
+			weightC=KeypadConversionDigit(); //take the weight input
 			while(weightC==0){
-				weightC=KeypadConversionDigit();
+				weightC=KeypadConversionDigit(); //make sure the user enterded a non-zero number
 			}
+			//show the user the wait he choose
 			  LCD_cmd(CLR_display);
 				LCD_cmd(Curs_1stRow);
         LCD_cmd(CursOff_DisON);
 			  LCD_write(weightC+'0');
 			  genericDelay(2000);
-							if(!SW2&&SW3){
-				state = cooking;
+				if(!SW2&&SW3){ //if sw2 is pressed and the door is closed start cooking
+					state = cooking;
 				}
-			break;
-			
+				break;
+			//**************************************************COOKINGTIME STATE******************************************************************
 			case cookingTime:
 			//your code goes here
 			break;
-			
+			//*************************************************PAUSE STATE*******************************************************************
 			case pause:
 			//flag++;
 			blink();
@@ -640,24 +627,19 @@ int main(void){
 			//flag--;
 				state = cooking;		
 			}
-<<<<<<< HEAD
-		  else if(!SW1){        
-=======
+
 		  else if(!SW1)//SW1 is pressed for second time{
-        
->>>>>>> 43b974c192ef3986f125494c2a574948e9f87c1d
 			flag=flag+1;}
 				if(flag%2){
 			state = end;	
 			}				 
 			break;
-			
+			//******************************************************END STATE************************************************************
 			case end:
-			ONbuzzer();
-			ArrayLED_Flash();
-			OFFbuzzer();
-			state = Idle;
-			//your code goes here
+			ONbuzzer();  //turn the buzzer on 
+			ArrayLED_Flash(); //flash the leds 
+			OFFbuzzer(); //turn the buzzer off
+			state = Idle; //start over
 			break;
 		}
 	}
