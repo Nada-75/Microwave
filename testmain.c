@@ -16,15 +16,7 @@
 #define pause 5
 #define end 6
 
-//Macros and prototypes for keypad
-#define SET_BIT(REG,BIT) REG|=1<<BIT
-#define CLR_BIT(REG, BIT) REG&=~(1<<BIT)
-#define READ_BIT(REG,BIT) (REG&(1<<BIT))>>BIT
-void RGBLEDS_Init(void);
-void Keypad_init();
-unsigned char KeypadScan();
-unsigned char noPressed=0xFF;
-unsigned char  array [4][4]={{'1','2','3','A'},{'4','5','6','B'},{'7','8','9','C'},{'*','0','#','D'}};
+//unsigned char noPressed =0xFF;
 
 
 //################################################STATESDELAY FUNCTION FROM TIMER####################################################################
@@ -111,7 +103,7 @@ int main(void){
 		switch(state){
 			case Idle: // ************************************************IDLE STATE**************************************************************
 			{ type=0;
-				do{PressedKey = KeypadScan();} while (PressedKey == noPressed);
+				do{PressedKey = KeypadScan();} while (PressedKey == 0xFF);
 			//What to do in Idle state
       LCD_write(PressedKey);
 		  genericDelay(2000);
@@ -258,7 +250,7 @@ int main(void){
 				}
 				case 4: //CUSTOM 
 				{
-					while(KeypadScan()==noPressed) genericDelay(5000);
+					while(KeypadScan()==0xFF) genericDelay(5000);
 					LCD_cmd(Curs_1stRow);
 					LCD_cmd(CursOff_DisON);
 					cookingtime_D(); //calculate the time and show it //still needing edit here.

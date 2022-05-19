@@ -5,12 +5,24 @@
 //Included files 
 #include "lcd.h"
 #include "tm4c123gh6pm.h"
+#include "timer.h"
+
 
 //macros 
 #define SET_BIT(REG,BIT) REG|=1<<BIT
 #define CLR_BIT(REG, BIT) REG&=~(1<<BIT)
 #define TOG_BIT(REG,BIT)  REG^= 1<<BIT
-#define READ_BIT(REG,BIT) REG&(1<<BIT)>>BIT
+//Macros and prototypes for keypad
+#define SET_BIT(REG,BIT) REG|=1<<BIT
+#define CLR_BIT(REG, BIT) REG&=~(1<<BIT)
+#define READ_BIT(REG,BIT) (REG&(1<<BIT))>>BIT
+void RGBLEDS_Init(void);
+
+void Keypad_init();
+unsigned char noPressed =0xFF;
+unsigned char KeypadScan();
+
+unsigned char  array [4][4]={{'1','2','3','A'},{'4','5','6','B'},{'7','8','9','C'},{'*','0','#','D'}};
 
 //Functions
 void Port_Init(unsigned char portname){
@@ -592,6 +604,7 @@ return 0;
 
 //the function will take inputs for D in keypad, ddetermine minutes and seconds then display the countdown
 void cookingtime_D(){ 
+	 unsigned char noPressed =0xFF;
    int arr[4] = {0,0,0,0};
 	int number=0x00; //the 16 bit digit
 	int i=0;
