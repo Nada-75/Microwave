@@ -465,8 +465,8 @@ int main(void){
 	unsigned int SW2;
   unsigned int SW3;
 	unsigned int type=0;
-	int weightB = 0;
-	int weightC=0;
+	unsigned int weight = 0;
+	//unsigned int weightC = 0;
 	unsigned char PressedKey ;
 	state	= Idle;
 	//initial LCD/RGB/Keypad/ needed ports and switches
@@ -511,7 +511,7 @@ int main(void){
 				LCD_WriteStr("Popcorn");
 				genericDelay(2000);
 			  type = 1;
-				if((!SW2)&&SW3){ ////Sw2 is pressed and door closed
+				if((SW2==0x00)&&(SW3==0x10)){ ////Sw2 is pressed and door closed
 				state = cooking;
 				}
 				break;
@@ -553,6 +553,53 @@ int main(void){
 		}
 	} //end of case idle
 		
+			
+			//***************************************************BEEFWEIGHT STATE*********************************************************************
+			case beefWeight:
+			{//we will take the inpt weight from the user 
+			genericDelay(500);	
+			weight=0;
+				
+			do{weight = KeypadConversionDigit();} while (weight==0);
+			//show the user the weight he enterd
+			 LCD_cmd(CLR_display);
+				LCD_cmd(Curs_1stRow);
+        LCD_cmd(CursOff_DisON);
+			  LCD_write(weight+'0');
+			  genericDelay(2000);
+			//when sw2 is pressed and we know the door is closed: start cooking
+			//	if((!SW2)&&SW3){
+					state = cooking;
+//}			
+				continue; } //end of case beefWeight
+				//********************************************************CHICKENWEIGHT STATE**************************************************************
+			case chickenWeight: 
+			{
+			//your code goes here
+				genericDelay(500);
+				weight=0;
+		 do{weight=KeypadConversionDigit();} while (weight==0);	
+			
+			//show the user the wait he choose
+		    LCD_WriteStr("this is case C");
+		    genericDelay(1000);
+			  LCD_cmd(CLR_display);
+				LCD_cmd(Curs_1stRow);
+        LCD_cmd(CursOff_DisON);
+			  LCD_write(weight+'0');
+			  genericDelay(2000);
+				//if(!SW2&&SW3){ //if sw2 is pressed and the door is closed start cooking
+					state = cooking;
+				//}
+				continue; } //end of case chickenweight
+			
+			//**************************************************COOKINGTIME STATE******************************************************************
+			case cookingTime: 
+			{
+			//your code goes here
+			break;
+			} //end of class chickenweight
+			
 			case cooking: //*********************************************Cooking State***************************************************
 			{ //your code goes here
 			GPIO_PORTF_DATA_R = 0x0E;   //Turn on  LEDS
@@ -571,7 +618,7 @@ int main(void){
 					LCD_cmd(Curs_1stRow);
 					LCD_cmd(CursOff_DisON);
 				
-					statesDelay(BC_delay('B',weightB)); //show the countdown for Beef
+					statesDelay(BC_delay('B',weight)); //show the countdown for Beef
 								state = end;
 					break;
 				}
@@ -581,7 +628,7 @@ int main(void){
 					LCD_cmd(CLR_display);
 					LCD_cmd(Curs_1stRow);
 					LCD_cmd(CursOff_DisON);
-					statesDelay(BC_delay('C',weightC)); //show the countdown for chicken
+					statesDelay(BC_delay('C',weight)); //show the countdown for chicken
 								state = end;
 					break;
 				}
@@ -616,56 +663,6 @@ int main(void){
 			break; */
 			} //end of case cooking
 			
-			//***************************************************BEEFWEIGHT STATE*********************************************************************
-			case beefWeight:
-			{//we will take the inpt weight from the user 
-			genericDelay(500);	
-			
-			/*weightB=KeypadConversionDigit();			//take the weight
-			while(weightB==0){ //keep taking the weight until you take any number but zero
-					weightB=KeypadConversionDigit();	
-			} */
-				
-			do{weightB=KeypadConversionDigit();} while (weightB==0);
-			//show the user the weight he enterd
-			LCD_cmd(CLR_display);
-				LCD_cmd(Curs_1stRow);
-        LCD_cmd(CursOff_DisON);
-			  LCD_write(weightB+'0');
-			  genericDelay(2000);
-			//when sw2 is pressed and we know the door is closed: start cooking
-				if(!SW2&&SW3){
-					state = cooking;
-				}			
-				break; } //end of case beefWeight
-				//********************************************************CHICKENWEIGHT STATE**************************************************************
-			case chickenWeight: 
-			{
-			//your code goes here
-				genericDelay(500);
-			/*weightC=KeypadConversionDigit(); //take the weight input
-			while(weightC==0){
-				weightC=KeypadConversionDigit(); //make sure the user enterded a non-zero number
-			}*/
-		 do{weightC=KeypadConversionDigit();} while (weightC==0);	
-			
-			//show the user the wait he choose
-			  LCD_cmd(CLR_display);
-				LCD_cmd(Curs_1stRow);
-        LCD_cmd(CursOff_DisON);
-			  LCD_write(weightC+'0');
-			  genericDelay(2000);
-				if(!SW2&&SW3){ //if sw2 is pressed and the door is closed start cooking
-					state = cooking;
-				}
-				break; } //end of case chickenweight
-			
-			//**************************************************COOKINGTIME STATE******************************************************************
-			case cookingTime: 
-			{
-			//your code goes here
-			break;
-			} //end of class chickenweight
 			//*************************************************PAUSE STATE*******************************************************************
 			case pause:
 			{
