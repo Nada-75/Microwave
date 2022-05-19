@@ -222,7 +222,7 @@ void enable_PullUP (unsigned char port_name, unsigned char pin_num){ //set the  
 		{SET_BIT(GPIO_PORTF_PUR_R, pin_num);
 		 break;
 		}
-	}
+	} }
 
 // this function makes buzzer on
 void ONbuzzer(void){
@@ -239,7 +239,7 @@ void ONbuzzer(void){
 	GPIO_PORTA_DEN_R |=0x80;  //Enable digital for pin A7
 	GPIO_PORTA_DATA_R |=0x80;//ON
 }
-}
+
 //Function to read the pin in any port
 unsigned char ReadPin (unsigned char portName,unsigned pinNum)
 { while(1){
@@ -571,8 +571,8 @@ int main(void){
 					
 			if(!SW1)//SW1 is pressed for first time{
 				state = pause;
-			}
-			else if (!SW3) //if door is opened{
+			
+			else if (!SW3){ //if door is opened{
 				flag=0;
 				state = pause;}
 			break;
@@ -626,13 +626,13 @@ int main(void){
 			if(!SW2)//SW2 is pressed after SW1{
 			//flag--;
 				state = cooking;		
-			}
 
 		  else if(!SW1)//SW1 is pressed for second time{
-			flag=flag+1;}
+			flag=flag+1;
 				if(flag%2){
 			state = end;	
-			}				 
+			}
+				
 			break;
 			//******************************************************END STATE************************************************************
 			case end:

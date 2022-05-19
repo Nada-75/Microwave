@@ -1,5 +1,6 @@
 #include "tm4c123gh6pm.h"
 #include "IO.h"
+
 #include "timer.h"
 #include "lcd.h"
 
@@ -18,6 +19,7 @@
 		SysTick_wait(16000); //1msec
 	}
 }*/
+
 void LCD_cmd(unsigned char cmd){
 	GPIO_PORTB_DATA_R=cmd;
 	writePin('A',RS,0);

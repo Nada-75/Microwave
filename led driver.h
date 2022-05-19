@@ -1,7 +1,7 @@
-void LED_INIT();       //Initialize the led
-void ArrayLED_ON();   //leds on
-void ArrayLED_OFF(); //leds off
-void ArrayLED_Flash();   //leds flash
-void blink();      //leds blink
+void LED_INIT(void);       //Initialize the led
+void ArrayLED_ON(void);   //leds on
+void ArrayLED_OFF(void); //leds off
+void ArrayLED_Flash(void);   //leds flash
+void blink(void);      //leds blink
 
 
