@@ -42,7 +42,7 @@ void displayTime(int seconds, int minutes){
 		LCD_write(s1+'0');
 }
 //function to make a delay AND update the LCD 
- int statesDelay(int time){ //the function takes time in milliseconds
+ /*int statesDelay(int time){ //the function takes time in milliseconds
 	//used variables
 	int i;
 	int seconds;
@@ -65,7 +65,7 @@ void displayTime(int seconds, int minutes){
 			 seconds--;  //decrease seconds each one second
 		 } 
 		else if(seconds ==0 && minutes>0) { //If seconds reached zero, decrease the minutes 
-			// After 1:00 comes 0:59888888888//*****
+			// After 1:00 comes 0:59888888888
 			displayTime(seconds,minutes); //Display the current time on LCD (Time here should be "minutes:00")
 			minutes --;
 			seconds =59;
@@ -82,7 +82,7 @@ void displayTime(int seconds, int minutes){
   		 //end while
 	 //} //end for
 return remainTime;	 
-} //end function 
+} //end function  */
 
 //A function to determine the delay for chicken and beef
 //this function will be called inside the genericDelay function to determine the time in seconds.

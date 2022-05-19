@@ -21,12 +21,17 @@
 
 //################################################STATESDELAY FUNCTION FROM TIMER####################################################################
 //function to make a delay AND update the LCD 
-/* int statesDelay(int time){ //the function takes time in milliseconds
+ int statesDelay(int time){ //the function takes time in milliseconds
 	//used variables
 	int i;
 	int seconds;
 	int minutes;
 	int remainTime;
+	unsigned int SW1;
+	unsigned int SW2;
+  unsigned int SW3; 
+	
+	 
 	
 	//Equations
 	seconds	= time%60; //get the time in seconds 
@@ -37,7 +42,15 @@
 		genericDelay(1000); //1 sec delay
 	
 	//Condition Checks	 
-		 while(!SW1 && SW3){ //when the switch1 or 3 is pressed go to pause
+		 SW1 = GPIO_PORTF_DATA_R & 0x10;
+		 SW3 = GPIO_PORTE_DATA_R & 0x10;
+     if((SW1==0x00) || (SW3 == 0x00)) {
+			 LCD_WriteStr("You are in pause now");
+				genericDelay(5000);
+			 
+		 }
+		 else{
+		 
 		if(seconds>0 && minutes>=0) 
      { 
 			 displayTime(seconds,minutes); //Display the current time on LCD
@@ -57,11 +70,11 @@
 			}
 		remainTime = time-i;
 		
-	} state = pause;
+	} // state = pause;
   		 //end while
 	 } //end for
 return remainTime;	 
-} //end function */
+} //end function 
 
 //###################################################################Main##############################################################################
 int main(void){
