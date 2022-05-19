@@ -225,7 +225,7 @@ void enable_PullUP (unsigned char port_name, unsigned char pin_num){ //set the  
 	} }
 
 // this function makes buzzer on
-void ONbuzzer(void){
+/*void ONbuzzer(void){
 	//buzzer is at pin A7
 	SYSCTL_RCGCGPIO_R|=0x01; //INTIALIZE THE CLOCK OF PORTF
 	while((SYSCTL_PRGPIO_R & 0x01)==0); //delay
@@ -238,7 +238,7 @@ void ONbuzzer(void){
 	GPIO_PORTA_DIR_R |= 0x80;	
 	GPIO_PORTA_DEN_R |=0x80;  //Enable digital for pin A7
 	GPIO_PORTA_DATA_R |=0x80;//ON
-}
+} */
 
 //Function to read the pin in any port
 unsigned char ReadPin (unsigned char portName,unsigned pinNum)
@@ -458,13 +458,17 @@ void cookingtime_D(){
 
 //###################################################################Main##############################################################################
 int main(void){
-	int state = Idle; //initial state 
+	int state;
+   //initial state 
 	unsigned char flag=1 ;
-	unsigned int SW1, SW2, SW3;
+	unsigned int SW1;
+	unsigned int SW2;
+  unsigned int SW3;
 	unsigned int type=0;
 	int weightB = 0;
 	int weightC=0;
-	unsigned char PressedKey ;	
+	unsigned char PressedKey ;
+	state	= Idle;
 	//initial LCD/RGB/Keypad/ needed ports and switches
 	init_LCD();  
   RGBLEDS_Init();
@@ -472,20 +476,34 @@ int main(void){
 	PORTF_Init();
 	sw3_Init();
 	
+	
 	while(1){
+		genericDelay(2000);
+		//do{PressedKey = KeypadScan();} while (PressedKey == noPressed); //wait here till you take an input
 		LCD_cmd(CLR_display);
     LCD_cmd(CursOff_DisON);
 		LCD_cmd(Curs_1stRow);
-		PressedKey = KeypadScan(); 	//use your keypad read function		
+		
+		
+			
 		SW1 = GPIO_PORTF_DATA_R & 0x10;
 		SW2 = GPIO_PORTF_DATA_R & 0x01;
 		SW3 = GPIO_PORTE_DATA_R & 0x10;
+		
 		switch(state){
 			case Idle: // ************************************************IDLE STATE**************************************************************
+			{ type=0;
+				do{PressedKey = KeypadScan();} while (PressedKey == noPressed);
 			//What to do in Idle state
- 
+      LCD_write(PressedKey);
+		  genericDelay(2000);
+			LCD_cmd(CLR_display);
+      LCD_cmd(CursOff_DisON);
+		  LCD_cmd(Curs_1stRow);
+				 
 		switch (PressedKey)
 		{
+			
 			//POPCORN
 			case 'A':			
 			{		
@@ -493,7 +511,7 @@ int main(void){
 				LCD_WriteStr("Popcorn");
 				genericDelay(2000);
 			  type = 1;
-				if(!SW2&&SW3){ ////Sw2 is pressed and door closed
+				if((!SW2)&&SW3){ ////Sw2 is pressed and door closed
 				state = cooking;
 				}
 				break;
@@ -533,58 +551,82 @@ int main(void){
 				break;
 			}			
 		}
+	} //end of case idle
 		
 			case cooking: //*********************************************Cooking State***************************************************
-			//your code goes here
+			{ //your code goes here
 			GPIO_PORTF_DATA_R = 0x0E;   //Turn on  LEDS
 			switch(type){
 				case 1: //POPCORN
-					genericDelay(1000);
-					statesDelay(A_delay()); //Show the countdown for popcorn
-				  state = end;
-					break;
+					{
+						genericDelay(1000);
+						statesDelay(A_delay()); //Show the countdown for popcorn
+						state = end;
+						break; 
+					}
 				
 				case 2: //BEEF
-				LCD_cmd(CLR_display); 
-				LCD_cmd(Curs_1stRow);
-        LCD_cmd(CursOff_DisON);
+				{
+					LCD_cmd(CLR_display); 
+					LCD_cmd(Curs_1stRow);
+					LCD_cmd(CursOff_DisON);
 				
-				statesDelay(BC_delay('B',weightB)); //show the countdown for Beef
+					statesDelay(BC_delay('B',weightB)); //show the countdown for Beef
 								state = end;
 					break;
+				}
+				
 				case 3: //CHICKEN
-				LCD_cmd(CLR_display);
-				LCD_cmd(Curs_1stRow);
-        LCD_cmd(CursOff_DisON);
-				statesDelay(BC_delay('C',weightC)); //show the countdown for chicken
+				{
+					LCD_cmd(CLR_display);
+					LCD_cmd(Curs_1stRow);
+					LCD_cmd(CursOff_DisON);
+					statesDelay(BC_delay('C',weightC)); //show the countdown for chicken
 								state = end;
 					break;
-				case 4: //CUSTOM
+				}
+				case 4: //CUSTOM 
+				{
 					while(KeypadScan()==noPressed) genericDelay(5000);
-				LCD_cmd(Curs_1stRow);
-        LCD_cmd(CursOff_DisON);
-				cookingtime_D(); //calculate the time and show it //still needing edit here.
+					LCD_cmd(Curs_1stRow);
+					LCD_cmd(CursOff_DisON);
+					cookingtime_D(); //calculate the time and show it //still needing edit here.
 								state = end;
-					break;}
+					break;
+				}
+				case 0: {
+					LCD_cmd(CLR_display);
+					LCD_cmd(Curs_1stRow);
+					LCD_cmd(CursOff_DisON);	
+					LCD_WriteStr("type is wrong");
+					genericDelay(1000);
+          					
+				}			
+				
+				} //end switch for type of cooking
 			
        //Pause condition still needs edit 
 					
-			if(!SW1)//SW1 is pressed for first time{
+		/*	if(!SW1)//SW1 is pressed for first time{
 				state = pause;
 			
 			else if (!SW3){ //if door is opened{
 				flag=0;
 				state = pause;}
-			break;
-				
+			break; */
+			} //end of case cooking
+			
 			//***************************************************BEEFWEIGHT STATE*********************************************************************
 			case beefWeight:
-			//we will take the inpt weight from the user 
+			{//we will take the inpt weight from the user 
 			genericDelay(500);	
-			weightB=KeypadConversionDigit();			//take the weight
+			
+			/*weightB=KeypadConversionDigit();			//take the weight
 			while(weightB==0){ //keep taking the weight until you take any number but zero
 					weightB=KeypadConversionDigit();	
-			}
+			} */
+				
+			do{weightB=KeypadConversionDigit();} while (weightB==0);
 			//show the user the weight he enterd
 			LCD_cmd(CLR_display);
 				LCD_cmd(Curs_1stRow);
@@ -595,15 +637,18 @@ int main(void){
 				if(!SW2&&SW3){
 					state = cooking;
 				}			
-				break;
+				break; } //end of case beefWeight
 				//********************************************************CHICKENWEIGHT STATE**************************************************************
-			case chickenWeight:
+			case chickenWeight: 
+			{
 			//your code goes here
 				genericDelay(500);
-			weightC=KeypadConversionDigit(); //take the weight input
+			/*weightC=KeypadConversionDigit(); //take the weight input
 			while(weightC==0){
 				weightC=KeypadConversionDigit(); //make sure the user enterded a non-zero number
-			}
+			}*/
+		 do{weightC=KeypadConversionDigit();} while (weightC==0);	
+			
 			//show the user the wait he choose
 			  LCD_cmd(CLR_display);
 				LCD_cmd(Curs_1stRow);
@@ -613,13 +658,17 @@ int main(void){
 				if(!SW2&&SW3){ //if sw2 is pressed and the door is closed start cooking
 					state = cooking;
 				}
-				break;
+				break; } //end of case chickenweight
+			
 			//**************************************************COOKINGTIME STATE******************************************************************
-			case cookingTime:
+			case cookingTime: 
+			{
 			//your code goes here
 			break;
+			} //end of class chickenweight
 			//*************************************************PAUSE STATE*******************************************************************
 			case pause:
+			{
 			//flag++;
 			blink();
 			//genericDelay(10000);
@@ -627,20 +676,22 @@ int main(void){
 			//flag--;
 				state = cooking;		
 
-		  else if(!SW1)//SW1 is pressed for second time{
+		  else if(!SW1) //SW1 is pressed for second time
 			flag=flag+1;
 				if(flag%2){
 			state = end;	
-			}
-				
-			break;
+			}break;
+		} //end of case pause
+			
 			//******************************************************END STATE************************************************************
 			case end:
+			{
 			ONbuzzer();  //turn the buzzer on 
 			ArrayLED_Flash(); //flash the leds 
 			OFFbuzzer(); //turn the buzzer off
 			state = Idle; //start over
 			break;
+			} //end of case end;
 		}
 	}
 			
