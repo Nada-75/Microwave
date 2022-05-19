@@ -118,3 +118,22 @@ do
 	LCD_WriteStr(arr);
 
 }
+
+
+
+void keypad_store4character(){
+	int g;
+	unsigned char  count_array1[4]={0,0,0,0};
+	unsigned char  count_array[g];
+	
+	for(g=0;g<4;g++)
+		{ count_array1[0]=count_array1[1];
+			count_array1[1]=count_array1[2];
+			count_array1[2]=count_array1[3];
+		  count_array1[3]=KeypadScan();
+		  genericDelay(2000); 
+			LCD_write(count_array[g]+'0');//***********
+			count_array[g]=count_array1[g];
+	}
+	
+}
