@@ -42,26 +42,23 @@ void displayTime(int seconds, int minutes){
 		LCD_write(s1+'0');
 }
 //function to make a delay AND update the LCD 
-void statesDelay(int time){ //the function takes time in milliseconds
+ int statesDelay(int time){ //the function takes time in milliseconds
 	//used variables
 	int i;
 	int seconds;
 	int minutes;
-	
-	//LCD_Init(); //IF NOT IN MAIN
+	int remainTime;
 	
 	//Equations
 	seconds	= time%60; //get the time in seconds 
 	minutes = time/60; //get the minutes by dividing the whole seconds /60
 	
-	
-	
 	// now we have seconds and minutes in their variables
 	 for(i=0; i<=time+1;i++){
 		genericDelay(1000); //1 sec delay
 	
-	//Condition Checks	
-		 
+	//Condition Checks	 
+		 //while(!SW1 && SW3){ //when the switch1 or 3 is pressed go to pause
 		if(seconds>0 && minutes>=0) 
      { 
 			 displayTime(seconds,minutes); //Display the current time on LCD
@@ -77,13 +74,15 @@ void statesDelay(int time){ //the function takes time in milliseconds
 			displayTime(seconds,minutes); //Display the current time on LCD (Time here should be 00:00)
 			//what to do when we finish goes here ###
 			
-		 // break; //get out of loop
+		  return 0; //get out of while
 			}
+		remainTime = time-i;
 		
-		
-	} 
-	 
-}
+	} //state = pause;
+  		 //end while
+	 //} //end for
+return remainTime;	 
+} //end function 
 
 //A function to determine the delay for chicken and beef
 //this function will be called inside the genericDelay function to determine the time in seconds.

@@ -15,6 +15,8 @@
 #define pause 5
 #define end 6
 
+
+
 // define port f pins
 #define GPIO_PORTF_CLK_EN  0x20    //clock enable of PORTF
 #define GPIO_PORTF_PIN0_EN 0x01    //Enable SW2
@@ -342,7 +344,49 @@ void RGBLEDS_Init(void)
   GPIO_PORTF_DEN_R |= 0x0E; 						//7)Enable Digital I/O on PF1 , PF2 and PF3
   GPIO_PORTF_DATA_R &= ~0x0E;     			//Initialize LEDs to be OFF
 }
-
+//################################################STATESDELAY FUNCTION FROM TIMER####################################################################
+//function to make a delay AND update the LCD 
+/* int statesDelay(int time){ //the function takes time in milliseconds
+	//used variables
+	int i;
+	int seconds;
+	int minutes;
+	int remainTime;
+	
+	//Equations
+	seconds	= time%60; //get the time in seconds 
+	minutes = time/60; //get the minutes by dividing the whole seconds /60
+	
+	// now we have seconds and minutes in their variables
+	 for(i=0; i<=time+1;i++){
+		genericDelay(1000); //1 sec delay
+	
+	//Condition Checks	 
+		 while(!SW1 && SW3){ //when the switch1 or 3 is pressed go to pause
+		if(seconds>0 && minutes>=0) 
+     { 
+			 displayTime(seconds,minutes); //Display the current time on LCD
+			 seconds--;  //decrease seconds each one second
+		 } 
+		else if(seconds ==0 && minutes>0) { //If seconds reached zero, decrease the minutes 
+			// After 1:00 comes 0:59888888888//*****
+			displayTime(seconds,minutes); //Display the current time on LCD (Time here should be "minutes:00")
+			minutes --;
+			seconds =59;
+		}
+		else if(seconds==0 && minutes==0){//we finished counting down 
+			displayTime(seconds,minutes); //Display the current time on LCD (Time here should be 00:00)
+			//what to do when we finish goes here ###
+			
+		  return 0; //get out of while
+			}
+		remainTime = time-i;
+		
+	} state = pause;
+  		 //end while
+	 } //end for
+return remainTime;	 
+} //end function */
 //########################################################KEYPAD FUNCTIONS#################################################################################
 
 //keypad initilization in port C and E
@@ -455,18 +499,19 @@ void cookingtime_D(){
 	statesDelay(D_delay (sec, min)); //get the delay for custom and display the countdown */
 }
 
-
 //###################################################################Main##############################################################################
 int main(void){
-	int state;
+
    //initial state 
 	unsigned char flag=1 ;
-	unsigned int SW1;
-	unsigned int SW2;
-  unsigned int SW3;
+	 //Global variables
+   int	state;
+   unsigned int SW1;
+	 unsigned int SW2;
+   unsigned int SW3;
 	unsigned int type=0;
 	unsigned int weight = 0;
-	//unsigned int weightC = 0;
+	
 	unsigned char PressedKey ;
 	state	= Idle;
 	//initial LCD/RGB/Keypad/ needed ports and switches
@@ -475,7 +520,7 @@ int main(void){
 	Keypad_init();		
 	PORTF_Init();
 	sw3_Init();
-	
+	  
 	
 	while(1){
 		genericDelay(2000);
@@ -484,11 +529,12 @@ int main(void){
     LCD_cmd(CursOff_DisON);
 		LCD_cmd(Curs_1stRow);
 		
-		
-			
 		SW1 = GPIO_PORTF_DATA_R & 0x10;
 		SW2 = GPIO_PORTF_DATA_R & 0x01;
 		SW3 = GPIO_PORTE_DATA_R & 0x10;
+		
+			
+		
 		
 		switch(state){
 			case Idle: // ************************************************IDLE STATE**************************************************************
@@ -507,13 +553,15 @@ int main(void){
 			//POPCORN
 			case 'A':			
 			{		
-				
 				LCD_WriteStr("Popcorn");
 				genericDelay(2000);
-			  type = 1;
 				
-                    while((SW2)||(!SW3)){}
-                    state = cooking;
+			  do{SW2 = GPIO_PORTF_DATA_R & 0x01;
+				   SW3 = GPIO_PORTE_DATA_R & 0x10;}
+        while((SW2 || (SW3 == 0x00)));
+				
+				type = 1;
+        state = cooking;
 				break;
 			}
 			
@@ -560,7 +608,8 @@ int main(void){
 			genericDelay(500);	
 			weight=0;
 				
-			do{weight = KeypadConversionDigit();} while (weight==0);
+			do{weight = KeypadConversionDigit();
+			   genericDelay(50);} while (weight == 0);
 			//show the user the weight he enterd
 			 LCD_cmd(CLR_display);
 				LCD_cmd(Curs_1stRow);
@@ -568,8 +617,11 @@ int main(void){
 			  LCD_write(weight+'0');
 			  genericDelay(2000);
 			//when sw2 is pressed and we know the door is closed: start cooking
-				while((SW2)||(!SW3)){}
-                                state = cooking;
+				do{SW2 = GPIO_PORTF_DATA_R & 0x01;
+				   SW3 = GPIO_PORTE_DATA_R & 0x10;}
+        while((SW2 || (SW3 == 0x00)));
+					 
+        state = cooking;
 				break; } //end of case beefWeight
 				//********************************************************CHICKENWEIGHT STATE**************************************************************
 			case chickenWeight: 
@@ -585,8 +637,12 @@ int main(void){
         LCD_cmd(CursOff_DisON);
 			  LCD_write(weight+'0');
 			  genericDelay(2000);
-				while((SW2)||(!SW3)){}
-                               state = cooking;
+		 
+				do{SW2 = GPIO_PORTF_DATA_R & 0x01;
+				   SW3 = GPIO_PORTE_DATA_R & 0x10;}
+        while((SW2 || (SW3 == 0x00)));
+					 
+        state = cooking;
 				break; } //end of case chickenweight
 			
 			//**************************************************COOKINGTIME STATE******************************************************************
