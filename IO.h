@@ -9,3 +9,7 @@ void write_highnibble(unsigned char port_name,unsigned char data);
 void write_lownibble(unsigned char port_name,unsigned char data);
 void Set_portDir(unsigned char port_name,unsigned char direction);
 void TOG_BinData (unsigned char port_name, unsigned char bin_num);
+void Keypad_init();
+unsigned char KeypadScan();
+int KeypadConversionDigit();
+void cookingtime_D();
