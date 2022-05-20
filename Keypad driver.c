@@ -99,32 +99,32 @@ void cookingtime_D(){
 	//int min = arr[1] + arr[0] * 10; //get minutes from the array
 	//int sec = arr[3] + arr[2] * 10; //get seconds from the array
 	statesDelay(D_delay (sec, min)); //get the delay for custom and display the countdown
-}
-
-void cookingtime_Dtest(){ 
+}void cookingtime_D(){ 
 	 
 char arr[4] = {'0','0','0','0'};
 int a,b,c,d;
 
 int sec,min;
 init_LCD();
-do
+while(1){
+while(sw2 not pressed || sw1 not pressed)
 { while(KeypadScan()==noPressed);
-	arr[3]=KeypadScan();
+	arr[3]=KeypadScan();a= (int)arr[3]-'0';
+	if(sw2  pressed || sw1  pressed) break; 
 	while(KeypadScan()==noPressed);
-	arr[2]=KeypadScan();
+	arr[2]=KeypadScan();b= (int)arr[2]-'0';
+	if(sw2  pressed || sw1  pressed) break; 
 	while(KeypadScan()==noPressed);
-	arr[1]=KeypadScan();
+	arr[1]=KeypadScan();c= (int)arr[1]-'0';
+		if(sw2  pressed || sw1  pressed) break; 
 	while(KeypadScan()==noPressed);
-	arr[0]=KeypadScan();
+	arr[0]=KeypadScan();	d= (int)arr[0]-'0';
+			if(sw2  pressed || sw1  pressed) break; 
+}
 	LCD_WriteStr(arr);
-	a= (int)arr[3]-'0';
-	b= (int)arr[2]-'0';
-	c= (int)arr[1]-'0';
-	d= (int)arr[0]-'0';
+
 sec=a+b*10;
 	min=d*10+c;
 	statesDelay(D_delay (sec, min));
-}while(sw2 not pressed && sw1 not pressed );
-
-
+	
+}}
