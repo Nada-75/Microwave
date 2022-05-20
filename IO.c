@@ -657,10 +657,11 @@ void keypad_store4character(){
 	    
     	
 	 for(g=0;g<4;g++)
-		{ count_array1[0]=count_array1[1];
+		{ while(KeypadScan()==0xff);
+			count_array1[0]=KeypadScan();
+			count_array1[0]=count_array1[1];
 			count_array1[1]=count_array1[2];
-			count_array1[2]=count_array1[3];
-		  count_array1[3]=KeypadScan();			
+		  count_array1[2]=count_array1[3];			
 			LCD_write(count_array[g]);
 			genericDelay(500);
 		  count_array[g]=count_array1[g];
@@ -670,5 +671,8 @@ void keypad_store4character(){
 		array_int[1]=count_array1[0]-'0';
 		array_int[2]=count_array1[0]-'0';
 		array_int[3]=count_array1[3]-'0';
-		D_delay ((array_int[3]+array_int[2]) , (array_int[1]+array_int[0]));
+		int sec=(array_int[3]+array_int[2]*10);
+		int min =(array_int[3]+array_int[2]*10);
+		statesDelay(D_delay (sec,min));
+		
    } 
