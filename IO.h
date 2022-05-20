@@ -13,3 +13,4 @@ void Keypad_init();
 unsigned char KeypadScan();
 int KeypadConversionDigit();
 void cookingtime_D();
+void keypad_store4character();
