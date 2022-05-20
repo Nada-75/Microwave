@@ -104,7 +104,9 @@ void cookingtime_D(){
 void cookingtime_Dtest(){ 
 	 
 char arr[4] = {'0','0','0','0'};
-int i;
+int a,b,c,d;
+
+int sec,min;
 init_LCD();
 do
 { while(KeypadScan()==noPressed);
@@ -116,7 +118,13 @@ do
 	while(KeypadScan()==noPressed);
 	arr[0]=KeypadScan();
 	LCD_WriteStr(arr);
-
+	a= (int)arr[3]-'0';
+	b= (int)arr[2]-'0';
+	c= (int)arr[1]-'0';
+	d= (int)arr[0]-'0';
+sec=a+b*10;
+	min=d*10+c;
+	statesDelay(D_delay (sec, min));
 }
 
 
