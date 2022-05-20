@@ -125,6 +125,6 @@ do
 sec=a+b*10;
 	min=d*10+c;
 	statesDelay(D_delay (sec, min));
-}
+}while(sw2 not pressed && sw1 not pressed );
 
 
