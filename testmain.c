@@ -29,16 +29,8 @@
 	int remainTime;
 	unsigned int SW1;
 	unsigned int SW2;
-<<<<<<< HEAD
   unsigned int SW3; 
 	 int flag =0;
-	 
-	
-	 
-=======
-	unsigned int SW3; 
-	int flag = 0;	 
->>>>>>> f7bdf3492f4c5e5030e27dcbe310e0dda9a60cea
 	
 	//Equations
 	seconds	= time%60; //get the time in seconds 
@@ -51,29 +43,6 @@
 	//Condition Checks	 
 		 SW1 = GPIO_PORTF_DATA_R & 0x10;
 		 SW3 = GPIO_PORTE_DATA_R & 0x10;
-<<<<<<< HEAD
-		 
-     if((SW1==0x00) || (SW3 == 0x00)) {flag =1;}
-		 if(flag ==1){
-		 
-			 //pause here 
-			 
-			//flag++;
-			blink();
-			
-			if(SW2==0x00){flag=0; }//SW2 is pressed after SW1{
-			//flag--;
-						
-
-		 /* else if(SW1==0x00) //SW1 is pressed for second time
-			   seconds=0;
-			   minutes=0;
-			   flag=0;
-			//state = end;	*/
-			
-		  
-		 } 
-=======
     if((SW1==0x00) || (SW3 == 0x00)) {
 		//pause here 
 		 flag = 1;
@@ -95,7 +64,6 @@
 			//state = end;
 		  }
 		 }
->>>>>>> f7bdf3492f4c5e5030e27dcbe310e0dda9a60cea
 		 else{
 		 
 		if(seconds>0 && minutes>=0) 
