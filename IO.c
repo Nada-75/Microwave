@@ -654,18 +654,17 @@ void keypad_store4character(){
 	unsigned char  count_array1[4]={0,0,0,0};
 	unsigned char  count_array[4];
 	int array_int[4];
-	    count_array1[0]=count_array1[1];
+	    
+    	
+	 for(g=0;g<4;g++)
+		{ count_array1[0]=count_array1[1];
 			count_array1[1]=count_array1[2];
 			count_array1[2]=count_array1[3];
-		  count_array1[3]=KeypadScan();
-		  genericDelay(2000); 
-	 for(g=0;g<4;g++)
-		{
-			count_array[g]=count_array1[g];
-	  } 
-		
-		LCD_write(count_array[g]+'0');
-		
+		  count_array1[3]=KeypadScan();			
+			LCD_write(count_array[g]);
+			genericDelay(500);
+		  count_array[g]=count_array1[g];
+		} 
 		//conver char to int
 	  array_int[0]=count_array1[0]-'0';
 		array_int[1]=count_array1[0]-'0';
