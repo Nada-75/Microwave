@@ -120,24 +120,3 @@ do
 }
 
 
-
-void keypad_store4character(){
-	int g;
-	unsigned char  count_array1[4]={0,0,0,0};
-	unsigned char  count_array[g];
-	int Displayed_Character;
-	Displayed_Character=count_array[g]+'0';
-	    count_array1[0]=count_array1[1];
-			count_array1[1]=count_array1[2];
-			count_array1[2]=count_array1[3];
-		  count_array1[3]=KeypadScan();
-		  genericDelay(2000); 
-	    
-			LCD_write(Displayed_Character);//***********
-	for(g=0;g<4;g++)
-		{
-			count_array[g]=count_array1[g];
-	  }
-		//A function to determine D(custom) delay 
-   // D_delay ((Displayed_Character[3]+Displayed_Character[2]), (Displayed_Character[1]+Displayed_Character[0]));
- } 
