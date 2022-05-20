@@ -30,6 +30,8 @@
 	unsigned int SW1;
 	unsigned int SW2;
   unsigned int SW3; 
+	 int flag =0;
+	 
 	
 	 
 	
@@ -38,31 +40,33 @@
 	minutes = time/60; //get the minutes by dividing the whole seconds /60
 	
 	// now we have seconds and minutes in their variables
-	 for(i=0; i<=time+1;i++){
+	 for(i=0; i<=1000000;i++){
 		genericDelay(1000); //1 sec delay
 	
 	//Condition Checks	 
 		 SW1 = GPIO_PORTF_DATA_R & 0x10;
 		 SW3 = GPIO_PORTE_DATA_R & 0x10;
-     if((SW1==0x00) || (SW3 == 0x00)) {
+		 
+     if((SW1==0x00) || (SW3 == 0x00)) {flag =1;}
+		 if(flag ==1){
+		 
 			 //pause here 
 			 
 			//flag++;
 			blink();
-			//genericDelay(10000);
-			if(SW2==0x00)//SW2 is pressed after SW1{
+			
+			if(SW2==0x00){flag=0; }//SW2 is pressed after SW1{
 			//flag--;
-				continue;		
+						
 
-		  else if(SW1==0x00) //SW1 is pressed for second time
+		 /* else if(SW1==0x00) //SW1 is pressed for second time
 			   seconds=0;
 			   minutes=0;
-			   continue; 
-			//state = end;	
+			   flag=0;
+			//state = end;	*/
 			
-		
-			 
-		 }
+		  
+		 } 
 		 else{
 		 
 		if(seconds>0 && minutes>=0) 
