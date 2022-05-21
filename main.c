@@ -104,7 +104,7 @@ int main(void){
 	unsigned int timeD = 0;
 	unsigned char PressedKey;
 	unsigned char flag = 1;
-	//initial LCD/RGB/Keypad/ needed ports and switches
+	//initialize LCD/RGB/Keypad/ needed ports and switches
 	init_LCD();  
 	RGBLEDS_Init();
 	Keypad_init();		
@@ -127,7 +127,7 @@ int main(void){
 			type=0;
 			do{PressedKey = KeypadScan();} while (PressedKey == 0xFF);
 			//What to do in Idle state
-			LCD_write(PressedKey);
+			LCD_write(PressedKey);//display pressed key from keypad on lcd
 			genericDelay(2000);
 			LCD_cmd(CLR_display);
 			LCD_cmd(CursOff_DisON);
@@ -137,7 +137,7 @@ int main(void){
 				//POPCORN
 				case 'A':			
 				{		
-					LCD_WriteStr("Popcorn");
+					LCD_WriteStr("Popcorn");//display "Popcorn" on lcd
 					genericDelay(2000);
 					do{
 						SW2 = GPIO_PORTF_DATA_R & 0x01;
@@ -150,7 +150,7 @@ int main(void){
 				//BEEF
 				case 'B':			
 				{
-					LCD_WriteStr("Beef Weight?");
+					LCD_WriteStr("Beef Weight?");//display "Beef Weight?" on lcd
 					genericDelay(2000);
 					type = 2;	
 					state = beefWeight; //We go there to take the weight from the user
@@ -159,7 +159,7 @@ int main(void){
 				//CHICKEN
 				case 'C':			
 				{ 
-					LCD_WriteStr("Chicken Weight?");
+					LCD_WriteStr("Chicken Weight?");//display "Chicken Weight?" on lcd
 					genericDelay(2000);
 					type = 3;
 					state = chickenWeight; //We go there to take the weight from the user
@@ -170,7 +170,7 @@ int main(void){
 				{
 					LCD_cmd(CLR_display); 
 					LCD_cmd(Curs_1stRow);
-					LCD_WriteStr("Cooking time?");
+					LCD_WriteStr("Cooking time?");//display "Cooking time?" on lcd
 					genericDelay(2000);
 					type = 4;
 					state = cookingTime;
@@ -184,7 +184,8 @@ int main(void){
 			if (state != cookingTime) break;
 			do{
 				genericDelay(1000);					
-				timeD = keypad_store4character(); } while (timeD == 0);	
+				timeD = keypad_store4character(); 
+			} while (timeD == 0);	
 				do{SW2 = GPIO_PORTF_DATA_R & 0x01;
 				SW3 = GPIO_PORTE_DATA_R & 0x10;
 			}while((SW2 || (SW3 == 0x00)));	 
@@ -198,18 +199,19 @@ int main(void){
 			weight=0;
 			do{
 				weight = KeypadConversionDigit();
-				genericDelay(50);} while (weight == 0);
+				genericDelay(50);
+			} while (weight == 0);
 				//show the user the weight he entered
 				LCD_cmd(CLR_display);
 				LCD_cmd(Curs_1stRow);
 				LCD_cmd(CursOff_DisON);
-				LCD_write(weight+'0');
+				LCD_write(weight+'0');//display weight on lcd
 				genericDelay(2000);
 		  		//when sw2 is pressed and we know the door is closed: start cooking
-				do{
-					SW2 = GPIO_PORTF_DATA_R & 0x01;
-					SW3 = GPIO_PORTE_DATA_R & 0x10;
-				}while((SW2 || (SW3 == 0x00)));	 
+			do{
+				SW2 = GPIO_PORTF_DATA_R & 0x01;
+				SW3 = GPIO_PORTE_DATA_R & 0x10;
+			}while((SW2 || (SW3 == 0x00)));	 
 			state = cooking;
 			break;
 			} //end of case beefWeight
@@ -226,11 +228,11 @@ int main(void){
 				LCD_cmd(CLR_display);
 				LCD_cmd(Curs_1stRow);
 				LCD_cmd(CursOff_DisON);
-				LCD_write(weight+'0');
+				LCD_write(weight+'0');//display weight on lcd
 				genericDelay(2000);
 				do{
 					SW2 = GPIO_PORTF_DATA_R & 0x01;
-				   SW3 = GPIO_PORTE_DATA_R & 0x10;
+				   	SW3 = GPIO_PORTE_DATA_R & 0x10;
 				}while((SW2 || (SW3 == 0x00)));
 				state = cooking;
 				break;
