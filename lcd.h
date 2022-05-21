@@ -17,12 +17,7 @@
 #define Return_Home   0x02
 
 //Functions Prototype
-//void genericDelay(unsigned long time);
 void LCD_cmd(unsigned char cmd);
 void init_LCD(void);
 void LCD_WriteStr(char * str);
-//void lcd_send_char(unsigned char chr);
-//void lcd_send_string(char *str);
-//void lcd_move_curs(unsigned char row,unsigned char col);
-//void clear_display();
 void LCD_write(unsigned char data);
