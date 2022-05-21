@@ -601,59 +601,15 @@ LCD_cmd(CLR_display );
 return 0;
 }
 
-
-//the function will take inputs for D in keypad, ddetermine minutes and seconds then display the countdown
-void cookingtime_D(){ 
-	 unsigned char noPressed =0xFF;
-   int arr[4] = {0,0,0,0};
-	int number=0x00; //the 16 bit digit
-	int i=0;
-	int j;
- 	int min;
-	int sec;
-	int s1;
-	int s2;
-	int m1;
-	int m2;
-	LCD_cmd(CLR_display);
-	LCD_cmd(Curs_1stRow);
-	LCD_cmd(CursOff_DisON);
-	for(j = 3 ; j>=0; j--)
-	//sw1 not pressed
-	{
-		while(KeypadScan()==noPressed) genericDelay(5000); 
-		while(KeypadScan()!='*')
-		{	
-			while(KeypadScan()==noPressed) genericDelay(5000);
-			arr[j] = KeypadConversionDigit();	//take the input every 
-			if(KeypadScan()=='#') continue;
-			
-			LCD_write(arr[j]+'0');
-			LCD_cmd(RShiftCurs);
-			genericDelay(2000);
-			//number = (number<<4) | i; 
-			//arr[i] = KeypadConversionDigit();	//we don't know if they(function and for loop) are in sync	
-		}
-	}
-/*	s1=number&~0xFFF0;
-	s2=number&~0xFF0F;
-	m1=number&~0xF0FF;
-	m2=number&~0x0FFF;
-	//sec = number | 0xF + (number | 0xF0)*10; 
-	sec = s1+ s2*10; 
-	min = m1+ m2*10;
-	
-	//int min = arr[1] + arr[0] * 10; //get minutes from the array
-	//int sec = arr[3] + arr[2] * 10; //get seconds from the array
-	statesDelay(D_delay (sec, min)); //get the delay for custom and display the countdown */
-}
-
-
-void keypad_store4character(){
+int keypad_store4character(){
 	int g;
-	unsigned char  count_array1[4]={0,0,0,0};
-	unsigned char  count_array[4];
-	int array_int[4];
+	int array_int[4]={0,0,0,0};
+	int min=0;    
+  int sec=0; 
+  int time=0;	
+	 for(g=0;g<4;g++)
+		{ while(KeypadScan()==0xff){ 
+				genericDelay(50);}
 	    
     	
 	 for(g=0;g<4;g++)
